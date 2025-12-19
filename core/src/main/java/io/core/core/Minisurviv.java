@@ -1,4 +1,4 @@
-package io.core;
+package io.core.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;

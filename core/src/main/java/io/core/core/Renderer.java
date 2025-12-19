@@ -1,4 +1,4 @@
-package io.core;
+package io.core.core;
 
 public class Renderer {
 

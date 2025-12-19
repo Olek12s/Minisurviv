@@ -1,9 +1,8 @@
 package io.core.screens;
 
 import com.badlogic.gdx.Screen;
-import io.core.Minisurviv;
-import io.core.Renderer;
-import io.core.Updater;
+import io.core.core.Renderer;
+import io.core.core.Updater;
 
 public class BaseScreen implements Screen
 {
