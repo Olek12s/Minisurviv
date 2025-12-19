@@ -2,7 +2,6 @@ package io.core.core;
 
 public class Updater {
 
-    public static final int TPS = 60;   // how many ticks are performed per 1 second
 
     /**
      *
