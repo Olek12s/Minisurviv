@@ -97,7 +97,6 @@ public class Input {
             keysHeld.put(key, Gdx.input.isKeyPressed(key));
         }
 
-        System.out.println("listen");
     }
 
     public static boolean isJustPressed(int key) {

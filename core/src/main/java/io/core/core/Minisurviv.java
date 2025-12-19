@@ -3,6 +3,7 @@ package io.core.core;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import io.core.screens.MainMenuScreen;
 
 public abstract class Minisurviv extends Game
@@ -42,7 +43,7 @@ public abstract class Minisurviv extends Game
         this.updater = new Updater();
         this.renderer = new Renderer();
 
-        setScreen(new MainMenuScreen());
+        setScreen(new MainMenuScreen(new FitViewport(432, 288)));
 
 
         lastSecondTime = System.currentTimeMillis();
@@ -92,6 +93,11 @@ public abstract class Minisurviv extends Game
             framesThisSecond = 0;
             lastSecondTime += 1000;
         }
+    }
+
+    @Override
+    public void resize(int x, int y) {
+        super.resize(x, y);
     }
 
     @Override

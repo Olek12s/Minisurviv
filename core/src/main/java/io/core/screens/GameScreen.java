@@ -1,9 +1,15 @@
 package io.core.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class GameScreen implements Screen
-{
+public class GameScreen extends BaseScreen {
+
+    
+    protected GameScreen(Viewport viewport) {
+        super(viewport);
+    }
+
     @Override
     public void show() {
 
