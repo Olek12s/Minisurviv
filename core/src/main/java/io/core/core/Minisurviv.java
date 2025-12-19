@@ -21,7 +21,9 @@ public class Minisurviv extends Game
     @Override
     public void render() {
         super.render();
-        System.out.println("ren");
+
+        System.out.println("Just pressed: " + Input.isJustPressed(Input.Keys.A));
+        System.out.println("Held: " + Input.isHeld(Input.Keys.A));
     }
 
     @Override
