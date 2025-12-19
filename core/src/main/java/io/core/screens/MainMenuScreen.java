@@ -2,6 +2,40 @@ package io.core.screens;
 
 import com.badlogic.gdx.Screen;
 
-public class MainMenuScreen extends BaseScreen {
-   // game.setScreen(new GameScreen(game)); when new game
+public class MainMenuScreen implements Screen {
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float v) {
+
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+    // game.setScreen(new GameScreen(game)); when new game
 }
