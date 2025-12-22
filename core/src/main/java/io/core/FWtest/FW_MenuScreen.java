@@ -7,11 +7,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class FW_MenuScreen implements Screen {
@@ -40,6 +42,15 @@ public class FW_MenuScreen implements Screen {
         TextButton button3 = new TextButton("settings", skin);
         TextButton button4 = new TextButton("achievements", skin);
         TextButton button5 = new TextButton("exit", skin);
+
+button2.addListener(new ClickListener() {
+    @Override
+    public void clicked(InputEvent event, float x, float y) {
+        System.out.println("click!");
+
+    }
+});
+
 
 
         BitmapFont font = new BitmapFont();
