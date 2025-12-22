@@ -1,13 +1,11 @@
 package io.core.FWtest;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,130 +15,157 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class FW_MenuScreen implements Screen {
-    private final FW_Main game;
-    Stage stage;
-    private Skin skin;
-    Texture logoTexture;
-    Image logo;
 
+    private final FW_Main game;
+    private Stage stage;
+    private Skin skin;
+
+    private Texture logoTexture;
+    private Image logo;
+
+    private TextButton[] buttons;
+    private int focusIndex = 0;
 
     public FW_MenuScreen(FW_Main game) {
         this.game = game;
         this.stage = new Stage(game.viewport);
         this.skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        this.logoTexture = new Texture(Gdx.files.internal("logo.png"));
-        this.logo = new Image(logoTexture);
-
-        Table table = new Table();
-
-        table.top();
-        table.setFillParent(true);
-
-        TextButton button1 = new TextButton("start new world", skin);
-        TextButton button2 = new TextButton("load world", skin);
-        TextButton button3 = new TextButton("settings", skin);
-        TextButton button4 = new TextButton("achievements", skin);
-        TextButton button5 = new TextButton("exit", skin);
-
-button2.addListener(new ClickListener() {
-    @Override
-    public void clicked(InputEvent event, float x, float y) {
-        System.out.println("click!");
-
-    }
-});
-
-
-
-        BitmapFont font = new BitmapFont();
-        font.getData().setScale(3f);
-
-
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.up = skin.getDrawable("default-round");
-        style.down = skin.getDrawable("default-round-down");
-        style.font = font;
-
-
-       button1 = new TextButton("Start", style);
-
+        Gdx.input.setInputProcessor(stage);
 
         // LOGO
-        table.add(logo)
-                .padTop(50)
-                .width(600)
-                .height(100);
+        logoTexture = new Texture(Gdx.files.internal("logo.png"));
+        logo = new Image(logoTexture);
+
+        // FONT
+        BitmapFont font = new BitmapFont();
+        font.getData().setScale(2.5f);
+
+        // STYLE
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        style.up = null;
+        style.down = null;
+        style.checked = null;
+        style.font = font;
+
+        TextButton button1 = new TextButton("start new world", style);
+        TextButton button2 = new TextButton("load world", style);
+        TextButton button3 = new TextButton("settings", style);
+        TextButton button4 = new TextButton("achievements", style);
+        TextButton button5 = new TextButton("exit", style);
+
+        buttons = new TextButton[] {
+                button1, button2, button3, button4, button5
+        };
+
+
+        button1.addListener(new ClickListener() {
+            @Override public void clicked(InputEvent event, float x, float y) {
+                System.out.println("NEW WORLD");
+            }
+        });
+
+        button5.addListener(new ClickListener() {
+            @Override public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
+
+
+        Table table = new Table();
+        table.setFillParent(true);
+        table.top();
+
+        table.add(logo).padTop(40).padBottom(80);
         table.row();
 
-        // 1. Start
-        table.add(button1)
-                .padTop(100)
-                .width(300)
-                .height(60);
-        table.row();
-
-        // 2. Load
-        table.add(button2)
-                .padTop(20)
-                .width(300)
-                .height(60);
-        table.row();
-
-        // 3. Settings + Achievements
-        Table rowTable = new Table();
-        rowTable.add(button3)
-                .width(140)
-                .height(60)
-                .padTop(20)
-                .padRight(20);
-
-
-        rowTable.add(button4)
-                .width(140)
-                .height(60)
-                .padTop(20);
-        table.add(rowTable);
-        table.row();
-
-        // 4. Exit
-        table.add(button5)
-                .padTop(20)
-                .width(300)
-                .height(60);
-        table.row();
+        for (TextButton b : buttons) {
+            table.add(b).padBottom(20);
+            table.row();
+        }
 
         stage.addActor(table);
 
 
-        Gdx.input.setInputProcessor(stage);
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+
+                if (keycode == Input.Keys.DOWN) {
+                    focusIndex = (focusIndex + 1) % buttons.length;
+                    updateFocus();
+                    return true;
+                }
+
+                if (keycode == Input.Keys.UP) {
+                    focusIndex = (focusIndex - 1 + buttons.length) % buttons.length;
+                    updateFocus();
+                    return true;
+                }
+
+                if (keycode == Input.Keys.ENTER || keycode == Input.Keys.SPACE) {
+                    if (keycode == Input.Keys.ENTER || keycode == Input.Keys.SPACE) {
+                        activateFocusedButton();
+                        return true;
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        // początkowy focus
+        updateFocus();
+    }
+
+    private void activateFocusedButton() {
+        if (buttons[focusIndex] == buttons[0]) {
+            System.out.println("NEW WORLD");
+        }
+        else if (buttons[focusIndex] == buttons[4]) {
+            Gdx.app.exit();
+        }
+    }
+
+
+    private void updateFocus() {
+        for (int i = 0; i < buttons.length; i++) {
+            String baseText = buttons[i].getText().toString()
+                    .replace("> ", "")
+                    .replace(" <", "");
+
+            if (i == focusIndex) {
+                buttons[i].setText("> " + baseText + " <");
+                stage.setKeyboardFocus(buttons[i]);
+            } else {
+                buttons[i].setText(baseText);
+            }
+        }
     }
 
     @Override
-    public void render(float v) {
-        stage.act();
+    public void render(float delta) {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(delta);
         stage.draw();
     }
 
     @Override
-    public void resize(int i, int i1)
-    {
-        game.viewport.update(i, i1);
+    public void resize(int width, int height) {
+        game.viewport.update(width, height, true);
     }
 
     @Override
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        logoTexture.dispose();
     }
 
-    @Override
-    public void pause() {}
-    @Override
-    public void resume() {}
-
-    @Override
-    public void show() {}
-    @Override
-    public void hide() {}
+    @Override public void show() {}
+    @Override public void hide() {}
+    @Override public void pause() {}
+    @Override public void resume() {}
 }
