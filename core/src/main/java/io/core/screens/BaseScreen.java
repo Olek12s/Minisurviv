@@ -18,7 +18,6 @@ abstract public class BaseScreen implements Screen
         viewport.update(width, height, true);
         Renderer.WORLD_WIDTH = (int)viewport.getWorldWidth();
         Renderer.WORLD_HEIGHT = (int)viewport.getWorldHeight();
-        System.out.println("resize");
     }
 
     @Override
