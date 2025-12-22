@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -39,6 +40,20 @@ public class FW_MenuScreen implements Screen {
         TextButton button3 = new TextButton("settings", skin);
         TextButton button4 = new TextButton("achievements", skin);
         TextButton button5 = new TextButton("exit", skin);
+
+
+        BitmapFont font = new BitmapFont();
+        font.getData().setScale(3f);
+
+
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        style.up = skin.getDrawable("default-round");
+        style.down = skin.getDrawable("default-round-down");
+        style.font = font;
+
+
+       button1 = new TextButton("Start", style);
+
 
         // LOGO
         table.add(logo)
