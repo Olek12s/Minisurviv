@@ -3,10 +3,11 @@ package io.core.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class MainMenuScreen extends BaseScreen {
+public class MainMenuScreen implements Screen
+{
 
     public MainMenuScreen(Viewport viewport) {
-        super(viewport);
+
     }
 
     @Override
@@ -21,7 +22,7 @@ public class MainMenuScreen extends BaseScreen {
 
     @Override
     public void resize(int width, int height) {
-        super.resize(width, height);
+
     }
 
     @Override
@@ -43,5 +44,4 @@ public class MainMenuScreen extends BaseScreen {
     public void dispose() {
 
     }
-    // game.setScreen(new GameScreen(game)); when new game
 }
