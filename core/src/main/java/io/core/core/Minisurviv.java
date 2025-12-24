@@ -4,8 +4,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import io.core.screens.MainMenuScreen;
+import lombok.Getter;
 
+@Getter
 public abstract class Minisurviv extends Game
 {
     private AssetManager assetManager;
@@ -13,6 +16,7 @@ public abstract class Minisurviv extends Game
     private Input input;
     private Updater updater;
     private Renderer renderer;
+    private Viewport viewport;
 
     // Debug counters
     private int ticksThisSecond = 0;
@@ -42,8 +46,9 @@ public abstract class Minisurviv extends Game
         this.input = new Input();
         this.updater = new Updater();
         this.renderer = new Renderer();
+        this.viewport = new FitViewport(18*24, 12*24);
 
-        setScreen(new MainMenuScreen(new FitViewport(432, 288)));
+        setScreen(new MainMenuScreen(this));
 
 
         lastSecondTime = System.currentTimeMillis();
