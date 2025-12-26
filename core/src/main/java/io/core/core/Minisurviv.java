@@ -16,7 +16,7 @@ public abstract class Minisurviv extends Game
     private Input input;
     private Updater updater;
     private Renderer renderer;
-    private Viewport viewport;
+    public Viewport viewport;   // LEAVE IT PUBLIC !
 
     // Debug counters
     private int ticksThisSecond = 0;

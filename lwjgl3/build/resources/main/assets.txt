@@ -1,1 +1,6 @@
+fonts/minecrafty/Bold.otf
+fonts/minecrafty/BoldItalic.otf
+fonts/minecrafty/Italic.otf
+fonts/minecrafty/Regular.otf
+fonts/minecrafty/info.txt
 logo.png

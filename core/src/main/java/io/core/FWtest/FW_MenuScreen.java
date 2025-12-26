@@ -79,7 +79,6 @@ public class FW_MenuScreen implements Screen {
 
         Table table = new Table();
         table.setFillParent(true);
-
         table.top();
 
         table.add(logo).padTop(40).padBottom(80);
