@@ -10,16 +10,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.core.core.Minisurviv;
 
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+
+import java.util.Random;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
@@ -29,23 +28,29 @@ public class MainMenuScreen implements Screen
     private Minisurviv game;
     private Stage stage;
     private Skin skin;
-
     private Texture logoTexture;
     private Image logo;
-
     private TextButton[] sceneButtons;
     private int focusIndex = 0;
+    private Label versionLabel;
+    private Label funTextLabel;
+
+    private String[] randomFunTexts = {
+            "Tiley!", "Also try Minecraft!", "Also try Terraria!", "Welcome 2026!",
+            "Don't forget to drink", "Praise to the cats!", "Don't try it at home!",
+            "Don't test dynamite at home!", "Also try Hardcore mode!", "GL & HF!",
+    };
 
     public MainMenuScreen(Minisurviv game) {
         this.game = game;
         this.stage = new Stage(game.getViewport());
         this.skin = new Skin(Gdx.files.internal("uiskin.json"));
-
-        Gdx.input.setInputProcessor(this.stage);
-
-        // LOGO
         this.logoTexture = new Texture(Gdx.files.internal("logo.png"));
         this.logo = new Image(logoTexture);
+        this.versionLabel = new Label(Minisurviv.VERSION, skin);
+        this.funTextLabel = new Label(randomFuntext(), skin);
+
+        Gdx.input.setInputProcessor(this.stage);
 
 
         // FONT
@@ -191,6 +196,11 @@ public class MainMenuScreen implements Screen
                 sceneButtons[i].setText(baseText);
             }
         }
+    }
+
+    private String randomFuntext() {
+        Random random = new Random();
+        return randomFunTexts[random.nextInt(randomFunTexts.length)];
     }
 
     @Override
