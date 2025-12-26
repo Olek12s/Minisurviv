@@ -53,31 +53,52 @@ public class MainMenuScreen implements Screen
         Gdx.input.setInputProcessor(this.stage);
 
 
-        // FONT
+        // FONT (buttons)
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/minecrafty/Regular.otf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter buttonParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        buttonParam.size = 16;
+        BitmapFont buttonFont = generator.generateFont(buttonParam);
 
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter =
-                new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //parameter.size = 64;
-        //parameter.color = Color.WHITE;
+        // FONT (version label)
+        FreeTypeFontGenerator.FreeTypeFontParameter labelParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        labelParam.size = 12;
+        BitmapFont labelFont = generator.generateFont(labelParam);
 
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
+        // FONT (fun text label)
+        FreeTypeFontGenerator.FreeTypeFontParameter funTextParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        funTextParam.size = 14;
+        BitmapFont funTextFont = generator.generateFont(funTextParam);
 
+
+        // VERSION LABEL STYLE
+        Label.LabelStyle versionStyle = new Label.LabelStyle();
+        versionStyle.font = labelFont;
+        versionStyle.fontColor = Color.GRAY;
+        versionLabel = new Label(Minisurviv.VERSION, versionStyle);
 
         // BARE BUTTON STYLE
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.up = null;
-        style.down = null;
-        style.checked = null;
-        style.font = font;
+        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
+        buttonStyle.up = null;
+        buttonStyle.down = null;
+        buttonStyle.checked = null;
+        buttonStyle.font = buttonFont;
+
+        // FUN TEXT LABEL STYLE
+        Label.LabelStyle funTextStyle = new Label.LabelStyle();
+        funTextStyle.font = funTextFont;
+        funTextStyle.fontColor = Color.GOLD;
+        funTextLabel = new Label(randomFuntext(), funTextStyle);
+        funTextLabel.addAction(forever(sequence(
+                fadeOut(1.4f),
+                fadeIn(1.4f)
+        )));
 
         // BUTTONS DEFINITONS
-        TextButton startnewWorldButton = new TextButton("start new world", style);
-        TextButton loadWorldButton = new TextButton("load world", style);
-        TextButton settingsButton = new TextButton("settings", style);
-        TextButton achievementsButton = new TextButton("achievements", style);
-        TextButton exitButton = new TextButton("exit", style);
+        TextButton startnewWorldButton = new TextButton("start new world", buttonStyle);
+        TextButton loadWorldButton = new TextButton("load world", buttonStyle);
+        TextButton settingsButton = new TextButton("settings", buttonStyle);
+        TextButton achievementsButton = new TextButton("achievements", buttonStyle);
+        TextButton exitButton = new TextButton("exit", buttonStyle);
 
 
         sceneButtons = new TextButton[] {
@@ -132,15 +153,17 @@ public class MainMenuScreen implements Screen
         table.setFillParent(true);
         table.top();
 
-        table.add(logo).padTop(20).padBottom(20).width(104*3).height(16*3);
+        table.add(logo).padTop(10).padBottom(2).width(104*3).height(16*3);
+        table.row();
+        table.add(funTextLabel).padTop(2).padBottom(20);
         table.row();
         for (TextButton b : sceneButtons) {
-            table.add(b).padBottom(20);
+            table.add(b).padBottom(10);
             table.row();
         }
 
         stage.addActor(table);
-
+        //table.debug();
 
         stage.addListener(new InputListener() {
             @Override
@@ -165,6 +188,18 @@ public class MainMenuScreen implements Screen
                 return false;
             }
         });
+
+        // VERSION LABEL
+        versionLabel.setColor(Color.GRAY);
+
+        Table bottomLeftTable = new Table();
+        bottomLeftTable.setFillParent(true);
+        bottomLeftTable.left().bottom();
+        bottomLeftTable.add(versionLabel).pad(3);
+        stage.addActor(bottomLeftTable);
+
+        // FUN TEXT LABEL
+
         updateFocus();
     }
 
