@@ -6,7 +6,7 @@ import io.core.level.biome.Biome;
 public class OceanBiome extends Biome
 {
     public OceanBiome() {
-        super(0.3f, 0.0f, 0.4f, 0.05f);
+        super(0.0f, -0.5f, 0.5f, 0.1f);
     }
 
     @Override

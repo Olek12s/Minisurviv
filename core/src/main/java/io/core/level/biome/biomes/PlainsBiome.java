@@ -6,7 +6,7 @@ import io.core.level.biome.Biome;
 public class PlainsBiome extends Biome
 {
     public PlainsBiome() {
-        super(0.4f, 0.0f, 0.2f, 0.05f);
+        super(0.2f, 0.0f, 0.0f, 0.1f);
     }
 
     @Override

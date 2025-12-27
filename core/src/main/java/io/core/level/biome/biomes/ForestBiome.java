@@ -8,7 +8,7 @@ public class ForestBiome extends Biome
 
 
     public ForestBiome() {
-        super(0.12f, -0.10f, -0.45f, 0.05f);
+        super(0.1f, 0.0f, 0.2f, 0.1f);
     }
 
     @Override

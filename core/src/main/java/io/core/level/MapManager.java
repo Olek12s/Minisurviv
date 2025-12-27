@@ -18,6 +18,10 @@ public class MapManager
 
     }
 
+    public void createMap(int seed, int width, int height, int level) { // TODO: finish
+
+    }
+
     private static class Chunk {
 
     }
