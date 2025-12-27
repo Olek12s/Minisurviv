@@ -16,8 +16,14 @@ public class RockyBiome extends Biome
 
     @Override
     public float getGenerationWeight(Noise noise, int x, int y) {
+        double val = Math.abs(noise.getScale64Noise(x, y, 0) - noise.getScale64Noise(x, y, 1));
+        double mval = Math.abs(Math.abs(noise.getScale16Noise(x, y, 0) - noise.getScale16Noise(x, y, 1)) - noise.getScale16Noise(x, y, 2));
 
-        return 2f;
+        // TODO: heuristic for this biome is not perfect, but it works for now...
+        if(val > 0.75 && mval < 0.35) {
+            return 9f;
+        }
+        else return Float.MIN_VALUE;
     }
 
 
