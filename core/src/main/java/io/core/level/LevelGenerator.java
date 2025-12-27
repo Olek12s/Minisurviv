@@ -86,7 +86,8 @@ public class LevelGenerator {
                 gray = Math.max(0, Math.min(255, gray));
 
                 int alpha = 255;
-                int argb = (alpha << 24) | (gray << 16) | (gray << 8) | gray;
+                //int argb = (alpha << 24) | (gray << 16) | (gray << 8) | gray;
+                int argb = 0xFF003000;  // ALPHA RED GREEN BLUE
                 newImage.setRGB(x, y, argb);
             }
         }
