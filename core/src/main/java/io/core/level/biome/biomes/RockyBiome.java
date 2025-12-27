@@ -25,7 +25,4 @@ public class RockyBiome extends Biome
         }
         else return Float.MIN_VALUE;
     }
-
-
-
 }

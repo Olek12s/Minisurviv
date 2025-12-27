@@ -16,15 +16,17 @@ public class Biomes
     public static final Biome ROCKY = new RockyBiome();
     public static final Biome RIVER = new RiverBiome();
     public static final Biome RIVER_EDGE = new RiverEdgeBiome();
+    public static final Biome WINTER = new WinterBiome();
 
     private static HashMap<Biome, Integer> biomesARGB = new HashMap<>() {{
         put(DESERT, 0xFFFFFF64);
         put(FOREST, 0xFF007200);
-        put(OCEAN, 0xFF0088FF);
+        put(OCEAN, 0xFF0033FF);
         put(PLAINS, 0xFF00A900);
         put(ROCKY, 0xFFB4B4B4);
-        put(RIVER, 0xFF0088BB);
-        put(RIVER_EDGE, 0xEEEEEE32);
+        put(RIVER, 0xFF0033CC);
+        put(RIVER_EDGE, 0xFFEEEE00);
+        put(WINTER, 0xFFEEEEEE);
     }};
 
     public static Set<Biome> getAllBiomes() {

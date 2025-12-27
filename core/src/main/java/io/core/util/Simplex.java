@@ -144,6 +144,9 @@ public class Simplex {
     /* Default noise3 */
     public float noise3(double x, double y, double z) { return noise3_ImproveXY(x, y, z); }
 
+    /* Default noise3 */
+    public float noise3D(double x, double y, double z) { return noise3_ImproveXY(x, y, z); }
+
     /**
      * 3D OpenSimplex2 noise, with better visual isotropy in (X, Y).
      * Recommended for 3D terrain and time-varied animations.

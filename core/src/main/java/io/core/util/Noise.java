@@ -4,100 +4,131 @@ import io.core.util.Perlin;
 
 public class Noise
 {
-    private static final int NOISE_LAYER_DIFF = 100;    // changing correlation between perlin layers
-
     private int width, height;  // should match chunk size in typical use case
-    private int layers = 4;
+    private int layers = 10;
     private Perlin perlin;
+    private Simplex simplex;
+
+    public int getLayers() { return layers; }
 
     // same noise generated at different scales
-    private float[][][] noise1;
-    private float[][][] noise2;
-    private float[][][] noise4;
-    private float[][][] noise8;
-    private float[][][] noise16;
-    private float[][][] noise32;
-    private float[][][] noise64;
-    private float[][][] noise128;
-    private float[][][] noise256;
-    private float[][][] noise512;
-    private float[][][] noise1024;
-    private float[][][] noise2048;
-    private float[][][] noise4096;
+//    private double[][][] noise1;
+//    private double[][][] noise2;
+//    private double[][][] noise4;
+//    private double[][][] noise8;
+//    private double[][][] noise16;
+//    private double[][][] noise32;
+//    private double[][][] noise64;
+//    private double[][][] noise128;
+//    private double[][][] noise256;
+//    private double[][][] noise512;
+//    private double[][][] noise1024;
+//    private double[][][] noise2048;
+//    private double[][][] noise4096;
 
-    public Noise(int seed, int width, int height, int octaves, double persistence, double lacunarity, int xOffset, int yOffset, int zOffset) {
+    // Small noise value - high frequency in noise, rough function, more detailed
+    // Large noise value - small frequency in noise, smooth function, less detailed
+
+    private double[] noise1;
+    private double[] noise4;
+    private double[] noise8;
+    private double[] noise16;
+    private double[] noise32;
+    private double[] noise64;
+    private double[] noise128;
+    private double[] noise512;
+    private double[] noise2048;
+    private double[] noise8192;
+
+    private static final int NOISE_LAYER_DIFF = 100;    // changing correlation between perlin layers
+
+    public Noise(int seed, int xOffset, int yOffset, int zOffset, int width, int height) {
         this.width = width;
         this.height = height;
-        this.perlin = new Perlin(seed, octaves, persistence, lacunarity);
+        //this.perlin = new Perlin(seed, 4, 0.5f, 2.0f);
+        this.simplex = new Simplex(seed);
 
-        noise1 = new float[width][height][layers];
-        noise2 = new float[width][height][layers];
-        noise4 = new float[width][height][layers];
-        noise8 = new float[width][height][layers];
-        noise16 = new float[width][height][layers];
-        noise32 = new float[width][height][layers];
-        noise64 = new float[width][height][layers];
-        noise128 = new float[width][height][layers];
-        noise256 = new float[width][height][layers];
-        noise512 = new float[width][height][layers];
-        noise1024 = new float[width][height][layers];
-        noise2048 = new float[width][height][layers];
-        noise4096 = new float[width][height][layers];
+//        noise1 = new double[width][height][layers];
+//        noise2 = new double[width][height][layers];
+//        noise4 = new double[width][height][layers];
+//        noise8 = new double[width][height][layers];
+//        noise16 = new double[width][height][layers];
+//        noise32 = new double[width][height][layers];
+//        noise64 = new double[width][height][layers];
+//        noise128 = new double[width][height][layers];
+//        noise256 = new double[width][height][layers];
+//        noise512 = new double[width][height][layers];
+//        noise1024 = new double[width][height][layers];
+//        noise2048 = new double[width][height][layers];
+//        noise4096 = new double[width][height][layers];
 
-        generateNoise(xOffset, yOffset, zOffset);
-    }
+        noise1 = new double[width * height * layers];
+        noise4 = new double[width * height * layers];
+        noise8 = new double[width * height * layers];
+        noise16 = new double[width * height * layers];
+        noise32 = new double[width * height * layers];
+        noise64 = new double[width * height * layers];
+        noise128 = new double[width * height * layers];
+        noise512 = new double[width * height * layers];
+        noise2048 = new double[width * height * layers];
+        noise8192 = new double[width * height * layers];
 
-    private void generateNoise(int xOffset, int yOffset, int zOffset) {
         for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                for (int l = 0; l < layers; l++) {
-
-                    double z = (zOffset + l) * NOISE_LAYER_DIFF;
-
-                    noise1[x][y][l] = sample(x + xOffset, y + yOffset, z, 1);
-                    noise2[x][y][l] = sample(x + xOffset, y + yOffset, z, 2);
-                    noise4[x][y][l] = sample(x + xOffset, y + yOffset, z, 4);
-                    noise8[x][y][l] = sample(x + xOffset, y + yOffset, z, 8);
-                    noise16[x][y][l] = sample(x + xOffset, y + yOffset, z, 16);
-                    noise32[x][y][l] = sample(x + xOffset, y + yOffset, z, 32);
-                    noise64[x][y][l] = sample(x + xOffset, y + yOffset, z, 64);
-                    noise128[x][y][l] = sample(x + xOffset, y + yOffset, z, 128);
-                    noise256[x][y][l] = sample(x + xOffset, y + yOffset, z, 256);
-                    noise512[x][y][l] = sample(x + xOffset, y + yOffset, z, 512);
-                    noise1024[x][y][l] = sample(x + xOffset, y + yOffset, z, 1024);
-                    noise2048[x][y][l] = sample(x + xOffset, y + yOffset, z, 2048);
-                    noise4096[x][y][l] = sample(x + xOffset, y + yOffset, z, 4096);
+            for(int y = 0; y < height; y++) {
+                for(int z = 0; z < layers; z++) {
+                    noise1[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 1.0, (y + yOffset) / 1.0, (z + zOffset + layers * 0) * NOISE_LAYER_DIFF);
+                    noise4[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 4.0, (y + yOffset) / 4.0, (z + zOffset + layers * 1) * NOISE_LAYER_DIFF);
+                    noise8[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 8.0, (y + yOffset) / 8.0, (z + zOffset + layers * 2) * NOISE_LAYER_DIFF);
+                    noise16[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 16.0, (y + yOffset) / 16.0, (z + zOffset + layers * 3) * NOISE_LAYER_DIFF);
+                    noise32[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 32.0, (y + yOffset) / 32.0, (z + zOffset + layers * 4) * NOISE_LAYER_DIFF);
+                    noise64[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 64.0, (y + yOffset) / 64.0, (z + zOffset + layers * 5) * NOISE_LAYER_DIFF);
+                    noise128[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 128.0, (y + yOffset) / 128.0, (z + zOffset + layers * 6) * NOISE_LAYER_DIFF);
+                    noise512[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 512.0, (y + yOffset) / 512.0, (z + zOffset + layers * 7) * NOISE_LAYER_DIFF);
+                    noise2048[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 2048.0, (y + yOffset) / 2048.0, (z + zOffset + layers * 8) * NOISE_LAYER_DIFF);
+                    noise8192[x + y * width + z * width * height] = simplex.noise3D((x + xOffset) / 8192.0, (y + yOffset) / 8192.0, (z + zOffset + layers * 9) * NOISE_LAYER_DIFF);
                 }
             }
         }
     }
 
-    private float sample(int x, int y, double z, double scale) {
-        return (float) perlin.noise3D(
-                x / scale,
-                y / scale,
-                z
-        );
+    private double sample(double[] values, int x, int y, int layer) {
+        if(layer < 0 || layer >= layers) throw new IndexOutOfBoundsException("Layer out of bounds!");
+        return values[(x & (width - 1)) + (y & (height - 1)) * width + layer * width * height];
     }
 
-    private double octave(float[][][] noiseArray, int x, int y, double... weights) {
-        double sum = 0;
-        for (int l = 0; l < layers; l++) {
-            sum += noiseArray[x][y][l] * weights[l];
-        }
-        return sum;
-    }
+    public double getTileNoise(int x, int y, int layer) { return sample(noise1, x, y, layer); }
+    public double getScale4Noise(int x, int y, int layer) { return sample(noise4, x, y, layer); }
+    public double getScale8Noise(int x, int y, int layer) { return sample(noise8, x, y, layer); }
+    public double getScale16Noise(int x, int y, int layer) { return sample(noise16, x, y, layer); }
+    public double getScale32Noise(int x, int y, int layer) { return sample(noise32, x, y, layer); }
+    public double getScale64Noise(int x, int y, int layer) { return sample(noise64, x, y, layer); }
+    public double getScale128Noise(int x, int y, int layer) { return sample(noise128, x, y, layer); }
+    public double getScale512Noise(int x, int y, int layer) { return sample(noise512, x, y, layer); }
+    public double getScale2048Noise(int x, int y, int layer) { return sample(noise2048, x, y, layer); }
+    public double getScale8192Noise(int x, int y, int layer) { return sample(noise8192, x, y, layer); }
 
+    private double octave(int x, int y, int layer, double scale1, double scale4, double scale8, double scale16, double scale32, double scale64, double scale128, double scale512, double scale2048, double scale8192) {
+        return getTileNoise(x, y, layer) * scale1
+                + getScale4Noise(x, y, layer) * scale4
+                + getScale8Noise(x, y, layer) * scale8
+                + getScale16Noise(x, y, layer) * scale16
+                + getScale32Noise(x, y, layer) * scale32
+                + getScale64Noise(x, y, layer) * scale64
+                + getScale128Noise(x, y, layer) * scale128
+                + getScale512Noise(x, y, layer) * scale512
+                + getScale2048Noise(x, y, layer) * scale2048
+                + getScale8192Noise(x, y, layer) * scale8192;
+    }
 
     public double getTemperature(int x, int y) {
-        return octave(noise512, x, y, 1,0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 0.05, 0.04, 0.01);
+        return octave(x, y, layers - 1, 0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 0.05, 0.04, 0.01);
     }
 
     public double getHeight(int x, int y) {
-        return octave(noise512, x, y,  2,0.005, 0.01, 0.02, 0.01, 0.02, 0.05, 0.1, 0.2, 0.7, 0.2);
+        return octave(x, y, layers - 2, 0.005, 0.01, 0.02, 0.01, 0.02, 0.05, 0.1, 0.2, 0.7, 0.2);
     }
 
     public double getHumidity(int x, int y) {
-        return octave(noise512, x, y, 3,0.02, 0.04, 0.07, 0.1, 0.4, 0.3, 0.1, 0.05, 0.02, 0.01);
+        return octave(x, y, layers - 3, 0.02, 0.04, 0.07, 0.1, 0.4, 0.3, 0.1, 0.05, 0.02, 0.01);
     }
 }

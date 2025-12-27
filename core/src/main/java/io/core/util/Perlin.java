@@ -96,10 +96,8 @@ public class Perlin {
             amplitude *= persistence;
             frequency *= lacunarity;
         }
-
-        return value / max;
+        return (value / max);
     }
-
 
     private double singleNoise(double x, double y, double z) {
         int X = fastFloor(x) & 255;
