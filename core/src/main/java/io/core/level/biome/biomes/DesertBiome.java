@@ -14,4 +14,9 @@ public class DesertBiome extends Biome
     public void generate(MapManager map, int x, int y) {
 
     }
+
+    @Override
+    public int getHexARGBColor() {
+        return 0xFF003000;
+    }
 }

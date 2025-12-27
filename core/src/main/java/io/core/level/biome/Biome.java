@@ -21,4 +21,5 @@ public abstract class Biome
     }
 
     public abstract void generate(MapManager map, int x, int y);
+    public abstract int getHexARGBColor();
 }
