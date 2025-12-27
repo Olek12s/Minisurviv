@@ -8,16 +8,11 @@ public class ForestBiome extends Biome
 
 
     public ForestBiome() {
-        super(-0.3f, 0.0f, 0.3f);
+        super(0.12f, -0.10f, -0.45f, 0.05f);
     }
 
     @Override
     public void generate(MapManager map, int x, int y) {
 
-    }
-
-    @Override
-    public int getHexARGBColor() {
-        return 0xFF003000;
     }
 }

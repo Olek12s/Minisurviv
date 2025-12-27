@@ -1,5 +1,8 @@
 package io.core.level;
 
+import io.core.level.biome.Biome;
+import io.core.level.biome.Biomes;
+import io.core.util.Noise;
 import io.core.util.Perlin;
 
 import java.awt.*;
@@ -11,64 +14,43 @@ import java.io.File;
 
 
 public class LevelGenerator {
-    private static int worldSeed = 0;
-    private static final Random random = new Random(worldSeed);
-    //private final int width, height; // Width and height of the map
+    private static int worldSeed;
+    private static final Random random = new Random();
 
+    // World params
+    private static final int WIDTH = 300;
+    private static final int HEIGHT = 300;
+
+    // Noise params
+    private static final int OCTAVES = 8;
+    private static final double PERSISTENCE = 0.5;
+    private static final double LACUNARITY = 2.0;
 
 
 
 
     public static void main(String[] args) {
-        LevelGenerator.worldSeed = (int)System.currentTimeMillis();
-        int width = 512 * 2;
-        int height = 512 * 2;
-        int octaves = 6;
-        float persistence = 0.5f;
-        float lacunarity = 2.0f;
-        Double[][] values = new Double[width][height];
+        worldSeed = (int) System.currentTimeMillis();
 
-        //Perlin perlin = new Perlin(worldSeed, 2, 2, 2);
-        Perlin perlin = new Perlin(worldSeed, octaves, persistence, lacunarity);
-
-        double scale = 0.01;
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                values[x][y] = perlin.noise2D(x * scale, y * scale);
-            }
-        }
-
-        // DISPLAY THE VALUES AS .PNG IMAGE (DEBUG PURPOSES)
-
-        BufferedImage image = getImage(width, height, values);
-
-        JFrame frame = new JFrame(String.valueOf(worldSeed));
+        JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
         JLabel imageLabel = new JLabel();
-        imageLabel.setIcon(new ImageIcon(image));
-
         JButton nextButton = new JButton("Next");
 
+        // --- INITIAL GENERATION ---
+        BufferedImage image = generateBiomeImage(worldSeed);
+        imageLabel.setIcon(new ImageIcon(image));
+        frame.setTitle(String.valueOf(worldSeed));
+
+        // --- NEXT SEED ---
         nextButton.addActionListener(e -> {
             worldSeed = random.nextInt();
             frame.setTitle(String.valueOf(worldSeed));
-
-            Perlin newPerlin = new Perlin(worldSeed, octaves, persistence, lacunarity);
-
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    values[x][y] = newPerlin.noise2D(x * scale, y * scale);
-                }
-            }
-
-            BufferedImage newImage = getImage(width, height, values);
-
-
-            imageLabel.setIcon(new ImageIcon(newImage));
+            imageLabel.setIcon(new ImageIcon(generateBiomeImage(worldSeed)));
             frame.repaint();
-        }); // end event listener
+        });
 
         frame.add(imageLabel, BorderLayout.CENTER);
         frame.add(nextButton, BorderLayout.SOUTH);
@@ -78,19 +60,33 @@ public class LevelGenerator {
         frame.setVisible(true);
     }
 
-    private static BufferedImage getImage(int width, int height, Double[][] values) {
-        BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                int gray = (int)((values[x][y] + 1) * 0.5 * 255);
-                gray = Math.max(0, Math.min(255, gray));
+    private static BufferedImage generateBiomeImage(int seed) {
 
-                int alpha = 255;
-                //int argb = (alpha << 24) | (gray << 16) | (gray << 8) | gray;
-                int argb = 0xFF003000;  // ALPHA RED GREEN BLUE
-                newImage.setRGB(x, y, argb);
+        Noise noise = new Noise(
+                seed,
+                WIDTH,
+                HEIGHT,
+                OCTAVES,
+                PERSISTENCE,
+                LACUNARITY,
+                0, 0, 0
+        );
+
+        BufferedImage image = new BufferedImage(
+                WIDTH,
+                HEIGHT,
+                BufferedImage.TYPE_INT_ARGB
+        );
+
+        for (int x = 0; x < WIDTH; x++) {
+            for (int y = 0; y < HEIGHT; y++) {
+
+                Biome biome = Biomes.matchBiome(noise, x, y);
+                int color = Biomes.getBiomeColor(biome);
+
+                image.setRGB(x, y, color);
             }
         }
-        return newImage;
+        return image;
     }
 }

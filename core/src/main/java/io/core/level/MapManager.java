@@ -11,10 +11,10 @@ public class MapManager
     public Map<Integer, Map<Integer, Chunk>> chunks;
 
     public Tile getTile(int x, int y) { // TODO: finish
-
+        return null;
     }
 
-    public void setTIle(int x, int y, Tile tile) {  // TODO: finish
+    public void setTile(int x, int y, Tile tile) {  // TODO: finish
 
     }
 

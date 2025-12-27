@@ -3,11 +3,10 @@ package io.core.level.biome.biomes;
 import io.core.level.MapManager;
 import io.core.level.biome.Biome;
 
-public class DesertBiome extends Biome
+public class WinterBiome extends Biome
 {
-
-    public DesertBiome() {
-        super(0.1f, 0.0f, -0.3f, 0.05f);
+    public WinterBiome() {
+        super(-0.75f, 0.0f, -0.5f, 0.05f);
     }
 
     @Override
