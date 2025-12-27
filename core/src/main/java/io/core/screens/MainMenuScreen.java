@@ -88,7 +88,8 @@ public class MainMenuScreen implements Screen
         funTextStyle.font = funTextFont;
         funTextStyle.fontColor = Color.GOLD;
         funTextLabel = new Label(randomFuntext(), funTextStyle);
-        funTextLabel.addAction(forever(sequence(
+        funTextLabel.addAction(forever(
+                sequence(
                 fadeOut(1.4f),
                 fadeIn(1.4f)
         )));
