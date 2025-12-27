@@ -14,16 +14,23 @@ public class Biomes
     public static final Biome OCEAN = new OceanBiome();
     public static final Biome PLAINS = new PlainsBiome();
     public static final Biome ROCKY = new RockyBiome();
-    public static final Biome WINTER = new WinterBiome();
+    public static final Biome RIVER = new RiverBiome();
+    public static final Biome RIVER_EDGE = new RiverEdgeBiome();
 
     private static HashMap<Biome, Integer> biomesARGB = new HashMap<>() {{
-        put(DESERT, 0xFFFFFf64);
+        put(DESERT, 0xFFFFFF64);
         put(FOREST, 0xFF007200);
         put(OCEAN, 0xFF0088FF);
         put(PLAINS, 0xFF00A900);
         put(ROCKY, 0xFFB4B4B4);
-        put(WINTER, 0xFFE3E3E3);
+        put(RIVER, 0xFF0088BB);
+        put(RIVER_EDGE, 0xEEEEEE32);
     }};
+
+    public static Set<Biome> getAllBiomes() {
+        return biomesARGB.keySet();
+    }
+
 
 
     public static int getBiomeColor(Biome biome) {
@@ -41,7 +48,8 @@ public class Biomes
      */
     public static Biome matchBiome(Noise noise, int x, int y) {
         Biome closest = null;
-        float maxWeight = -Float.MAX_VALUE;
+        //float maxWeight = -Float.MAX_VALUE;
+        float maxWeight = Float.NEGATIVE_INFINITY;
         for (Biome biome : biomesARGB.keySet()) {
             float weight = biome.getGenerationWeight(noise, x, y);
             if (weight > maxWeight) {
@@ -51,4 +59,6 @@ public class Biomes
         }
         return closest;
     }
+
+
 }

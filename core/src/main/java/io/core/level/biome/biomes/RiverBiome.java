@@ -3,10 +3,10 @@ package io.core.level.biome.biomes;
 import io.core.level.MapManager;
 import io.core.level.biome.Biome;
 
-public class PlainsBiome extends Biome
+public class RiverBiome extends Biome
 {
-    public PlainsBiome() {
-        super(-0.25f, 0, 0.3f, 1.f);
+    public RiverBiome() {
+        super(0, -0.1f, 0.1f, 0.2f);
     }
 
     @Override

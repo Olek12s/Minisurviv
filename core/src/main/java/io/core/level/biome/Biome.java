@@ -5,10 +5,10 @@ import io.core.util.Noise;
 
 public abstract class Biome
 {
-    private float temperature;  // [-1, 1] Cold - Hot
-    private float height;       // [-1, 1] Deep ocean - high mountains
-    private float humidity;     // [-1, 1] extremely dry - extremely wet
-    private float rarity;       // [-1, 1] very rare - very common
+    private float temperature;
+    private float height;
+    private float humidity;
+    private float rarity;
 
     public Biome(float temperature, float height, float humidity, float rarity) {
         this.temperature = temperature;
@@ -25,8 +25,7 @@ public abstract class Biome
         float x = (float)noise.getTemperature(tx, ty) - temperature;
         float y = (float)noise.getHeight(tx, ty) - height;
         float z = (float)noise.getHumidity(tx, ty) - humidity;
-
-        return - (x*x + y*y + z*z) + rarity;
+        return rarity / (x * x + y * y + z * z);
     }
 
     public abstract void generate(MapManager map, int x, int y);

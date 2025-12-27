@@ -7,7 +7,7 @@ public class DesertBiome extends Biome
 {
 
     public DesertBiome() {
-        super(0.5f, 0.0f, -0.5f, 0.1f);
+        super(0.3f, 0.0f, -0.6f, 1.f);
     }
 
     @Override
