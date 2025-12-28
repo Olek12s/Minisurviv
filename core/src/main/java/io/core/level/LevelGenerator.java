@@ -19,7 +19,8 @@ public class LevelGenerator {
     public static void main(String[] args) {
 
         // worldSeed = (int) System.currentTimeMillis();
-        worldSeed = 750;
+        //worldSeed = 750;
+        worldSeed = 781;
         random.setSeed(worldSeed);
 
         int width = 512;
