@@ -12,7 +12,6 @@ import lombok.Getter;
 public abstract class Minisurviv extends Game
 {
     private AssetManager assetManager;
-    private SpriteBatch spriteBatch;
     private Input input;
     private Updater updater;
     private Renderer renderer;
@@ -43,7 +42,6 @@ public abstract class Minisurviv extends Game
     @Override
     public void create() {
         this.assetManager = new AssetManager();
-        this.spriteBatch = new SpriteBatch();
 
         this.input = new Input();
         this.updater = new Updater();
@@ -110,6 +108,5 @@ public abstract class Minisurviv extends Game
     @Override
     public void dispose() {
         assetManager.dispose();
-        spriteBatch.dispose();
     }
 }

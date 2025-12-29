@@ -50,7 +50,7 @@ public class Renderer {
     }
 
 
-    public static void drawTile(TextureRegion region, int tileX, int tileY) {
-        spriteBatch.draw(region, tileX * TILE_TXT_SIZE, tileY * TILE_TXT_SIZE);
+    public static void drawTile(String tileName, int x, int y) {
+        spriteBatch.draw(TILES_TEXTURE_ATLAS.findRegion(tileName.toLowerCase()), x * TILE_TXT_SIZE, y * TILE_TXT_SIZE);
     }
 }

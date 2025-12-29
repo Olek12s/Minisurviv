@@ -1,20 +1,17 @@
 package io.core.level.tile;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.core.core.Renderer;
 
-public class Tile
+public abstract class Tile
 {
-    private Ground ground;
-    private Feature feature;
+    protected final String name;
 
-    public Tile(String name) {
-
+    protected Tile(String name) {
+        this.name = name;
     }
 
-
-
-
-    public void render(int x, int y) {
-        //Renderer.spriteBatch.draw().render(screen, level, x, y);
+    public void render(int tileX, int tileY) {
+        Renderer.drawTile(name, tileX, tileY);
     }
 }
