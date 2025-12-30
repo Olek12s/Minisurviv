@@ -1,8 +1,7 @@
 package io.core.level.biome.biomes;
 
-import io.core.level.MapManager;
+import io.core.level.Chunk;
 import io.core.level.biome.Biome;
-import io.core.util.Noise;
 
 public class WinterBiome extends Biome
 {
@@ -11,7 +10,7 @@ public class WinterBiome extends Biome
     }
 
     @Override
-    public void generate(MapManager map, int x, int y) {
+    public void generate(Chunk map, int x, int y) {
 
     }
 

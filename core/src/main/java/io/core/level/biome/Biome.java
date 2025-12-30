@@ -1,6 +1,6 @@
 package io.core.level.biome;
 
-import io.core.level.MapManager;
+import io.core.level.Chunk;
 import io.core.util.Noise;
 
 public abstract class Biome
@@ -28,5 +28,5 @@ public abstract class Biome
         return rarity / (x * x + y * y + z * z);
     }
 
-    public abstract void generate(MapManager map, int x, int y);
+    public abstract void generate(Chunk map, int x, int y);
 }

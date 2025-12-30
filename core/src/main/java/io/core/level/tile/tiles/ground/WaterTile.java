@@ -1,11 +1,12 @@
 package io.core.level.tile.tiles.ground;
 
 import io.core.level.tile.GroundTile;
+import io.core.level.tile.TileId;
 
 public class WaterTile extends GroundTile
 {
 
-    public WaterTile(String name) {
-        super(name);
+    public WaterTile(TileId id) {
+        super(id);
     }
 }
