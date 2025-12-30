@@ -198,7 +198,7 @@ public class Level
 
                         if (worldX >= xb0 && worldX <= xb1 &&
                                 worldY >= yb0 && worldY <= yb1) {
-                            tile.render();
+                            tileData.render();
                         }
                     }
                 }
