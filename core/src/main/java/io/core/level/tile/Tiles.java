@@ -17,23 +17,23 @@ This one is tricky. Tile placing system has few rules:
 public class Tiles
 {
     // FOUNDATION LAYER - THERE'S NOTHING DEEPER THAN BEDROCK
-    public static Tile BEDROCK = new BedrockTile("BEDROCK");
+    public static final Tile BEDROCK = new BedrockTile(TileId.BEDROCK);
 
     // GROUND LAYER - there are 2 such layers in 1 tile
-    public static Tile DIRT = new DirtTile("DIRT");
-    public static Tile GRASS = new GrassTile("GRASS");
-    public static Tile SAND = new SandTile("SAND");
-    public static Tile CLAY = new ClayTile("CLAY");
-    public static Tile WATER = new WaterTile("WATER");
-    public static Tile STONE = new StoneTile("STONE");
+    public static final Tile DIRT   = new DirtTile(TileId.DIRT);
+    public static final Tile GRASS  = new GrassTile(TileId.GRASS);
+    public static final Tile SAND   = new SandTile(TileId.SAND);
+    public static final Tile CLAY   = new ClayTile(TileId.CLAY);
+    public static final Tile WATER  = new WaterTile(TileId.WATER);
+    public static final Tile STONE  = new StoneTile(TileId.STONE);
 
 
-    // FEATURE TILES - can connect to all other layers
-    public static Tile DANTELION = new DantelionTile("DANTELION");
-    public static Tile ROSE = new RoseTile("ROSE");
-    public static Tile SNOW = new SnowTile("SNOW");
-    public static Tile CACTUS = new CactusTile("CACTUS");
-    public static Tile TREE = new TreeTile("TREE");
+    // FEATURES
+    public static final Tile DANTELION = new DantelionTile(TileId.DANTELION);
+    public static final Tile ROSE      = new RoseTile(TileId.ROSE);
+    public static final Tile SNOW      = new SnowTile(TileId.SNOW);
+    public static final Tile CACTUS    = new CactusTile(TileId.CACTUS);
+    public static final Tile TREE      = new TreeTile(TileId.TREE);
 
 
 }

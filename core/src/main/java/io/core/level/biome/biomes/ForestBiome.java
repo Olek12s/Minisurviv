@@ -1,6 +1,6 @@
 package io.core.level.biome.biomes;
 
-import io.core.level.MapManager;
+import io.core.level.Chunk;
 import io.core.level.biome.Biome;
 
 public class ForestBiome extends Biome
@@ -12,7 +12,7 @@ public class ForestBiome extends Biome
     }
 
     @Override
-    public void generate(MapManager map, int x, int y) {
+    public void generate(Chunk map, int x, int y) {
 
     }
 }

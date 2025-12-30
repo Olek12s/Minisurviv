@@ -33,9 +33,9 @@ public class Renderer {
     }
 
     private static void loadTileTextures() {
-        assetManager.load("tiles.atlas", TextureAtlas.class);
+        assetManager.load("tileDats.atlas", TextureAtlas.class);
         assetManager.finishLoading();
-        TILES_TEXTURE_ATLAS = assetManager.get("tiles.atlas", TextureAtlas.class);
+        TILES_TEXTURE_ATLAS = assetManager.get("tileDats.atlas", TextureAtlas.class);
     }
 
     /**
@@ -46,12 +46,9 @@ public class Renderer {
     }
 
 
-    private static void renderLevelEntity() {
-        Level currentLevel = Level.getCurrentLevel();
-
-        for (Entity e : currentLevel.getEntities()) {
-            e.render();
-        }
+    private static void renderLevel() {
+        //currentLevel.renderTiles();
+       // currentLevel.renderEntities();
     }
 
     public static void renderTile(String tileName, int x, int y) {

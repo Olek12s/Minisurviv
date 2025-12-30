@@ -2,22 +2,15 @@ package io.core.level;
 
 import io.core.entity.Entity;
 import io.core.entity.Player;
+import io.core.level.tile.TileData;
 
 import java.util.*;
 
 public class Level
 {
-    private static final NavigableMap<Integer, String> levelNames = new TreeMap<>() {{
-        put(-3, "Ruins");
-        put(-2, "Deep Cave");
-        put(-1, "Cave");
-        put(0, "Surface");
-    }};
-
-    private static final Level[] levels = new Level[4];
+    public Chunk[][] chunks;
 
     private int width, height;  // size of the Level map
-    private final int seed;     // seed that was used to generate this level
     private Level parentLevel; // reference to parent level
 
     private Set<Entity> entities = new HashSet<>();         // TODO : change to entity
@@ -25,34 +18,89 @@ public class Level
     private Set<Entity> entitiesToAdd = new HashSet<>();    // TODO : change to entity
     private Set<Entity> entitiesToRemove = new HashSet<>(); // TODO : change to entity
 
+
+    public Level(int width, int height, Level parentLevel) {
+        this.chunks = new Chunk[width/Chunk.CHUNK_SIZE][height/Chunk.CHUNK_SIZE];
+        this.width = width;
+        this.height = height;
+        this.parentLevel = parentLevel;
+    }
+
+    private int toMapX(int worldX) {
+        return worldX + width / 2;
+    }
+
+    private int toMapY(int worldY) {
+        return worldY + height / 2;
+    }
+
+    private boolean inBounds(int mapX, int mapY) {
+        return mapX >= 0 && mapX < width && mapY >= 0 && mapY < height;
+    }
+
+    private int chunkX(int mapX) { return mapX / Chunk.CHUNK_SIZE; }
+    private int tileX(int mapX)  { return mapX % Chunk.CHUNK_SIZE; }
+    private int chunkY(int mapY) { return mapY / Chunk.CHUNK_SIZE; }
+    private int tileY(int mapY)  { return mapY % Chunk.CHUNK_SIZE; }
+
+
     public Set<Entity> getEntities() {
         return entities;
     }
 
-    private static int currentLevel = 0;
 
-    public static Level getCurrentLevel() {
-        int idx = currentLevel - levelNames.firstKey();
+    public TileData getTileData(int x, int y) {
+        int mapX = toMapX(x);
+        int mapY = toMapY(y);
 
-        if (idx < 0 || idx >= levels.length) {
-            throw new IllegalStateException("Invalid level depth: " + currentLevel);
+        if (!inBounds(mapX, mapY)) {
+            return null;
         }
-        return levels[idx];
+
+        Chunk chunk = chunks[chunkX(mapX)][chunkY(mapY)];
+        if (chunk == null) return null;
+
+        return chunk.tileDats[tileX(mapX)][tileY(mapY)];
     }
 
 
-    public static String getLevelName(int depth) {return levelNames.get(depth);}
+    public void setTileData(int x, int y, TileData tileData) {
+        int mapX = toMapX(x);
+        int mapY = toMapY(y);
 
+        if (!inBounds(mapX, mapY)) {
+            throw new IndexOutOfBoundsException(
+                    "Tile outside map: " + x + "," + y
+            );
+        }
 
-    public Level(int width, int height, int seed, Level parentLevel) {
-        this.width = width;
-        this.height = height;
-        this.seed = seed;
-        this.parentLevel = parentLevel;
+        Chunk chunk = chunks[chunkX(mapX)][chunkY(mapY)];
+        if (chunk == null) {
+            chunk = new Chunk();
+            chunks[chunkX(mapX)][chunkY(mapY)] = chunk;
+        }
+
+        chunk.tileDats[tileX(mapX)][tileY(mapY)] = tileData;
     }
 
 
 
+    /*
+    Main render method for level. Here rendering of Level is managed.
+     */
+    public void render() {
 
+        for (Entity e : entities) {
+            e.render();
+        }
+    }
+
+    public void renderTiles() {
+
+    }
+
+    public void renderEntities() {
+
+    }
 
 }

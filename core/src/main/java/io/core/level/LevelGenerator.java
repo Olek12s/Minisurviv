@@ -16,6 +16,7 @@ public class LevelGenerator {
     private static int worldSeed = 0;
     private static final Random random = new Random();
 
+
     public static void main(String[] args) {
 
         // worldSeed = (int) System.currentTimeMillis();
@@ -79,7 +80,7 @@ public class LevelGenerator {
             double percent = (count * 100.0) / total;
 
             System.out.printf(
-                    "%-15s : %6.2f %% (%d tiles)%n",
+                    "%-15s : %6.2f %% (%d tileDats)%n",
                     biome.getClass().getSimpleName(),
                     percent,
                     count
