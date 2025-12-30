@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.core.entity.Entity;
 import io.core.level.Level;
+import io.core.level.LevelsManager;
 
 public class Renderer {
     private static int WORLD_WIDTH = 432;   // 18 * 24
@@ -46,9 +47,12 @@ public class Renderer {
     }
 
 
+    /**
+     * Renders current level content
+     */
     private static void renderLevel() {
-        //currentLevel.renderTiles();
-       // currentLevel.renderEntities();
+        Level currentLevel = LevelsManager.getCurrentLevel();
+        currentLevel.render();
     }
 
     public static void renderTile(String tileName, int x, int y) {

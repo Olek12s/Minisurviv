@@ -13,4 +13,16 @@ public class TileData
         this.x = x;
         this.y = y;
     }
+
+    /**
+     * TileData is made of 3 layers stacked as:
+     * -Ground1
+     * -Ground2
+     * -Feature
+     *
+     * Feature might exist if both ground1 and ground2 are nulls (bedrock is rendered)
+     */
+    public void render() {
+
+    }
 }

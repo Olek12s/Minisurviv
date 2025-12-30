@@ -4,6 +4,9 @@ package io.core.level.tile;
 import io.core.level.tile.tiles.ground.*;
 import io.core.level.tile.tiles.features.*;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 /*
 This one is tricky. Tile placing system has few rules:
 1) First layer of every tile is undestructable bedrock tile. No exception. It is achieved by replacing destroyed ground tile with bedrock.
@@ -16,24 +19,40 @@ This one is tricky. Tile placing system has few rules:
  */
 public class Tiles
 {
-    // FOUNDATION LAYER - THERE'S NOTHING DEEPER THAN BEDROCK
-    public static final Tile BEDROCK = new BedrockTile(TileId.BEDROCK);
+    private static final Map<TileId, Tile> REGISTRY = new EnumMap<>(TileId.class);
 
-    // GROUND LAYER - there are 2 such layers in 1 tile
-    public static final Tile DIRT   = new DirtTile(TileId.DIRT);
-    public static final Tile GRASS  = new GrassTile(TileId.GRASS);
-    public static final Tile SAND   = new SandTile(TileId.SAND);
-    public static final Tile CLAY   = new ClayTile(TileId.CLAY);
-    public static final Tile WATER  = new WaterTile(TileId.WATER);
-    public static final Tile STONE  = new StoneTile(TileId.STONE);
+    static {
+        // FOUNDATION LAYER - THERE'S NOTHING DEEPER THAN BEDROCK
+        register(new BedrockTile(TileId.BEDROCK));
 
-
-    // FEATURES
-    public static final Tile DANTELION = new DantelionTile(TileId.DANTELION);
-    public static final Tile ROSE      = new RoseTile(TileId.ROSE);
-    public static final Tile SNOW      = new SnowTile(TileId.SNOW);
-    public static final Tile CACTUS    = new CactusTile(TileId.CACTUS);
-    public static final Tile TREE      = new TreeTile(TileId.TREE);
+        // GROUND LAYER - there are 2 such layers in 1 tile
+        register(new DirtTile(TileId.DIRT));
+        register(new GrassTile(TileId.GRASS));
+        register(new SandTile(TileId.SAND));
+        register(new ClayTile(TileId.CLAY));
+        register(new WaterTile(TileId.WATER));
+        register(new StoneTile(TileId.STONE));
 
 
+
+        // FEATURES
+        register(new DantelionTile(TileId.DANTELION));
+        register(new RoseTile(TileId.ROSE));
+        register(new SnowTile(TileId.SNOW));
+        register(new CactusTile(TileId.CACTUS));
+        register(new TreeTile(TileId.TREE));
+    }
+
+    private static void register(Tile tile) {
+        REGISTRY.put(tile.id, tile);
+    }
+
+
+    public static Tile getTileFromID(TileId id) {
+        Tile tile = REGISTRY.get(id);
+        if (tile == null) {
+            throw new IllegalArgumentException("Unknown TileId: " + id);
+        }
+        return tile;
+    }
 }
