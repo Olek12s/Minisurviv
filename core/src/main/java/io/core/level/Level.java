@@ -152,11 +152,54 @@ public class Level
      */
     @Deprecated
     public void renderTiles() {
-        for (int i = 0; i < chunks[0].length; i++) {
-            for (int j = 0; j < chunks.length; j++) {
+        for (int i = 0; i < chunks.length; i++) {
+            for (int j = 0; j < chunks[0].length; j++) {
                 for (TileData[] tileDataX : chunks[i][j].tileDats) {
                     for (TileData tileData : tileDataX) {
                         tileData.render();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Renders current level's tiles in stack order defined inside tileData.
+     * Only entities within given box are rendered
+     * @param xb0 - Left
+     * @param yb0 - Top
+     * @param xb1 - Right
+     * @param yb1 - Bottom
+     */
+    @Deprecated
+    public void renderTiles(int xb0, int yb0, int xb1, int yb1) {
+
+        int mapLeft   = toMapX(xb0);
+        int mapRight  = toMapX(xb1);
+        int mapTop    = toMapY(yb0);
+        int mapBottom = toMapY(yb1);
+
+
+        int chunkX0 = chunkX(mapLeft);
+        int chunkX1 = chunkX(mapRight);
+        int chunkY0 = chunkY(mapTop);
+        int chunkY1 = chunkY(mapBottom);
+
+        for (int cx = chunkX0; cx <= chunkX1; cx++) {
+            for (int cy = chunkY0; cy <= chunkY1; cy++) {
+                Chunk chunk = chunks[cx][cy];
+
+                for (int tx = 0; tx < Chunk.CHUNK_SIZE; tx++) {
+                    for (int ty = 0; ty < Chunk.CHUNK_SIZE; ty++) {
+                        TileData tileData = chunk.tileDats[tx][ty];
+
+                        int worldX = cx * Chunk.CHUNK_SIZE + tx - width / 2;
+                        int worldY = cy * Chunk.CHUNK_SIZE + ty - height / 2;
+
+                        if (worldX >= xb0 && worldX <= xb1 &&
+                                worldY >= yb0 && worldY <= yb1) {
+                            tile.render();
+                        }
                     }
                 }
             }
