@@ -1,19 +1,12 @@
 package io.core.core;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.core.entity.Entity;
+import io.core.level.Level;
 
 public class Renderer {
     private static int WORLD_WIDTH = 432;   // 18 * 24
@@ -45,12 +38,23 @@ public class Renderer {
         TILES_TEXTURE_ATLAS = assetManager.get("tiles.atlas", TextureAtlas.class);
     }
 
+    /**
+     * Main rendering method, here every render() method is being called and managed
+     */
     public static void render() {
 
     }
 
 
-    public static void drawTile(String tileName, int x, int y) {
+    private static void renderLevelEntity() {
+        Level currentLevel = Level.getCurrentLevel();
+
+        for (Entity e : currentLevel.getEntities()) {
+            e.render();
+        }
+    }
+
+    public static void renderTile(String tileName, int x, int y) {
         spriteBatch.draw(TILES_TEXTURE_ATLAS.findRegion(tileName.toLowerCase()), x * TILE_TXT_SIZE, y * TILE_TXT_SIZE);
     }
 }

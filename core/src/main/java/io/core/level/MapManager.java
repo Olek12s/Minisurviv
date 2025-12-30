@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class MapManager
 {
-    public static final int CHUNK_SIZE = 64;
+    public static final int CHUNK_SIZE = 8;
 
     public Map<Integer, Map<Integer, Chunk>> chunks;
 
@@ -22,7 +22,8 @@ public class MapManager
 
     }
 
-    private static class Chunk {
 
+    private static class Chunk {
+        Chunk() {}
     }
 }
