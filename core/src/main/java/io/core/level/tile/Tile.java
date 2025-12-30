@@ -1,6 +1,5 @@
 package io.core.level.tile;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.core.core.Renderer;
 
 public abstract class Tile
@@ -12,6 +11,6 @@ public abstract class Tile
     }
 
     public void render(int tileX, int tileY) {
-        Renderer.drawTile(name, tileX, tileY);
+        Renderer.renderTile(name, tileX, tileY);
     }
 }
