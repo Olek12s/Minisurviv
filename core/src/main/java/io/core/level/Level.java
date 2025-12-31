@@ -13,6 +13,7 @@ public class Level
     public Chunk[][] chunks;
 
     private int width, height;  // size of the Level map
+    private int level;
     private Level parentLevel; // reference to parent level
 
     private Set<Entity> entities = new HashSet<>();         // TODO : change to entity
@@ -21,11 +22,12 @@ public class Level
     private Set<Entity> entitiesToRemove = new HashSet<>(); // TODO : change to entity
 
 
-    public Level(int width, int height, Level parentLevel) {
+    public Level(int width, int height, Level parentLevel, int level) {
         this.chunks = new Chunk[width/Chunk.CHUNK_SIZE][height/Chunk.CHUNK_SIZE];
         this.width = width;
         this.height = height;
         this.parentLevel = parentLevel;
+        this.level = level;
     }
 
     private int toMapX(int worldX) {
