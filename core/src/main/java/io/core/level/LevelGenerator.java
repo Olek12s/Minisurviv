@@ -2,6 +2,7 @@ package io.core.level;
 
 import io.core.level.biome.Biome;
 import io.core.level.biome.Biomes;
+import io.core.level.tile.TileData;
 import io.core.util.Noise;
 
 import javax.swing.*;
@@ -16,6 +17,50 @@ public class LevelGenerator {
     private static int worldSeed = 0;
     private static final Random random = new Random();
 
+
+    public static void generateMapLevel(Level level) {
+
+        int chunksX = level.width / Chunk.CHUNK_SIZE;
+        int chunksY = level.height / Chunk.CHUNK_SIZE;
+
+        for (int cx = 0; cx < chunksX; cx++) {
+            for (int cy = 0; cy < chunksY; cy++) {
+
+                Chunk chunk = new Chunk();
+                level.chunks[cx][cy] = chunk;
+
+                // world-space offset of this chunk
+                int chunkWorldX = cx * Chunk.CHUNK_SIZE - level.width / 2;
+                int chunkWorldY = cy * Chunk.CHUNK_SIZE - level.height / 2;
+
+                // Noise LOCAL to this chunk
+                Noise noise = new Noise(
+                        level.seed,
+                        chunkWorldX,
+                        chunkWorldY,
+                        0,
+                        Chunk.CHUNK_SIZE,
+                        Chunk.CHUNK_SIZE
+                );
+
+                // generating biomes and Tile layers
+                for (int tx = 0; tx < Chunk.CHUNK_SIZE; tx++) {
+                    for (int ty = 0; ty < Chunk.CHUNK_SIZE; ty++) {
+
+                        int worldX = chunkWorldX + tx;
+                        int worldY = chunkWorldY + ty;
+
+                        TileData tileData = new TileData(worldX, worldY);
+
+                        Biome biome = Biomes.matchBiome(noise, worldX, worldY);
+                        biome.generate(chunk, tx, ty);
+
+                        chunk.tileDats[tx][ty] = tileData;
+                    }
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) {
 

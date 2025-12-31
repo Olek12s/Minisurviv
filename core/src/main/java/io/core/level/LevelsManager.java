@@ -30,7 +30,8 @@ public class LevelsManager
                     worldSize,
                     worldSize,
                     parent,   // parentLevel
-                    lvl
+                    lvl,
+                    seed
             );
 
             parent = levels[index];

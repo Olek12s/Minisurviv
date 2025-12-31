@@ -1,5 +1,6 @@
 package io.core.level.tile;
 
+import io.core.level.biome.Biome;
 import io.core.level.tile.tiles.ground.BedrockTile;
 import io.core.level.tile.tiles.ground.WaterTile;
 
@@ -8,6 +9,7 @@ public class TileData
     public final int x;
     public final int y;
 
+    private Biome biome;
     private GroundTile ground1;
     private GroundTile ground2;
     private FeatureTile feature;

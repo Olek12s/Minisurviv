@@ -12,9 +12,10 @@ public class Level
 {
     public Chunk[][] chunks;
 
-    private int width, height;  // size of the Level map
-    private int level;
-    private Level parentLevel; // reference to parent level
+    protected int width, height;  // size of the Level map
+    protected int level;
+    protected Level parentLevel; // reference to parent level
+    protected int seed;
 
     private Set<Entity> entities = new HashSet<>();         // TODO : change to entity
     private Set<Player> players = new HashSet<>();          // TODO : change to player
@@ -22,12 +23,19 @@ public class Level
     private Set<Entity> entitiesToRemove = new HashSet<>(); // TODO : change to entity
 
 
-    public Level(int width, int height, Level parentLevel, int level) {
+
+    public Level(int width, int height, Level parentLevel, int level, int seed) {
         this.chunks = new Chunk[width/Chunk.CHUNK_SIZE][height/Chunk.CHUNK_SIZE];
         this.width = width;
         this.height = height;
         this.parentLevel = parentLevel;
         this.level = level;
+        this.seed = seed;
+
+        LevelGenerator.generateMapLevel(this);
+
+
+
     }
 
     private int toMapX(int worldX) {
