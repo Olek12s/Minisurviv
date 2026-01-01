@@ -1,13 +1,17 @@
 package io.core.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.core.core.Minisurviv;
 
 public class GameScreen implements Screen {
-
+    private final Minisurviv game;
+    private final Stage hudStage;
     
-    protected GameScreen(Viewport viewport) {
-
+    protected GameScreen(Minisurviv game) {
+        this.game = game;
+        this.hudStage = new Stage(game.getViewport());
     }
 
     @Override
