@@ -1,6 +1,7 @@
 package io.core.level;
 
 import io.core.entity.Player;
+import io.core.util.FloatConsumer;
 
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -14,44 +15,52 @@ public class LevelsManager
 
     private static int currentLevel = 0;
 
-    public static void setCurrentLevel(int level) {
-        if (!levelNames.containsKey(level)) throw new IllegalArgumentException("Level does not exist");
-        LevelsManager.currentLevel = level;
+
+    public LevelsManager(int seed, int worldSize) {
+        this.seed = seed;
+        this.worldSize = worldSize;
+        this.player = new Player();
     }
 
-    public LevelsManager() {
-
-        // this.worldSize = settingsScreen.getWorldSize();
-        // this.seed = settingsScreen.getSeed);
-        this.seed = 750;
-        this.player = new Player();
-
-
+    /**
+     * Generates all levels in order with parent references while reporting current progress.
+     */
+    public void generateAllLevels(FloatConsumer overallProgress, FloatConsumer stepProgress, FloatConsumer stepNameProgress)
+    {
         Level parent = null;
         int index = 0;
-        // Levels are loaded in reverse order for proper Parent References
-        for (int lvl : levelNames.descendingKeySet()) {
-            levels[index] = new Level(
-                    worldSize,
-                    worldSize,
-                    parent,   // parentLevel
-                    lvl,
-                    seed
-            );
+        int totalLevels = levelNames.size();
 
-            parent = levels[index];
+        for (int depth : levelNames.descendingKeySet()) {
+            String name = levelNames.get(depth);
+            Level lvl = new Level(worldSize, worldSize, parent, depth, seed);
+            levels[index] = lvl;
+
+            int finalIndex = index;
+            lvl.generate(p -> {
+                float overall = (finalIndex + p) / totalLevels;
+                overallProgress.accept(overall);
+                stepProgress.accept(p);
+                stepNameProgress.accept(finalIndex / (float) totalLevels);
+            });
+
+            parent = lvl;
             index++;
         }
     }
 
     public static Level getCurrentLevel() {
-        int idx = currentLevel - levelNames.firstKey();
-
-        if (idx < 0 || idx >= levels.length) {
-            throw new IllegalStateException("Invalid level depth: " + currentLevel);
-        }
-        return levels[idx];
+        return levels[currentLevel];
     }
+
+    public static void setCurrentLevel(int level) {
+        if (!levelNames.containsKey(level)) throw new IllegalArgumentException("Level does not exist");
+        LevelsManager.currentLevel = level;
+    }
+
+    public static String getLevelName(int depth) { return levelNames.get(depth); }
+
+    public Level[] getLevels() { return levels; }
 
     private static final NavigableMap<Integer, String> levelNames = new TreeMap<>() {{
         put(-3, "Ruins");
@@ -59,6 +68,4 @@ public class LevelsManager
         put(-1, "Cave");
         put(0, "Surface");
     }};
-
-    public static String getLevelName(int depth) {return levelNames.get(depth);}
 }

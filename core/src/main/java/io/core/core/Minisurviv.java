@@ -36,7 +36,7 @@ public abstract class Minisurviv extends Game
     // when was last tick call in (nano secs)
     long lastTickTime = 0;
 
-    public static final String VERSION = "v0.0.2 Pre-alpha";
+    public static final String VERSION = "v0.0.9 Pre-alpha";
 
 
     @Override

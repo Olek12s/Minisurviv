@@ -117,7 +117,7 @@ public class MainMenuScreen implements Screen
         startnewWorldButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("[Main Menu] New World");
-                game.setScreen(new LoadingScreen(game, LoadingScreen.Mode.NEW_WORLD));
+                game.setScreen(new NewWorldOptionsScreen(game));
             }
         });
 

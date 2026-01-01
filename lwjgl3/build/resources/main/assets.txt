@@ -4,3 +4,17 @@ fonts/minecrafty/Italic.otf
 fonts/minecrafty/Regular.otf
 fonts/minecrafty/info.txt
 logo.png
+textures/tiles/bedrock.png
+textures/tiles/cactus.png
+textures/tiles/clay.png
+textures/tiles/dandelion.png
+textures/tiles/dirt.png
+textures/tiles/grass.png
+textures/tiles/rock.png
+textures/tiles/rose.png
+textures/tiles/sand.png
+textures/tiles/snow.png
+textures/tiles/tree.png
+textures/tiles/water.png
+tiles.atlas
+tiles.png
