@@ -55,6 +55,7 @@ public abstract class Minisurviv extends Game
     }
 
 
+
     /**
      * Main loop method. Main-loop IUR pipeline stands as:
      * 1) calling user I/O operations   - dependent on {@link #TARGET_TPS}

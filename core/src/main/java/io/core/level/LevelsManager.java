@@ -14,6 +14,11 @@ public class LevelsManager
 
     private static int currentLevel = 0;
 
+    public static void setCurrentLevel(int level) {
+        if (!levelNames.containsKey(level)) throw new IllegalArgumentException("Level does not exist");
+        LevelsManager.currentLevel = level;
+    }
+
     public LevelsManager() {
 
         // this.worldSize = settingsScreen.getWorldSize();

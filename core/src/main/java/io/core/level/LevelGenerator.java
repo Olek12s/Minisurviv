@@ -3,6 +3,7 @@ package io.core.level;
 import io.core.level.biome.Biome;
 import io.core.level.biome.Biomes;
 import io.core.level.tile.TileData;
+import io.core.util.FloatConsumer;
 import io.core.util.Noise;
 
 import javax.swing.*;
@@ -18,10 +19,13 @@ public class LevelGenerator {
     private static final Random random = new Random();
 
 
-    public static void generateMapLevel(Level level) {
+    public static void generateMapLevel(Level level, FloatConsumer progress) {
 
         int chunksX = level.width / Chunk.CHUNK_SIZE;
         int chunksY = level.height / Chunk.CHUNK_SIZE;
+
+        int totalChunks = chunksX * chunksY;
+        int done = 0;
 
         for (int cx = 0; cx < chunksX; cx++) {
             for (int cy = 0; cy < chunksY; cy++) {
@@ -58,6 +62,8 @@ public class LevelGenerator {
                         chunk.tileDats[tx][ty] = tileData;
                     }
                 }
+                done++;
+                progress.accept(done / (float) totalChunks);
             }
         }
     }

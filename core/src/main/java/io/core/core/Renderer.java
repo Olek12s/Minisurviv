@@ -13,7 +13,7 @@ public class Renderer {
     private static int WORLD_WIDTH = 432;   // 18 * 24
     private static int WORLD_HEIGHT = 288;  // 12 * 24
 
-    private static int TILE_TXT_SIZE = 16;
+    private static int TILE_TXT_SIZE = 24;
 
     public static SpriteBatch spriteBatch;
     private static OrthographicCamera camera;

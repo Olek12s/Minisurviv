@@ -5,6 +5,7 @@ import io.core.entity.Entity;
 import io.core.entity.Player;
 import io.core.level.tile.TileData;
 import io.core.level.tile.Tiles;
+import io.core.util.FloatConsumer;
 
 import java.util.*;
 
@@ -22,7 +23,7 @@ public class Level
     private Set<Entity> entitiesToAdd = new HashSet<>();    // TODO : change to entity
     private Set<Entity> entitiesToRemove = new HashSet<>(); // TODO : change to entity
 
-
+    public int getLevelNumber() {return level;}
 
     public Level(int width, int height, Level parentLevel, int level, int seed) {
         this.chunks = new Chunk[width/Chunk.CHUNK_SIZE][height/Chunk.CHUNK_SIZE];
@@ -31,12 +32,12 @@ public class Level
         this.parentLevel = parentLevel;
         this.level = level;
         this.seed = seed;
-
-        LevelGenerator.generateMapLevel(this);
-
-
-
     }
+
+    public void generate(FloatConsumer progress) {
+        LevelGenerator.generateMapLevel(this, progress);
+    }
+
 
     private int toMapX(int worldX) {
         return worldX + width / 2;
