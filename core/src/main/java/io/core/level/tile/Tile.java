@@ -1,9 +1,11 @@
 package io.core.level.tile;
 
+import io.core.Tickable;
 import io.core.core.Renderer;
+import io.core.level.Level;
 import io.core.level.tile.tiles.features.TreeTile;
 
-public abstract class Tile
+public abstract class Tile implements Tickable
 {
     protected final TileId id;
 
@@ -16,6 +18,7 @@ public abstract class Tile
     protected Tile(TileId id) {
         this.id = id;
     }
+
 
 
     public void render(int tileX, int tileY) {
