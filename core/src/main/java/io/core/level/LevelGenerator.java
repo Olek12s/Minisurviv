@@ -47,6 +47,8 @@ public class LevelGenerator {
                         Chunk.CHUNK_SIZE
                 );
 
+                chunk.setNoise(noise);
+
                 // generating biomes and Tile layers
                 for (int tx = 0; tx < Chunk.CHUNK_SIZE; tx++) {
                     for (int ty = 0; ty < Chunk.CHUNK_SIZE; ty++) {
@@ -54,16 +56,18 @@ public class LevelGenerator {
                         int worldX = chunkWorldX + tx;
                         int worldY = chunkWorldY + ty;
 
-                        TileData tileData = new TileData(worldX, worldY);
-
                         Biome biome = Biomes.matchBiome(noise, worldX, worldY);
+
+                        //TileData tileData = new TileData(Biomes.getTileBiomeFromBiome(biome), worldX, worldY);
+
                         biome.generate(chunk, tx, ty);
 
-                        chunk.tileDats[tx][ty] = tileData;
+                        //chunk.tileDats[tx][ty] = tileData;
                     }
                 }
                 done++;
                 progress.accept(done / (float) totalChunks);
+                chunk.setNoise(noise);  // IMPORTANT! clear noise from the chunk after generating
 
                 if (done == totalChunks) {
                     System.out.println("[World Generator] Generated level: " + LevelsManager.getLevelName(level.getLevelNumber()));

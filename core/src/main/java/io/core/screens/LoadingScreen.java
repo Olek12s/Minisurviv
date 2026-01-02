@@ -54,7 +54,7 @@ public class LoadingScreen implements Screen {
     }
 
     private void generateWorld() {
-        LevelsManager manager = new LevelsManager(worldName, worldSize, worldSeed);
+        LevelsManager.init(worldName, worldSize, worldSeed);
 
         FloatConsumer overall = p -> Gdx.app.postRunnable(() ->
                 overallLabel.setText(String.format("Overall Progress: %d%%", (int)(p * 100)))
@@ -66,7 +66,7 @@ public class LoadingScreen implements Screen {
 
         FloatConsumer stepName = p -> {};
 
-        manager.generateAllLevels(overall, step, stepName);
+        LevelsManager.generateAllLevels(overall, step, stepName);
         LevelsManager.setCurrentLevel(0);
 
         finished = true;

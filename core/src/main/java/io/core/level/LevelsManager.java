@@ -10,25 +10,22 @@ public class LevelsManager
 {
     private static final Level[] levels = new Level[4];
 
-    private String worldName;
-    private int worldSize;
-    private int worldSeed;
+    private static String worldName;
+    private static int worldSize;
+    private static int worldSeed;
 
     private static int currentLevel = 0;
-    private Player player;
 
-    public LevelsManager(String worldName, int worldSize, int worldSeed) {
-        this.worldName = worldName;
-        this.worldSize = worldSize;
-        this.worldSeed = worldSeed;
-
-        this.player = new Player();
+    public static void init(String worldName, int worldSize, int worldSeed) {
+        LevelsManager.worldName = worldName;
+        LevelsManager.worldSize = worldSize;
+        LevelsManager.worldSeed = worldSeed;
     }
 
     /**
      * Generates all levels in order with parent references while reporting current progress.
      */
-    public void generateAllLevels(FloatConsumer overallProgress, FloatConsumer stepProgress, FloatConsumer stepNameProgress)
+    public static void generateAllLevels(FloatConsumer overallProgress, FloatConsumer stepProgress, FloatConsumer stepNameProgress)
     {
         Level parent = null;
         int index = 0;
@@ -63,7 +60,7 @@ public class LevelsManager
 
     public static String getLevelName(int depth) { return levelNames.get(depth); }
 
-    public Level[] getLevels() { return levels; }
+    public static Level[] getLevels() { return levels; }
 
     private static final NavigableMap<Integer, String> levelNames = new TreeMap<>() {{
         put(-3, "Ruins");

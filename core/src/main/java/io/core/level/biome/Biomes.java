@@ -18,7 +18,7 @@ public class Biomes
     public static final Biome RIVER_EDGE = new RiverEdgeBiome();
     public static final Biome WINTER = new WinterBiome();
 
-    private static HashMap<Biome, Integer> biomesARGB = new HashMap<>() {{
+    public static HashMap<Biome, Integer> biomesARGB = new HashMap<>() {{
         put(DESERT, 0xFFFFFF64);
         put(FOREST, 0xFF007200);
         put(OCEAN, 0xFF0033FF);
@@ -28,6 +28,30 @@ public class Biomes
         put(RIVER_EDGE, 0xFFEEEE00);
         put(WINTER, 0xFFEEEEEE);
     }};
+
+    public enum TileBiome {
+        DESERT,
+        FOREST,
+        OCEAN,
+        PLAINS,
+        ROCKY,
+        RIVER,
+        RIVER_EDGE,
+        WINTER
+    }
+
+    //TODO: TIDY IT
+    public static TileBiome getTileBiomeFromBiome(Biome biome) {
+        if (biome instanceof DesertBiome) return TileBiome.DESERT;
+        if (biome instanceof ForestBiome) return TileBiome.FOREST;
+        if (biome instanceof OceanBiome) return TileBiome.OCEAN;
+        if (biome instanceof PlainsBiome) return TileBiome.PLAINS;
+        if (biome instanceof RockyBiome) return TileBiome.ROCKY;
+        if (biome instanceof RiverBiome) return TileBiome.RIVER;
+        if (biome instanceof RiverEdgeBiome) return TileBiome.RIVER_EDGE;
+        if (biome instanceof WinterBiome) return TileBiome.WINTER;
+        return null;
+    }
 
     public static Set<Biome> getAllBiomes() {
         return biomesARGB.keySet();

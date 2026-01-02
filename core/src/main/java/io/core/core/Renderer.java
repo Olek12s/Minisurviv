@@ -21,6 +21,8 @@ public class Renderer {
     private static final AssetManager assetManager = new AssetManager();
     private static TextureAtlas TILES_TEXTURE_ATLAS;
 
+    public static boolean renderGame = false;
+
     public static void init(OrthographicCamera camera, Viewport viewport) {
         Renderer.spriteBatch = new SpriteBatch();
         Renderer.camera = camera;
@@ -43,14 +45,17 @@ public class Renderer {
      * Main rendering method, here every render() method is being called and managed
      */
     public static void render() {
-
+        if (renderGame) {
+            renderLevel();
+            //renderGUI();
+        }
     }
 
 
     /**
      * Renders current level content
      */
-    private static void renderLevel() {
+    public static void renderLevel() {
         Level currentLevel = LevelsManager.getCurrentLevel();
         currentLevel.render();
     }
