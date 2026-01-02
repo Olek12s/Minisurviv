@@ -64,6 +64,10 @@ public class LevelGenerator {
                 }
                 done++;
                 progress.accept(done / (float) totalChunks);
+
+                if (done == totalChunks) {
+                    System.out.println("[World Generator] Generated level: " + LevelsManager.getLevelName(level.getLevelNumber()));
+                }
             }
         }
     }

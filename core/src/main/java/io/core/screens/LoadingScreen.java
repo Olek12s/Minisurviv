@@ -18,10 +18,17 @@ public class LoadingScreen implements Screen {
     private Label overallLabel;
     private Label stepLabel;
 
+    private String worldName;
+    private int worldSize;
+    private int worldSeed;
+
     private boolean finished = false;
 
-    public LoadingScreen(Minisurviv game) {
+    public LoadingScreen(Minisurviv game, String worldName, int worldSize, int worldSeed) {
         this.game = game;
+        this.worldName = worldName;
+        this.worldSize = worldSize;
+        this.worldSeed = worldSeed;
     }
 
     @Override
@@ -47,7 +54,7 @@ public class LoadingScreen implements Screen {
     }
 
     private void generateWorld() {
-        LevelsManager manager = new LevelsManager(750, 512);    // TODO : pass params from worldoptions
+        LevelsManager manager = new LevelsManager(worldName, worldSize, worldSeed);
 
         FloatConsumer overall = p -> Gdx.app.postRunnable(() ->
                 overallLabel.setText(String.format("Overall Progress: %d%%", (int)(p * 100)))
@@ -74,6 +81,10 @@ public class LoadingScreen implements Screen {
 
         if (finished) {
             System.out.println("[Main Menu] generating world finished");
+            System.out.println("[Main Menu] world params: ");
+            System.out.println("[P] Name: " + worldName);
+            System.out.println("[P] Size: " + worldSize);
+            System.out.println("[P] Seed: " + worldSeed);
             game.setScreen(new GameScreen(game));
         }
     }

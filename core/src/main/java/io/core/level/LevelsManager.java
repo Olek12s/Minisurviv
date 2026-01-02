@@ -8,17 +8,20 @@ import java.util.TreeMap;
 
 public class LevelsManager
 {
-    private final int seed;     // seed that is used to generate levels
-    private int worldSize = 256;    // TODO: 256 is temporary. worldSize shall be loadedfrom settings or loaded file
     private static final Level[] levels = new Level[4];
-    private Player player;
+
+    private String worldName;
+    private int worldSize;
+    private int worldSeed;
 
     private static int currentLevel = 0;
+    private Player player;
 
-
-    public LevelsManager(int seed, int worldSize) {
-        this.seed = seed;
+    public LevelsManager(String worldName, int worldSize, int worldSeed) {
+        this.worldName = worldName;
         this.worldSize = worldSize;
+        this.worldSeed = worldSeed;
+
         this.player = new Player();
     }
 
@@ -33,7 +36,7 @@ public class LevelsManager
 
         for (int depth : levelNames.descendingKeySet()) {
             String name = levelNames.get(depth);
-            Level lvl = new Level(worldSize, worldSize, parent, depth, seed);
+            Level lvl = new Level(worldSize, worldSize, parent, depth, worldSeed);
             levels[index] = lvl;
 
             int finalIndex = index;

@@ -16,6 +16,9 @@ import io.core.core.Minisurviv;
 
 import java.util.Random;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
+
 public class NewWorldOptionsScreen implements Screen {
 
     private final Minisurviv game;
@@ -26,16 +29,18 @@ public class NewWorldOptionsScreen implements Screen {
     private Label worldSeedLabel;
     private Label worldSizeLabel;
     private Label createWorldLabel;
-    private Actor[] labelActors;
+    private Label[] labelActors;
 
 
-    private String worldName;
+    private String worldNameText = "";
     private int seed;
-    private int worldSize = 256;    // default value
+    private String seedText = "";
 
     private int focusIndex = 0;
 
+    private int worldSizeIndex = 1;
     private final int[] allowedSizes = {128, 256, 512, 1024, 2048};
+    private int worldSize = allowedSizes[worldSizeIndex];
 
     public NewWorldOptionsScreen(Minisurviv game) {
         this.game = game;
@@ -63,7 +68,7 @@ public class NewWorldOptionsScreen implements Screen {
         worldSeedLabel = new Label("Seed: ", labelStyle);
         createWorldLabel = new Label("Create World", labelStyle);
 
-        labelActors = new Actor[4];
+        labelActors = new Label[4];
         labelActors[0] = worldNameLabel;
         labelActors[1] = worldSizeLabel;
         labelActors[2] = worldSeedLabel;
@@ -96,19 +101,45 @@ public class NewWorldOptionsScreen implements Screen {
 
                 // CHANGE SCREEN TO MAIN MENU
                 if (keycode == Input.Keys.ESCAPE) {
-                 //   game.setScreen(new MainMenuScreen(game));
+                    game.setScreen(new MainMenuScreen(game));
                     return true;
                 }
 
                 // DOWN
                 if (keycode == Input.Keys.DOWN) {
                     focusIndex = (focusIndex + 1) % labelActors.length;
+                    updateFocus();
                     return true;
                 }
 
                 // UP
                 if (keycode == Input.Keys.UP) {
                     focusIndex = (focusIndex - 1 + labelActors.length) % labelActors.length;
+                    updateFocus();
+                    return true;
+                }
+
+                // LEFT
+                if (keycode == Input.Keys.LEFT) {
+                    if (focusIndex == LabelIndices.WORLD_SIZE.index) {
+                        if (worldSizeIndex > 0) {
+                            worldSizeIndex--;
+
+                            updateFocus();
+                        }
+                    }
+                    return true;
+                }
+
+                // RIGHT
+                if (keycode == Input.Keys.RIGHT) {
+                    if (focusIndex == LabelIndices.WORLD_SIZE.index) {
+                        if (worldSizeIndex < allowedSizes.length - 1) {
+                            worldSizeIndex++;
+
+                            updateFocus();
+                        }
+                    }
                     return true;
                 }
 
@@ -116,12 +147,110 @@ public class NewWorldOptionsScreen implements Screen {
                 if ((keycode == Input.Keys.ENTER || keycode == Input.Keys.SPACE)
                         && LabelIndices.fromIndex(focusIndex) == LabelIndices.WORLD_GENERATE) {
 
+                    String finalWorldName = worldNameText.trim();
+                    if (finalWorldName.isEmpty()) return false;
+
+                    // if seed empty - generate random seed
+                    int finalSeed;
+                    if (seedText.isEmpty() || seedText.equals("-")) {
+                        finalSeed = new Random().nextInt();
+                    } else {
+                        try {
+                            finalSeed = Integer.parseInt(seedText);
+                        } catch (NumberFormatException e) {
+                            finalSeed = new Random().nextInt();
+                        }
+                    }
+
+                    game.setScreen(new LoadingScreen(
+                            game,
+                            finalWorldName,
+                            worldSize,
+                            finalSeed
+                    ));
                     return true;
                 }
 
                 return false;
             }
+
+            // KeyTyped for both seed & world name
+            @Override
+            public boolean keyTyped(InputEvent event, char character) {
+
+                if (character == '\r' || character == '\n') return true;
+
+                // BACKSPACE
+                if (character == '\b') {
+                    if (focusIndex == LabelIndices.WORLD_NAME.index && worldNameText.length() > 0) {
+                        worldNameText = worldNameText.substring(0, worldNameText.length() - 1);
+                    }
+
+                    if (focusIndex == LabelIndices.WORLD_SEED.index && seedText.length() > 0) {
+                        seedText = seedText.substring(0, seedText.length() - 1);
+                    }
+
+                    updateFocus();
+                    return true;
+                }
+
+                if (focusIndex == LabelIndices.WORLD_NAME.index) {
+                    if (worldNameText.length() < 32 && character >= 32) {
+                        worldNameText += character;
+                    }
+                }
+
+                if (focusIndex == LabelIndices.WORLD_SEED.index) {
+                    if (Character.isDigit(character) || character == '-') {
+                        seedText += character;
+                    }
+                }
+
+                updateFocus();
+                return true;
+            }
         });
+        updateFocus();
+    }   // show()
+
+    private void updateFocus() {
+
+
+        worldSize = allowedSizes[worldSizeIndex];
+        worldSizeLabel.setText("Size: " + worldSize);
+
+        for (int i = 0; i < labelActors.length; i++) {
+
+            labelActors[i].clearActions();
+            labelActors[i].getColor().a = 1f;
+
+            String baseText;
+
+            if (i == LabelIndices.WORLD_NAME.index) {
+                baseText = "Name: " + worldNameText;
+            }
+            else if (i == LabelIndices.WORLD_SIZE.index) {
+                baseText = "Size: " + worldSize;
+            }
+            else if (i == LabelIndices.WORLD_SEED.index) {
+                baseText = "Seed: " + seedText;
+            }
+            else {
+                baseText = "Create World";
+            }
+
+            if (i == focusIndex) {
+                labelActors[i].setText("> " + baseText + " <");
+                stage.setKeyboardFocus(labelActors[i]);
+                labelActors[i].addAction(forever(sequence(
+                        fadeOut(0.5f),
+                        fadeIn(0.5f)
+                )));
+
+            } else {
+                labelActors[i].setText(baseText);
+            }
+        }
     }
 
     @Override
