@@ -32,9 +32,10 @@ public class DesertBiome extends Biome
         }
         else {
             map.setTile(x, y, TileId.SAND, FloorType.GROUND_SHALLOW);
-        }
-        if(noise.getScale8Noise(x, y, 0) < -0.25 && noise.getTileNoise(x, y, 1) < -0.4) {
-            map.setTile(x, y, TileId.CACTUS, FloorType.FEATURE);
+
+            if(noise.getScale8Noise(x, y, 0) < -0.25 && noise.getTileNoise(x, y, 1) < -0.4) {
+                map.setTile(x, y, TileId.CACTUS, FloorType.FEATURE);
+            }
         }
     }
 }
