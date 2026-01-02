@@ -28,8 +28,8 @@ public class Chunk
     public void setTile(int x, int y, TileId tileId, FloorType floorType) {
         switch (floorType) {
             case FEATURE -> tileDats[x][y].setFeature(tileId);
-            case GROUND_SHALLOW -> tileDats[x][y].setGround1(tileId);
-            case GROUND_DEEP -> tileDats[x][y].setGround2(tileId);
+            case GROUND_SHALLOW -> tileDats[x][y].setGroundShallow(tileId);
+            case GROUND_DEEP -> tileDats[x][y].setGroundDeep(tileId);
         }
     }
 }

@@ -2,6 +2,7 @@ package io.core.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -49,7 +50,7 @@ public abstract class Minisurviv extends Game
         this.viewport = new FitViewport(18*24, 12*24);
 
         setScreen(new MainMenuScreen(this));
-
+        Renderer.init(viewport);
 
         lastSecondTime = System.currentTimeMillis();
     }

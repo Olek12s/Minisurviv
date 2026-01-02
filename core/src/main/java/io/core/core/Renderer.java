@@ -23,22 +23,22 @@ public class Renderer {
 
     public static boolean renderGame = false;
 
-    public static void init(OrthographicCamera camera, Viewport viewport) {
+    public static void init(Viewport viewport) {
         Renderer.spriteBatch = new SpriteBatch();
-        Renderer.camera = camera;
+
+        Renderer.camera = (OrthographicCamera) viewport.getCamera();
+        Renderer.camera.setToOrtho(false);
+        camera.update();
+
+        spriteBatch.setProjectionMatrix(camera.combined);
 
         loadTileTextures();
-
-
-        camera.setToOrtho(true);   // (0,0) coordinate is at top left !!!
-        viewport.setCamera(camera);
-        viewport.getCamera();
     }
 
     private static void loadTileTextures() {
-        assetManager.load("tileDats.atlas", TextureAtlas.class);
+        assetManager.load("tiles.atlas", TextureAtlas.class);
         assetManager.finishLoading();
-        TILES_TEXTURE_ATLAS = assetManager.get("tileDats.atlas", TextureAtlas.class);
+        TILES_TEXTURE_ATLAS = assetManager.get("tiles.atlas", TextureAtlas.class);
     }
 
     /**
@@ -46,8 +46,10 @@ public class Renderer {
      */
     public static void render() {
         if (renderGame) {
+            spriteBatch.begin();
             renderLevel();
             //renderGUI();
+            spriteBatch.end();
         }
     }
 

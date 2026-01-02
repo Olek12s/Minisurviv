@@ -10,10 +10,10 @@ textures/tiles/clay.png
 textures/tiles/dandelion.png
 textures/tiles/dirt.png
 textures/tiles/grass.png
-textures/tiles/rock.png
 textures/tiles/rose.png
 textures/tiles/sand.png
 textures/tiles/snow.png
+textures/tiles/stone.png
 textures/tiles/tree.png
 textures/tiles/water.png
 tiles.atlas

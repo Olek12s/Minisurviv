@@ -36,7 +36,7 @@ public class Tiles
 
 
         // FEATURES
-        register(new DantelionTile(TileId.DANTELION));
+        register(new DantelionTile(TileId.DANDELION));
         register(new RoseTile(TileId.ROSE));
         register(new SnowTile(TileId.SNOW));
         register(new CactusTile(TileId.CACTUS));

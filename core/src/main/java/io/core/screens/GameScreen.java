@@ -31,8 +31,6 @@ public class GameScreen implements Screen {
 
         hudStage.act(dt);
         hudStage.draw();
-
-        Renderer.renderLevel();
     }
 
     @Override

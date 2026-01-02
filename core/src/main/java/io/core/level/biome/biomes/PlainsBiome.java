@@ -33,7 +33,7 @@ public class PlainsBiome extends Biome
                 map.setTile(x, y, TileId.TREE, FloorType.FEATURE);
             }
             if (noise.getScale32Noise(x, y, 2) + noise.getScale8Noise(x, y, 0) < -0.6 && noise.getTileNoise(x, y, 1) < -0.4) {
-                map.setTile(x, y, TileId.DANTELION, FloorType.FEATURE);
+                map.setTile(x, y, TileId.DANDELION, FloorType.FEATURE);
             }
         }
     }

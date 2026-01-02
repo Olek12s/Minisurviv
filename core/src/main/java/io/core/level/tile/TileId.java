@@ -16,7 +16,7 @@ public enum TileId
 
     // FEATURES
 
-    DANTELION,
+    DANDELION,
     ROSE,
     SNOW,
     CACTUS,

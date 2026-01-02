@@ -1,7 +1,6 @@
 package io.core.level.tile;
 
-import io.core.level.biome.Biome;
-import io.core.level.biome.Biomes;
+import io.core.level.biome.BiomeId;
 import io.core.level.tile.tiles.ground.BedrockTile;
 import io.core.level.tile.tiles.ground.WaterTile;
 
@@ -10,18 +9,25 @@ public class TileData
     public final int x;
     public final int y;
 
-    private Biomes.TileBiome biome;     // TODO: tidy it
-    private GroundTile ground1;
-    private GroundTile ground2;
+    private BiomeId biome;
+    private GroundTile groundDeep;
+    private GroundTile groundShallow;
     private FeatureTile feature;
 
 
-    /*
-    public void setGround1(GroundTile ground1) {
-        this.ground1 = ground1;
+    public TileData(BiomeId biome, int x, int y) {
+        this.biome = biome;
+        this.x = x;
+        this.y = y;
     }
-    public void setGround2(GroundTile ground2) {
-        this.ground2 = ground2;
+
+
+    /*
+    public void setGroundDeep(GroundTile groundDeep) {
+        this.groundDeep = groundDeep;
+    }
+    public void setGroundShallow(GroundTile groundShallow) {
+        this.groundShallow = groundShallow;
     }
     public void setFeature(FeatureTile feature) {
         this.feature = feature;
@@ -29,7 +35,7 @@ public class TileData
      */
 
 
-    public void setGround1(TileId tileId) {
+    public void setGroundDeep(TileId tileId) {
         Tile tile = Tiles.getTileFromID(tileId);
 
         if (!(tile instanceof GroundTile)) {
@@ -38,17 +44,17 @@ public class TileData
             );
         }
 
-        if (tile instanceof WaterTile && ground2 instanceof WaterTile) {
+        if (tile instanceof WaterTile && groundShallow instanceof WaterTile) {
             throw new IllegalArgumentException(
                     "Water tiles cannot be stacked!"
             );
         }
 
-        this.ground1 = (GroundTile) tile;
+        this.groundDeep = (GroundTile) tile;
     }
 
 
-    public void setGround2(TileId tileId) {
+    public void setGroundShallow(TileId tileId) {
         Tile tile = Tiles.getTileFromID(tileId);
 
         if (!(tile instanceof GroundTile)) {
@@ -57,19 +63,19 @@ public class TileData
             );
         }
 
-        if (tile instanceof WaterTile && ground1 instanceof WaterTile) {
+        if (tile instanceof WaterTile && groundDeep instanceof WaterTile) {
             throw new IllegalArgumentException(
                     "Water tiles cannot be stacked!"
             );
         }
 
-        if (tile instanceof  WaterTile && ground1.isSolid()) {
+        if (tile instanceof  WaterTile && groundDeep.isSolid()) {
             throw new IllegalArgumentException(
                     "Water tiles cannot be stacked above solid tiles!"
             );
         }
 
-        this.ground2 = (GroundTile) tile;
+        this.groundShallow = (GroundTile) tile;
     }
 
     public void setFeature(TileId tileId) {
@@ -81,7 +87,7 @@ public class TileData
             );
         }
 
-        if (ground2 != null && ground2.isSolid() || ground2 == null && ground1.isSolid()) {
+        if (groundShallow != null && groundShallow.isSolid() || groundShallow == null && groundDeep.isSolid()) {
             throw new IllegalArgumentException(
                     "Feature tile " + tileId + " cannot be stacked above solid tile"
             );
@@ -92,31 +98,18 @@ public class TileData
 
 
 
-    public TileData(Biomes.TileBiome biome, int x, int y) {
-        this.biome = biome;
-        this.x = x;
-        this.y = y;
-    }
-
     /**
      * TileData is made of 3 layers stacked as:
-     * -Ground1
-     * -Ground2
+     * -GroundShallow
+     * -GroundDeep
      * -Feature
      *
-     * Feature might exist if both ground1 and ground2 are nulls (bedrock is rendered)
+     * Feature might exist if both groundDeep and groundShallow are nulls (bedrock is rendered)
+     * Only visible parts are rendered for sake of performance
      */
     public void render() {
-        if (ground1 != null &&
-                (ground2 == null || ground2 instanceof WaterTile)) {
-            ground1.render(x, y);
-        }
-
-        if (ground2 != null &&
-                (ground1 == null || ground1 instanceof BedrockTile)) {
-            ground2.render(x, y);
-        }
-
+        if (groundDeep != null) groundDeep.render(x, y);
+        if (groundShallow != null) groundShallow.render(x, y);
         if (feature != null) {
             feature.render(x, y);
         }
@@ -127,8 +120,8 @@ public class TileData
         StringBuilder sb = new StringBuilder();
 
         sb.append("Biome: " + biome + " ");
-        sb.append("Ground1: " + ground1 + " ");
-        sb.append("Ground2: " + ground2 + " ");
+        sb.append("Ground1: " + groundDeep + " ");
+        sb.append("Ground2: " + groundShallow + " ");
         sb.append("Feature: " + feature + " ");
 
         return sb.toString();

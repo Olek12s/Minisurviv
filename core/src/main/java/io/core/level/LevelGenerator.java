@@ -58,11 +58,9 @@ public class LevelGenerator {
 
                         Biome biome = Biomes.matchBiome(noise, worldX, worldY);
 
-                        //TileData tileData = new TileData(Biomes.getTileBiomeFromBiome(biome), worldX, worldY);
-
+                        TileData tileData = new TileData(Biomes.getBiomeId(biome), worldX, worldY);
+                        chunk.tileDats[tx][ty] = tileData;
                         biome.generate(chunk, tx, ty);
-
-                        //chunk.tileDats[tx][ty] = tileData;
                     }
                 }
                 done++;

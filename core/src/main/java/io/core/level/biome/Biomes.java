@@ -29,34 +29,22 @@ public class Biomes
         put(WINTER, 0xFFEEEEEE);
     }};
 
-    public enum TileBiome {
-        DESERT,
-        FOREST,
-        OCEAN,
-        PLAINS,
-        ROCKY,
-        RIVER,
-        RIVER_EDGE,
-        WINTER
-    }
-
-    //TODO: TIDY IT
-    public static TileBiome getTileBiomeFromBiome(Biome biome) {
-        if (biome instanceof DesertBiome) return TileBiome.DESERT;
-        if (biome instanceof ForestBiome) return TileBiome.FOREST;
-        if (biome instanceof OceanBiome) return TileBiome.OCEAN;
-        if (biome instanceof PlainsBiome) return TileBiome.PLAINS;
-        if (biome instanceof RockyBiome) return TileBiome.ROCKY;
-        if (biome instanceof RiverBiome) return TileBiome.RIVER;
-        if (biome instanceof RiverEdgeBiome) return TileBiome.RIVER_EDGE;
-        if (biome instanceof WinterBiome) return TileBiome.WINTER;
-        return null;
-    }
-
     public static Set<Biome> getAllBiomes() {
         return biomesARGB.keySet();
     }
 
+    public static BiomeId getBiomeId(Biome biome) {
+        if (biome == DESERT) return BiomeId.DESERT;
+        if (biome == FOREST) return BiomeId.FOREST;
+        if (biome == OCEAN) return BiomeId.OCEAN;
+        if (biome == PLAINS) return BiomeId.PLAINS;
+        if (biome == ROCKY) return BiomeId.ROCKY;
+        if (biome == RIVER) return BiomeId.RIVER;
+        if (biome == RIVER_EDGE) return BiomeId.RIVER_EDGE;
+        if (biome == WINTER) return BiomeId.WINTER;
+
+        throw new IllegalArgumentException("Unknown biome: " + biome);
+    }
 
 
     public static int getBiomeColor(Biome biome) {
