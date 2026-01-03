@@ -24,6 +24,10 @@ public class Packer
      * Drawing is done by passing a reference to the texture region.
      */
     private static void packTextures() {
-        TexturePacker.process("assets/textures/tiles", "assets", "tiles");
+        TexturePacker.Settings settings = new TexturePacker.Settings();
+        settings.maxWidth = 1024;
+        settings.maxHeight = 1024;
+        settings.duplicatePadding = true;
+        TexturePacker.process(settings,"assets/textures/tiles", "assets", "tiles");
     }
 }

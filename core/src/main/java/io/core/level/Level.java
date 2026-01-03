@@ -152,9 +152,8 @@ public class Level
     /**
     Main render method for level. Here rendering of Level is managed.
      */
-    public void render() {
-        renderTiles();
-        renderEntities();
+    public void render(int xb0, int yb0, int xb1, int yb1) {
+        renderTiles(xb0, yb0, xb1, yb1);
     }
 
     /**
@@ -182,7 +181,6 @@ public class Level
      * @param xb1 - Right
      * @param yb1 - Bottom
      */
-    @Deprecated
     public void renderTiles(int xb0, int yb0, int xb1, int yb1) {
 
         int mapLeft   = toMapX(xb0);

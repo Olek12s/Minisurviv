@@ -2,6 +2,7 @@ package io.core.core;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -10,10 +11,7 @@ import io.core.level.Level;
 import io.core.level.LevelsManager;
 
 public class Renderer {
-    private static int WORLD_WIDTH = 432;   // 18 * 24
-    private static int WORLD_HEIGHT = 288;  // 12 * 24
-
-    private static int TILE_TXT_SIZE = 24;
+    private static int TILE_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
 
     public static SpriteBatch spriteBatch;
     private static OrthographicCamera camera;
@@ -27,7 +25,7 @@ public class Renderer {
         Renderer.spriteBatch = new SpriteBatch();
 
         Renderer.camera = (OrthographicCamera) viewport.getCamera();
-        Renderer.camera.setToOrtho(false);
+        //Renderer.camera.setToOrtho(false);
         camera.update();
 
         spriteBatch.setProjectionMatrix(camera.combined);
@@ -45,24 +43,29 @@ public class Renderer {
      * Main rendering method, here every render() method is being called and managed
      */
     public static void render() {
+        // camera's visible AABB
+        int startX = (int)(camera.position.x - camera.viewportWidth / 2) / TILE_TXT_SIZE;
+        int endX   = (int)(camera.position.x + camera.viewportWidth / 2) / TILE_TXT_SIZE;
+        int startY = (int)(camera.position.y - camera.viewportHeight / 2) / TILE_TXT_SIZE;
+        int endY   = (int)(camera.position.y + camera.viewportHeight / 2) / TILE_TXT_SIZE;
+
         if (renderGame) {
             spriteBatch.begin();
-            renderLevel();
+            LevelsManager.getCurrentLevel().render(startX, startY, endX, endY);
             //renderGUI();
             spriteBatch.end();
         }
     }
 
-
-    /**
-     * Renders current level content
-     */
-    public static void renderLevel() {
-        Level currentLevel = LevelsManager.getCurrentLevel();
-        currentLevel.render();
-    }
-
     public static void renderTile(String tileName, int x, int y) {
-        spriteBatch.draw(TILES_TEXTURE_ATLAS.findRegion(tileName.toLowerCase()), x * TILE_TXT_SIZE, y * TILE_TXT_SIZE);
+
+        spriteBatch.draw(
+                TILES_TEXTURE_ATLAS.findRegion(tileName.toLowerCase()),
+                x * TILE_TXT_SIZE,
+                y * TILE_TXT_SIZE,
+                TILE_TXT_SIZE,
+                TILE_TXT_SIZE
+        );
     }
+
 }
