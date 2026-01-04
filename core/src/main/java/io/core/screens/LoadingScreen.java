@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import io.core.core.Minisurviv;
+import io.core.entity.Player;
 import io.core.level.LevelsManager;
 import io.core.util.FloatConsumer;
 
@@ -70,6 +71,14 @@ public class LoadingScreen implements Screen {
         LevelsManager.setCurrentLevel(0);
 
         finished = true;
+
+        // small sleep for sync issues
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        LevelsManager.player = new Player();
     }
 
     @Override

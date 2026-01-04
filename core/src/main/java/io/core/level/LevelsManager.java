@@ -13,6 +13,7 @@ public class LevelsManager
     private static String worldName;
     private static int worldSize;
     private static int worldSeed;
+    public static Player player;
 
     private static int currentLevel = 0;
 

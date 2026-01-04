@@ -9,7 +9,7 @@ import io.core.level.Level;
 
 public abstract class Entity implements Tickable
 {
-    protected int x, y;
+    protected int x, y; // world coordinates
     protected Rectangle hitbox;
     protected Level level; // level that entity is at
     protected Animation<TextureRegion> sprites;

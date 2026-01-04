@@ -9,6 +9,17 @@ import io.core.level.Level;
 
 public class Player extends Mob
 {
+    public Player() {
+        // starting coordinates are set to 0
+        int x = 0;
+        int y = 0;
+
+        System.out.println("[Player] Initialized at x: " + x + ", " + "y: " + y);
+    }
+
+
+
+
     @Override
     public void tick(Level level) {
         Vector2 vec = new Vector2(0, 0);    // movement vector

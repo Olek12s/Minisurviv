@@ -18,10 +18,10 @@ public class Level
     protected Level parentLevel; // reference to parent level
     protected int seed;
 
-    private Set<Entity> entities = new HashSet<>();         // TODO : change to entity
-    private Set<Player> players = new HashSet<>();          // TODO : change to player
-    private Set<Entity> entitiesToAdd = new HashSet<>();    // TODO : change to entity
-    private Set<Entity> entitiesToRemove = new HashSet<>(); // TODO : change to entity
+    private Set<Entity> entities = new HashSet<>();
+    private Set<Player> players = new HashSet<>();
+    private Set<Entity> entitiesToAdd = new HashSet<>();
+    private Set<Entity> entitiesToRemove = new HashSet<>();
 
     public int getLevelNumber() {return level;}
 
