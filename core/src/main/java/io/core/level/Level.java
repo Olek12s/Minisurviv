@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Rectangle;
 import io.core.entity.Entity;
 import io.core.entity.Player;
 import io.core.level.tile.TileData;
-import io.core.level.tile.Tiles;
 import io.core.util.FloatConsumer;
 
 import java.util.*;
@@ -19,6 +18,13 @@ public class Level
     protected int seed;
 
     public Set<Entity> entities = new HashSet<>();
+
+    public Player getFirstPlayer() {
+        if (players.isEmpty()) return null;
+        return players.iterator().next();
+    }
+
+
     public Set<Player> players = new HashSet<>();
     private Set<Entity> entitiesToAdd = new HashSet<>();
     private Set<Entity> entitiesToRemove = new HashSet<>();

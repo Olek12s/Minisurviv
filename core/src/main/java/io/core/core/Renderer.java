@@ -16,10 +16,11 @@ import io.core.level.LevelsManager;
 public class Renderer {
     private static int TILE_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
     private static int ENTITY_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
+    private static int TILE_UNITS_COUNT = 24;   // one tile is consited of 24 units
 
     public static SpriteBatch spriteBatch;
     private static ShapeRenderer shapeRenderer;
-    private static OrthographicCamera camera;
+    private static CameraController cameraController;
 
     private static final AssetManager assetManager = new AssetManager();
     private static TextureAtlas TILES_TEXTURE_ATLAS;
@@ -36,11 +37,11 @@ public class Renderer {
         Renderer.spriteBatch = new SpriteBatch();
         Renderer.shapeRenderer = new ShapeRenderer();
 
-        Renderer.camera = (OrthographicCamera) viewport.getCamera();
+        cameraController = new CameraController((OrthographicCamera) viewport.getCamera());
         //Renderer.camera.setToOrtho(false);
-        camera.update();
+        cameraController.update();
 
-        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.setProjectionMatrix(cameraController.camera.combined);
 
         loadTileTextures();
         loadEntitiesTextures();
@@ -62,14 +63,21 @@ public class Renderer {
      * Main rendering method, here every render() method is being called and managed
      */
     public static void render() {
-        // camera's visible AABB
-        int startX = (int)((camera.position.x - camera.viewportWidth / 2) / TILE_TXT_SIZE);
-        int endX   = (int)((camera.position.x + camera.viewportWidth / 2) / TILE_TXT_SIZE);
-        int startY = (int)((camera.position.y - camera.viewportHeight / 2) / TILE_TXT_SIZE);
-        int endY   = (int)((camera.position.y + camera.viewportHeight / 2) / TILE_TXT_SIZE);
+        // camera's visible AABB. floor/ceil so we don't see any unordered areas.
+        float camX = CameraController.camera.position.x;
+        float camY = CameraController.camera.position.y;
+        float halfW = CameraController.camera.viewportWidth / 2f;
+        float halfH = CameraController.camera.viewportHeight / 2f;
+
+        int startX = (int) Math.floor((camX - halfW) / TILE_TXT_SIZE);
+        int endX   = (int) Math.ceil ((camX + halfW) / TILE_TXT_SIZE);
+        int startY = (int) Math.floor((camY - halfH) / TILE_TXT_SIZE);
+        int endY   = (int) Math.ceil ((camY + halfH) / TILE_TXT_SIZE);
 
 
         if (renderGame) {
+
+            spriteBatch.setProjectionMatrix(CameraController.camera.combined);
             spriteBatch.begin();
             LevelsManager.getCurrentLevel().render(startX, startY, endX, endY);
             //renderGUI();
@@ -77,7 +85,7 @@ public class Renderer {
 
 
             // Shape renderer's DEBUG render
-            shapeRenderer.setProjectionMatrix(camera.combined);
+            shapeRenderer.setProjectionMatrix(CameraController.camera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             if (Minisurviv.DEBUG_MODE) {
                 LevelsManager.getCurrentLevel().renderShapes(startX, startY, endX, endY);
