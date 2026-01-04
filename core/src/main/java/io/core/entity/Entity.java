@@ -18,6 +18,7 @@ public abstract class Entity implements Tickable
     protected Level level; // level that entity is at
 
     // Hitbox config - needed during hitbox updates. Values needs to be divided by / 24 (1 tile contains 24 pixels)
+    // - which is already done in updateHitbox()
     protected float hitboxOffsetX = 0;
     protected float hitboxOffsetY = 0;
     protected float hitboxWidth;
@@ -60,12 +61,13 @@ public abstract class Entity implements Tickable
         return false;
     }
 
+    // div by /24 so hitbox is in proper world coordinate system
     protected void updateHitbox() {
         hitbox.set(
-                x + hitboxOffsetX,
-                y + hitboxOffsetY,
-                hitboxWidth,
-                hitboxHeight
+                x + (hitboxOffsetX / 24f),
+                y + (hitboxOffsetX / 24f),
+                (hitboxWidth) / 24f,
+                (hitboxHeight) / 24f
         );
     }
 }

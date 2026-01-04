@@ -28,10 +28,10 @@ public abstract class Mob extends Entity
     public Mob() {
 
         // default hitbox values for mob
-        this.hitboxOffsetX = 4f / 24;
-        this.hitboxOffsetY = 4f / 24;
-        this.hitboxWidth = 16f / 24;
-        this.hitboxHeight = 16f / 24;
+        this.hitboxOffsetX = 4f;
+        this.hitboxOffsetY = 4f;
+        this.hitboxWidth = 16f;
+        this.hitboxHeight = 16f;
     }
 
     public void render() {

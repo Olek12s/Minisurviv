@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.core.entity.Entity;
 import io.core.level.Level;
@@ -16,6 +18,7 @@ public class Renderer {
     private static int ENTITY_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
 
     public static SpriteBatch spriteBatch;
+    private static ShapeRenderer shapeRenderer;
     private static OrthographicCamera camera;
 
     private static final AssetManager assetManager = new AssetManager();
@@ -31,6 +34,7 @@ public class Renderer {
 
     public static void init(Viewport viewport) {
         Renderer.spriteBatch = new SpriteBatch();
+        Renderer.shapeRenderer = new ShapeRenderer();
 
         Renderer.camera = (OrthographicCamera) viewport.getCamera();
         //Renderer.camera.setToOrtho(false);
@@ -59,16 +63,26 @@ public class Renderer {
      */
     public static void render() {
         // camera's visible AABB
-        int startX = (int)(camera.position.x - camera.viewportWidth / 2) / TILE_TXT_SIZE;
-        int endX   = (int)(camera.position.x + camera.viewportWidth / 2) / TILE_TXT_SIZE;
-        int startY = (int)(camera.position.y - camera.viewportHeight / 2) / TILE_TXT_SIZE;
-        int endY   = (int)(camera.position.y + camera.viewportHeight / 2) / TILE_TXT_SIZE;
+        int startX = (int)((camera.position.x - camera.viewportWidth / 2) / TILE_TXT_SIZE);
+        int endX   = (int)((camera.position.x + camera.viewportWidth / 2) / TILE_TXT_SIZE);
+        int startY = (int)((camera.position.y - camera.viewportHeight / 2) / TILE_TXT_SIZE);
+        int endY   = (int)((camera.position.y + camera.viewportHeight / 2) / TILE_TXT_SIZE);
+
 
         if (renderGame) {
             spriteBatch.begin();
             LevelsManager.getCurrentLevel().render(startX, startY, endX, endY);
             //renderGUI();
             spriteBatch.end();
+
+
+            // Shape renderer's DEBUG render
+            shapeRenderer.setProjectionMatrix(camera.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            if (Minisurviv.DEBUG_MODE) {
+                LevelsManager.getCurrentLevel().renderShapes(startX, startY, endX, endY);
+            }
+            shapeRenderer.end();
         }
     }
 
@@ -83,13 +97,27 @@ public class Renderer {
         );
     }
 
-    public static void renderEntity(TextureRegion region, int x, int y) {
+    public static void renderEntity(TextureRegion region, float x, float y) {
         spriteBatch.draw(
                 region,
-                x * ENTITY_TXT_SIZE,
-                y * ENTITY_TXT_SIZE,
+                x * TILE_TXT_SIZE,
+                y * TILE_TXT_SIZE,
                 ENTITY_TXT_SIZE,
                 ENTITY_TXT_SIZE
+        );
+    }
+
+    public static void renderHitboxShape(Rectangle hitbox) {
+        float x = hitbox.x;
+        float y = hitbox.y;
+        float w = hitbox.width;
+        float h = hitbox.height;
+
+        shapeRenderer.rect(
+                x * ENTITY_TXT_SIZE,
+                y * ENTITY_TXT_SIZE,
+                w * TILE_TXT_SIZE,
+                h * TILE_TXT_SIZE
         );
     }
 }
