@@ -100,9 +100,10 @@ public class Level
      * Returns list of entities at given chunk found by world position on the current level
      * @param x - world X
      * @param y - world Y
+     * @param includePlayers - should include players into the list
      * @return
      */
-    public List<Entity> getEntitiesInChunk(int x, int y) {
+    public List<Entity> getEntitiesInChunk(int x, int y, boolean includePlayers) {
         int mapX = toMapX(x);
         int mapY = toMapY(y);
 
@@ -114,7 +115,7 @@ public class Level
         int chunkRight  = chunkLeft + Chunk.CHUNK_SIZE;
         int chunkBottom = chunkTop + Chunk.CHUNK_SIZE;
 
-        return getEntitiesInBox(chunkLeft, chunkTop, chunkRight, chunkBottom);
+        return getEntitiesInBox(chunkLeft, chunkTop, chunkRight, chunkBottom, includePlayers);
     }
 
 
@@ -125,9 +126,10 @@ public class Level
      * @param y0 - Top
      * @param x1 - Right
      * @param y1 - Bottom
+     * @param includePlayers - should include players into the list
      * @return - List of entities whose hitboxes are intersecting box given in params
      */
-    public List<Entity> getEntitiesInBox(int x0, int y0, int x1, int y1) {
+    public List<Entity> getEntitiesInBox(int x0, int y0, int x1, int y1, boolean includePlayers) {
         List<Entity> result = new ArrayList<>();
 
         int left = Math.min(x0, x1);
@@ -142,6 +144,13 @@ public class Level
                 result.add(e);
             }
         }
+        if (includePlayers) {
+            for (Entity p : players) {
+                if (p.getHitbox().overlaps(box)) {
+                    result.add(p);
+                }
+            }
+        }
 
         return result;
     }
@@ -154,6 +163,7 @@ public class Level
      */
     public void render(int xb0, int yb0, int xb1, int yb1) {
         renderTiles(xb0, yb0, xb1, yb1);
+        renderEntities(xb0, yb0, xb1, yb1);
     }
 
     /**
@@ -225,7 +235,7 @@ public class Level
      * @param yb1 - Bottom
      */
     public void renderEntities(int xb0, int yb0, int xb1, int yb1) {
-        List<Entity> entityList = getEntitiesInBox(xb0, yb0, xb1, yb1);
+        List<Entity> entityList = getEntitiesInBox(xb0, yb0, xb1, yb1, true);
         entityList.sort((e1, e2) -> Float.compare(e2.getHitbox().y, e1.getHitbox().y));
 
         for (Entity e : entityList) {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.core.entity.Entity;
 import io.core.level.Level;
@@ -12,6 +13,7 @@ import io.core.level.LevelsManager;
 
 public class Renderer {
     private static int TILE_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
+    private static int ENTITY_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
 
     public static SpriteBatch spriteBatch;
     private static OrthographicCamera camera;
@@ -68,4 +70,13 @@ public class Renderer {
         );
     }
 
+    public static void renderEntity(TextureRegion frame, int x, int y) {
+        spriteBatch.draw(
+                frame,
+                x * ENTITY_TXT_SIZE,
+                y * ENTITY_TXT_SIZE,
+                ENTITY_TXT_SIZE,
+                ENTITY_TXT_SIZE
+        );
+    }
 }

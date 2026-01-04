@@ -17,5 +17,18 @@ public class Player extends Mob
         if (Input.isHeld(Input.Keys.S)) vec.y--;    // down
         if (Input.isHeld(Input.Keys.A)) vec.x--;    // left
         if (Input.isHeld(Input.Keys.D)) vec.x++;    // right
+
+        // ...
+        // ...
+        // ...
+
+        int speed = 1;
+        // Move the player
+        int xd = (int) (vec.x * speed);
+        int yd = (int) (vec.y * speed);
+        boolean moved = move(xd, yd);
     }
+
+
+
 }
