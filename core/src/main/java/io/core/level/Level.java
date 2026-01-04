@@ -257,4 +257,9 @@ public class Level
             e.render();
         }
     }
+
+    @Override
+    public String toString() {
+        return "level=" + LevelsManager.getLevelName(level);
+    }
 }
