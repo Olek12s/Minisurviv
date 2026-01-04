@@ -155,7 +155,16 @@ public class Level
         return result;
     }
 
+    public void tick() {
 
+        for (Player p : players) {
+            p.tick(this);
+        }
+
+        for (Entity e : entities) {
+            e.tick(this);
+        }
+    }
 
 
     /**

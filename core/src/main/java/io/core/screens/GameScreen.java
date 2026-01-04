@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.core.core.Minisurviv;
 import io.core.core.Renderer;
+import io.core.core.Updater;
 
 public class GameScreen implements Screen {
     private final Minisurviv game;
@@ -17,6 +18,7 @@ public class GameScreen implements Screen {
         this.hudStage = new Stage(game.getViewport());
 
         Renderer.renderGame = true; // gameplay is pending, setting flag to true so game can be rendered in main loop
+        Updater.tickGame = true; // gameplay is pending, setting flag to true so game can be ticked in main loop
     }
 
     @Override

@@ -10,6 +10,7 @@ import io.core.core.Input;
 import io.core.core.Renderer;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
+import io.core.util.Direction;
 
 
 public class Player extends Mob
@@ -18,7 +19,7 @@ public class Player extends Mob
     public Player() {
         TextureRegion sheet = Renderer.getEntitiesTextureAtlas().findRegion("player");
         loadAnimations(sheet, 3, 4);
-        
+
         // starting coordinates are set to 0
         int x = 0;
         int y = 0;
@@ -32,11 +33,22 @@ public class Player extends Mob
     @Override
     public void tick(Level level) {
         Vector2 vec = new Vector2(0, 0);    // movement vector
-
-        if (Input.isHeld(Input.Keys.W)) vec.y++;    // up
-        if (Input.isHeld(Input.Keys.S)) vec.y--;    // down
-        if (Input.isHeld(Input.Keys.A)) vec.x--;    // left
-        if (Input.isHeld(Input.Keys.D)) vec.x++;    // right
+        if (Input.isHeld(Input.Keys.W)) {
+            vec.y++;    // up
+            facingDirection = Direction.UP;
+        }
+        if (Input.isHeld(Input.Keys.S)) {
+            vec.y--;    // down
+            facingDirection = Direction.DOWN;
+        }
+        if (Input.isHeld(Input.Keys.A)) {
+            vec.x--;    // left
+            facingDirection = Direction.LEFT;
+        }
+        if (Input.isHeld(Input.Keys.D)) {
+            vec.x++;    // right
+            facingDirection = Direction.RIGHT;
+        }
 
         // ...
         // ...
