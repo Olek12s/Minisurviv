@@ -12,7 +12,6 @@ public abstract class Entity implements Tickable
     protected int x, y; // world coordinates
     protected Rectangle hitbox = new Rectangle();
     protected Level level; // level that entity is at
-    protected Animation<TextureRegion> sprites;
 
     // Hitbox config - needed during hitbox updates
     protected int hitboxOffsetX = 0;
@@ -37,11 +36,8 @@ public abstract class Entity implements Tickable
 
     public Rectangle getHitbox() {return hitbox;}
 
-    public void render() {
-        TextureRegion frame = sprites.getKeyFrame(0);
+    public abstract void render();
 
-        Renderer.renderEntity(frame, x, y);
-    }
 
 
     /**

@@ -21,6 +21,12 @@ public class Renderer {
     private static final AssetManager assetManager = new AssetManager();
     private static TextureAtlas TILES_TEXTURE_ATLAS;
 
+    public static TextureAtlas getEntitiesTextureAtlas() {
+        return ENTITIES_TEXTURE_ATLAS;
+    }
+
+    private static TextureAtlas ENTITIES_TEXTURE_ATLAS;
+
     public static boolean renderGame = false;
 
     public static void init(Viewport viewport) {
@@ -33,12 +39,19 @@ public class Renderer {
         spriteBatch.setProjectionMatrix(camera.combined);
 
         loadTileTextures();
+        loadEntitiesTextures();
     }
 
     private static void loadTileTextures() {
         assetManager.load("tiles.atlas", TextureAtlas.class);
         assetManager.finishLoading();
         TILES_TEXTURE_ATLAS = assetManager.get("tiles.atlas", TextureAtlas.class);
+    }
+
+    private static void loadEntitiesTextures() {
+        assetManager.load("entities.atlas", TextureAtlas.class);
+        assetManager.finishLoading();
+        ENTITIES_TEXTURE_ATLAS = assetManager.get("entities.atlas", TextureAtlas.class);
     }
 
     /**
@@ -70,9 +83,9 @@ public class Renderer {
         );
     }
 
-    public static void renderEntity(TextureRegion frame, int x, int y) {
+    public static void renderEntity(TextureRegion region, int x, int y) {
         spriteBatch.draw(
-                frame,
+                region,
                 x * ENTITY_TXT_SIZE,
                 y * ENTITY_TXT_SIZE,
                 ENTITY_TXT_SIZE,

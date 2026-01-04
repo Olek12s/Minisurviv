@@ -239,7 +239,6 @@ public class Level
         entityList.sort((e1, e2) -> Float.compare(e2.getHitbox().y, e1.getHitbox().y));
 
         for (Entity e : entityList) {
-            System.out.println("r");
             e.render();
         }
     }

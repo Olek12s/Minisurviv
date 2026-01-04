@@ -34,5 +34,6 @@ public class Packer
         // TLDR:   Repeat edge pixels to prevent ghosting between tiles
 
         TexturePacker.process(settings,"assets/textures/tiles", "assets", "tiles");
+        TexturePacker.process(settings,"assets/textures/entities", "assets", "entities");
     }
 }
