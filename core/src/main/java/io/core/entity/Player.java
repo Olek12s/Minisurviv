@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectFloatMap;
+import io.core.core.CameraController;
 import io.core.core.Input;
 import io.core.core.Renderer;
 import io.core.level.Level;
@@ -24,6 +25,7 @@ public class Player extends Mob
         int x = 0;
         int y = 0;
         LevelsManager.getCurrentLevel().addEntity(this, x, y);
+        CameraController.snapTo(this);  // TODO: It's not really good place for snapping
         System.out.println("[Player] Initialized at x: " + x + ", " + "y: " + y + " At level: " + LevelsManager.getCurrentLevel());
     }
 

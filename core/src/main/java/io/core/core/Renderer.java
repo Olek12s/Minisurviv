@@ -39,7 +39,7 @@ public class Renderer {
 
         cameraController = new CameraController((OrthographicCamera) viewport.getCamera());
         //Renderer.camera.setToOrtho(false);
-        cameraController.update();
+        CameraController.camera.update();
 
         spriteBatch.setProjectionMatrix(cameraController.camera.combined);
 
