@@ -1,10 +1,11 @@
 package io.core.entity;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 import io.core.core.Input;
 import io.core.level.Level;
-
+import io.core.level.LevelsManager;
 
 
 public class Player extends Mob
@@ -13,8 +14,8 @@ public class Player extends Mob
         // starting coordinates are set to 0
         int x = 0;
         int y = 0;
-
-        System.out.println("[Player] Initialized at x: " + x + ", " + "y: " + y);
+        LevelsManager.getCurrentLevel().addEntity(this, x, y);
+        System.out.println("[Player] Initialized at x: " + x + ", " + "y: " + y + " At level: " + LevelsManager.getCurrentLevel());
     }
 
 
@@ -39,7 +40,4 @@ public class Player extends Mob
         int yd = (int) (vec.y * speed);
         boolean moved = move(xd, yd);
     }
-
-
-
 }

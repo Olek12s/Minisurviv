@@ -79,6 +79,7 @@ public class LoadingScreen implements Screen {
             throw new RuntimeException(e);
         }
         LevelsManager.player = new Player();
+
     }
 
     @Override

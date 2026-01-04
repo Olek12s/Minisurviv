@@ -10,15 +10,30 @@ import io.core.level.Level;
 public abstract class Entity implements Tickable
 {
     protected int x, y; // world coordinates
-    protected Rectangle hitbox;
+    protected Rectangle hitbox = new Rectangle();
     protected Level level; // level that entity is at
     protected Animation<TextureRegion> sprites;
 
-    public void setX(int x) {this.x = x;}
-    public void setY(int y) {this.y = y;}
+    // Hitbox config - needed during hitbox updates
+    protected int hitboxOffsetX = 0;
+    protected int hitboxOffsetY = 0;
+    protected int hitboxWidth;
+    protected int hitboxHeight;
+
+    public void setX(int x)
+    {
+        this.x = x;
+        updateHitbox();
+    }
+    public void setY(int y)
+    {
+        this.y = y;
+        updateHitbox();
+    }
     public int getX() {return x;}
     public int getY() {return y;}
     public Level getLevel() {return level;}
+    public void setLevel(Level level) {this.level = level;}
 
     public Rectangle getHitbox() {return hitbox;}
 
@@ -40,5 +55,14 @@ public abstract class Entity implements Tickable
 
 
         return false;
+    }
+
+    protected void updateHitbox() {
+        hitbox.set(
+                x + hitboxOffsetX,
+                y + hitboxOffsetY,
+                hitboxWidth,
+                hitboxHeight
+        );
     }
 }
