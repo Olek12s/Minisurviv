@@ -9,22 +9,26 @@ import io.core.level.Level;
 
 public abstract class Entity implements Tickable
 {
-    protected float x, y; // world coordinates. Notice how they are float values - It's because entity can appear between "tile pixels"
+    // world coordinates. Notice how they are float values - It's because entity can appear between "tile pixels"
+    // Discrete values are tile coordinates.
+    // USE SETTERS IF YOU WANT TO MODIFY THESE VALUES
+    public float x, y;
+
     protected Rectangle hitbox = new Rectangle();
     protected Level level; // level that entity is at
 
-    // Hitbox config - needed during hitbox updates
-    protected int hitboxOffsetX = 0;
-    protected int hitboxOffsetY = 0;
-    protected int hitboxWidth;
-    protected int hitboxHeight;
+    // Hitbox config - needed during hitbox updates. Values needs to be divided by / 24 (1 tile contains 24 pixels)
+    protected float hitboxOffsetX = 0;
+    protected float hitboxOffsetY = 0;
+    protected float hitboxWidth;
+    protected float hitboxHeight;
 
-    public void setX(int x)
+    public void setX(float x)
     {
         this.x = x;
         updateHitbox();
     }
-    public void setY(int y)
+    public void setY(float y)
     {
         this.y = y;
         updateHitbox();
@@ -38,6 +42,9 @@ public abstract class Entity implements Tickable
 
     public abstract void render();
 
+    public void renderShape() {
+        Renderer.renderHitboxShape(hitbox);
+    }
 
 
     /**

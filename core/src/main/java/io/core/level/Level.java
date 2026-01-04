@@ -176,6 +176,21 @@ public class Level
     }
 
     /**
+     * Debug method using shaperenderer
+     */
+    public void renderShapes(int xb0, int yb0, int xb1, int yb1) {
+        renderEntityHitboxes(xb0, yb0, xb1, yb1);
+    }
+
+    public void renderEntityHitboxes(int xb0, int yb0, int xb1, int yb1) {
+        List<Entity> en = getEntitiesInBox(xb0, yb0, xb1, yb1, true);
+        for (Entity e : en) {
+            e.renderShape();
+        }
+    }
+
+
+    /**
      * Renders current level's tiles in stack order defined inside tileData.
      * Tiles out of screen are also drawn
      */

@@ -17,8 +17,8 @@ public abstract class Mob extends Entity
     protected float animStateTime = 0f;
     private float animSpeed = 0.15f;
 
-    // movement speed is expressed as: (movSpeed / 60) = speed in tiles per second
-    protected float movSpeed = 180f;
+
+    protected float movSpeed = 3f / 60; // TODO: change it for better format. now it moves 3 tiles / sec
 
     public TextureRegion getCurrentFrame() {
         return animations.get(facingDirection).getKeyFrame(animStateTime);
@@ -28,8 +28,10 @@ public abstract class Mob extends Entity
     public Mob() {
 
         // default hitbox values for mob
-        this.hitboxWidth = 16;
-        this.hitboxHeight = 16;
+        this.hitboxOffsetX = 4f / 24;
+        this.hitboxOffsetY = 4f / 24;
+        this.hitboxWidth = 16f / 24;
+        this.hitboxHeight = 16f / 24;
     }
 
     public void render() {

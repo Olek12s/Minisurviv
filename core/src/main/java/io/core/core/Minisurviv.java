@@ -17,6 +17,7 @@ public abstract class Minisurviv extends Game
     private Updater updater;
     private Renderer renderer;
     public Viewport viewport;   // LEAVE IT PUBLIC !
+    public static boolean DEBUG_MODE = true;
 
     // Debug counters
     private int ticksThisSecond = 0;
