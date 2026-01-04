@@ -33,20 +33,26 @@ public class Player extends Mob
     @Override
     public void tick(Level level) {
         Vector2 vec = new Vector2(0, 0);    // movement vector
+        float dt = Gdx.graphics.getDeltaTime();
+
         if (Input.isHeld(Input.Keys.W)) {
             vec.y++;    // up
+            y+= movSpeed / 60 / 60;
             facingDirection = Direction.UP;
         }
         if (Input.isHeld(Input.Keys.S)) {
             vec.y--;    // down
+            y-= movSpeed / 60 / 60;
             facingDirection = Direction.DOWN;
         }
         if (Input.isHeld(Input.Keys.A)) {
             vec.x--;    // left
+            x-= movSpeed / 60 / 60;
             facingDirection = Direction.LEFT;
         }
         if (Input.isHeld(Input.Keys.D)) {
             vec.x++;    // right
+            x+= movSpeed / 60 / 60;
             facingDirection = Direction.RIGHT;
         }
 

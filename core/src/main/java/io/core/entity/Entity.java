@@ -9,7 +9,7 @@ import io.core.level.Level;
 
 public abstract class Entity implements Tickable
 {
-    protected int x, y; // world coordinates
+    protected float x, y; // world coordinates. Notice how they are float values - It's because entity can appear between "tile pixels"
     protected Rectangle hitbox = new Rectangle();
     protected Level level; // level that entity is at
 
@@ -29,8 +29,8 @@ public abstract class Entity implements Tickable
         this.y = y;
         updateHitbox();
     }
-    public int getX() {return x;}
-    public int getY() {return y;}
+    public float getX() {return x;}
+    public float getY() {return y;}
     public Level getLevel() {return level;}
     public void setLevel(Level level) {this.level = level;}
 

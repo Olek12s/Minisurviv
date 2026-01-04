@@ -17,6 +17,9 @@ public abstract class Mob extends Entity
     protected float animStateTime = 0f;
     private float animSpeed = 0.15f;
 
+    // movement speed is expressed as: (movSpeed / 60) = speed in tiles per second
+    protected float movSpeed = 180f;
+
     public TextureRegion getCurrentFrame() {
         return animations.get(facingDirection).getKeyFrame(animStateTime);
     }
