@@ -18,8 +18,8 @@ public class Level
     protected Level parentLevel; // reference to parent level
     protected int seed;
 
-    private Set<Entity> entities = new HashSet<>();
-    private Set<Player> players = new HashSet<>();
+    public Set<Entity> entities = new HashSet<>();
+    public Set<Player> players = new HashSet<>();
     private Set<Entity> entitiesToAdd = new HashSet<>();
     private Set<Entity> entitiesToRemove = new HashSet<>();
 
@@ -239,6 +239,7 @@ public class Level
         entityList.sort((e1, e2) -> Float.compare(e2.getHitbox().y, e1.getHitbox().y));
 
         for (Entity e : entityList) {
+            System.out.println("r");
             e.render();
         }
     }
@@ -251,10 +252,23 @@ public class Level
     @Deprecated
     public void renderEntities() {
         List<Entity> entityList = new ArrayList<>(entities);
+        entityList.add((Entity) players);
         entityList.sort((e1, e2) -> Float.compare(e2.getHitbox().y, e1.getHitbox().y));
 
         for (Entity e : entityList) {
             e.render();
+        }
+    }
+
+    public void addEntity(Entity entity, int x, int y) {
+        entity.setLevel(this);
+        entity.setX(x);
+        entity.setY(y);
+
+        if (entity instanceof Player p) {
+            players.add(p);
+        } else {
+            entities.add(entity);
         }
     }
 

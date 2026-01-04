@@ -17,6 +17,8 @@ public class LevelsManager
 
     private static int currentLevel = 0;
 
+    public static final int SURFACE = 0, CAVE = -1, DEEP_CAVE = -2, RUINS = -3;
+
     public static void init(String worldName, int worldSize, int worldSeed) {
         LevelsManager.worldName = worldName;
         LevelsManager.worldSize = worldSize;
@@ -64,9 +66,9 @@ public class LevelsManager
     public static Level[] getLevels() { return levels; }
 
     private static final NavigableMap<Integer, String> levelNames = new TreeMap<>() {{
-        put(-3, "Ruins");
-        put(-2, "Deep Cave");
-        put(-1, "Cave");
-        put(0, "Surface");
+        put(RUINS, "Ruins");
+        put(DEEP_CAVE, "Deep Cave");
+        put(CAVE, "Cave");
+        put(SURFACE, "Surface");
     }};
 }
