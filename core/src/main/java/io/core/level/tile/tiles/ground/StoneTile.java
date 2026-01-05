@@ -8,5 +8,6 @@ public class StoneTile extends GroundTile
 
     public StoneTile(TileId id) {
         super(id);
+        isSolid = true;
     }
 }

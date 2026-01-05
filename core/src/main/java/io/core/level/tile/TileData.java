@@ -14,6 +14,12 @@ public class TileData
     private GroundTile groundShallow;
     private FeatureTile feature;
 
+    public boolean isSolid() {
+        return (feature != null && feature.isSolid())
+                || (groundShallow != null && groundShallow.isSolid())
+                || (groundDeep != null && groundDeep.isSolid());
+    }
+
 
     public TileData(BiomeId biome, int x, int y) {
         this.biome = biome;

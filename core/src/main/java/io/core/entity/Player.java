@@ -38,37 +38,18 @@ public class Player extends Mob
         Vector2 vec = new Vector2(0, 0);    // movement vector
         float dt = Gdx.graphics.getDeltaTime();
 
-        // up
-        if (Input.isHeld(Input.Keys.W)) {
-            vec.y++;
-            facingDirection = Direction.UP;
-        }
-        // down
-        if (Input.isHeld(Input.Keys.S)) {
-            vec.y--;
-            facingDirection = Direction.DOWN;
-        }
-        // left
-        if (Input.isHeld(Input.Keys.A)) {
-            vec.x--;
-            facingDirection = Direction.LEFT;
-        }
-        // right
-        if (Input.isHeld(Input.Keys.D)) {
-            vec.x++;
-            facingDirection = Direction.RIGHT;
-        }
+        if (Input.isHeld(Input.Keys.W)) vec.y++;            // up
+        if (Input.isHeld(Input.Keys.S)) vec.y--;            // down
+        if (Input.isHeld(Input.Keys.A)) vec.x--;            // left
+        if (Input.isHeld(Input.Keys.D)) vec.x++;            // right
 
-        move(vec.x * movSpeed, vec.y * movSpeed);
 
-        // ...
-        // ...
-        // ...
 
-        int speed = 1;
+
         // Move the player
-        int xd = (int) (vec.x * speed);
-        int yd = (int) (vec.y * speed);
-        boolean moved = move(xd, yd);
+        float xd = vec.x * movSpeed;
+        float yd = vec.y * movSpeed;
+        boolean moved = move(xd, yd, true); // Player's moved in this method
+        System.out.println("player pos: " + x + ", " + y);
     }
 }

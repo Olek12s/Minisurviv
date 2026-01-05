@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import io.core.entity.Entity;
 import io.core.entity.Player;
 import io.core.level.tile.TileData;
+import io.core.util.Box;
 import io.core.util.FloatConsumer;
 
 import java.util.*;
@@ -18,16 +19,14 @@ public class Level
     protected int seed;
 
     public Set<Entity> entities = new HashSet<>();
+    public Set<Player> players = new HashSet<>();
+    private Set<Entity> entitiesToAdd = new HashSet<>();
+    private Set<Entity> entitiesToRemove = new HashSet<>();
 
     public Player getFirstPlayer() {
         if (players.isEmpty()) return null;
         return players.iterator().next();
     }
-
-
-    public Set<Player> players = new HashSet<>();
-    private Set<Entity> entitiesToAdd = new HashSet<>();
-    private Set<Entity> entitiesToRemove = new HashSet<>();
 
     public int getLevelNumber() {return level;}
 
@@ -159,6 +158,65 @@ public class Level
         }
 
         return result;
+    }
+
+    public boolean intersectsWithAnyCollidableInBox(Rectangle rect, Entity ignore) {
+        return intersectsWithAnyCollidableInBox(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height, ignore);
+    }
+
+    public boolean intersectsWithAnyCollidableInBox(float x0, float y0, float x1, float y1, Entity ignore) {
+        int mapLeft   = toMapX((int)Math.floor(x0));
+        int mapRight  = toMapX((int)Math.ceil (x1));
+        int mapTop    = toMapY((int)Math.floor(y0));
+        int mapBottom = toMapY((int)Math.ceil (y1));
+
+        int chunkX0 = chunkX(mapLeft);
+        int chunkX1 = chunkX(mapRight);
+        int chunkY0 = chunkY(mapTop);
+        int chunkY1 = chunkY(mapBottom);
+
+        // check if any collidable tile intersects with box
+        for (int cx = chunkX0; cx <= chunkX1; cx++) {
+            for (int cy = chunkY0; cy <= chunkY1; cy++) {
+
+                if (cx < 0 || cx >= chunks.length) continue;
+                if (cy < 0 || cy >= chunks[cx].length) continue;
+
+                Chunk chunk = chunks[cx][cy];
+                if (chunk == null) continue;
+
+                for (int tx = 0; tx < Chunk.CHUNK_SIZE; tx++) {
+                    for (int ty = 0; ty < Chunk.CHUNK_SIZE; ty++) {
+                        TileData tileData = chunk.tileDats[tx][ty];
+                        if (!tileData.isSolid()) continue;
+
+                        int tileX = cx * Chunk.CHUNK_SIZE + tx - width / 2;
+                        int tileY = cy * Chunk.CHUNK_SIZE + ty - height / 2;
+
+                        if (tileX + 1 > x0 && tileX < x1 &&
+                                tileY + 1 > y0 && tileY < y1) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // check if any entity's hitbox at the current map intersects with box
+        for (Entity e : entities) {
+            if (e == ignore) continue;
+            Rectangle hb = e.getHitbox();
+
+            if (Box.overlaps(
+                    hb.x, hb.y, hb.x + hb.width, hb.y + hb.height,
+                    x0, y0, x1, y1
+            )) {
+                return true;
+            }
+
+        }
+
+        return false;
     }
 
     public void tick() {

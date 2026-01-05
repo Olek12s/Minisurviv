@@ -9,7 +9,7 @@ public abstract class Tile implements Tickable
 {
     protected final TileId id;
 
-    private boolean isSolid;
+    protected boolean isSolid;
 
     public boolean isSolid() {
         return isSolid;

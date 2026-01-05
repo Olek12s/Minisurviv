@@ -9,5 +9,6 @@ public class CactusTile extends FeatureTile
 
     public CactusTile(TileId id) {
         super(id);
+        isSolid = true;
     }
 }

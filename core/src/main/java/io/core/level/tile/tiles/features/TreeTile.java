@@ -8,5 +8,6 @@ public class TreeTile extends FeatureTile
 
     public TreeTile(TileId id) {
         super(id);
+        isSolid = true;
     }
 }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import io.core.Tickable;
 import io.core.core.Renderer;
 import io.core.level.Level;
+import io.core.level.LevelsManager;
 
 public abstract class Entity implements Tickable
 {
@@ -60,34 +61,52 @@ public abstract class Entity implements Tickable
      * of given X or Y until collision happens.
      * At first, movement by X axis is done, then by Y axis so entity can "slide" when moving diagonally.
      * There's a check if entity will collide with a new position, if not, entity is moved
-     * @param x - X axis
-     * @param y - Y axis
+     * @param xd - X axis
+     * @param yd - Y axis
+     * @param changeDirection - change mob's direction along x y vector
      * @return True if entity has moved, otherwise false
      */
-    public boolean move(float x, float y) {
+    public boolean move(float xd, float yd, boolean changeDirection) {
+        if (xd == 0 && yd == 0) return false;
+        Level lvl = LevelsManager.getCurrentLevel();
+        Rectangle hbFuturePos = new Rectangle(
+                x + xd + hitboxOffsetX / 24f,
+                y + yd + hitboxOffsetY / 24f,
+                hitboxWidth / 24f,
+                hitboxHeight / 24f
+        );
+
+        System.out.println("Future pos: " + hbFuturePos);
 
 
+        if(!lvl.intersectsWithAnyCollidableInBox(hbFuturePos, this)) {
+            setX(x + xd);
+            setY(y + yd);
+            return true;
+        }
+        System.out.println("collided");
 
-        return false;
+        boolean moved = false;
+        return moved;
     }
 
     /**
      * Moves the entity by x distance. distance equals to 1 is relative to the length of 1 tile.
-     * @param x - X axis
+     * @param xd - X axis
      * @return True if entity has moved, otherwise false
      */
-    private boolean moveX(float x) {
-
+    private boolean moveX(float xd) {
+        setX(xd);
         return false;
     }
 
     /**
      * Moves the entity by y distance. distance equals to 1 is relative to the length of 1 tile.
-     * @param y - Y axis
+     * @param yd - Y axis
      * @return True if entity has moved, otherwise false
      */
-    private boolean moveY(float y) {
-
+    private boolean moveY(float yd) {
+        setY(yd);
         return false;
     }
 
@@ -95,7 +114,7 @@ public abstract class Entity implements Tickable
     protected void updateHitbox() {
         hitbox.set(
                 x + (hitboxOffsetX / 24f),
-                y + (hitboxOffsetX / 24f),
+                y + (hitboxOffsetY / 24f),
                 (hitboxWidth) / 24f,
                 (hitboxHeight) / 24f
         );
