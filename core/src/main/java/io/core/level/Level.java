@@ -185,20 +185,20 @@ public class Level
                 Chunk chunk = chunks[cx][cy];
                 if (chunk == null) continue;
 
-                for (int tx = 0; tx < Chunk.CHUNK_SIZE; tx++) {
-                    for (int ty = 0; ty < Chunk.CHUNK_SIZE; ty++) {
-                        TileData tileData = chunk.tileDats[tx][ty];
-                        if (!tileData.isSolid()) continue;
+                int tileLeft   = (int)Math.floor(x0);
+                int tileRight  = (int)Math.floor(x1 - 1e-6f);
+                int tileTop    = (int)Math.floor(y0);
+                int tileBottom = (int)Math.floor(y1 - 1e-6f);
 
-                        int tileX = cx * Chunk.CHUNK_SIZE + tx - width / 2;
-                        int tileY = cy * Chunk.CHUNK_SIZE + ty - height / 2;
-
-                        if (tileX + 1 > x0 && tileX < x1 &&
-                                tileY + 1 > y0 && tileY < y1) {
+                for (int tx = tileLeft; tx <= tileRight; tx++) {
+                    for (int ty = tileTop; ty <= tileBottom; ty++) {
+                        TileData t = getTileData(tx, ty);
+                        if (t != null && t.isSolid()) {
                             return true;
                         }
                     }
                 }
+
             }
         }
 
