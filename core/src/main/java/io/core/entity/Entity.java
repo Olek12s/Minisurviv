@@ -49,14 +49,43 @@ public abstract class Entity implements Tickable
 
 
     /**
-     * Moves the entity by vector(x, y).
+     * Moves the entity by vector(x, y) distance. distance equals to 1 is relative to the length of 1 tile.
+     * Moving at both directions at the same time results in diagonal movement, which is NOT rooted (this is a faster way of travel)
+     *
+     * Method works as:
+     * New Rectangle (hitbox) is created at predicted position. If it doesn't collides with Level's collidable tiles or
+     * other entity's hitboxes then entity is being moved to that position. At very high speeds entity can shoot through slim hitboxes.
+     *
+     * Otherwise, if there is a collision at the expected position - entity is moved by a fraction of given X or Y until collision happens.
+     * At first, movement by X axis is done, then by Y axis so entity can "slide" when moving diagonally.
+     * There's a check if entity will collide with a new position, if not, entity is moved
      * @param x - X axis
      * @param y - Y axis
      * @return True if entity has moved, otherwise false
      */
-    public boolean move(int x, int y) {
+    public boolean move(float x, float y) {
 
 
+
+        return false;
+    }
+
+    /**
+     * Moves the entity by x distance. distance equals to 1 is relative to the length of 1 tile.
+     * @param x - X axis
+     * @return True if entity has moved, otherwise false
+     */
+    private boolean moveX(float x) {
+
+        return false;
+    }
+
+    /**
+     * Moves the entity by y distance. distance equals to 1 is relative to the length of 1 tile.
+     * @param y - Y axis
+     * @return True if entity has moved, otherwise false
+     */
+    private boolean moveY(float y) {
 
         return false;
     }
