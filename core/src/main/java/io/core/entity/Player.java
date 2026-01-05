@@ -38,26 +38,28 @@ public class Player extends Mob
         Vector2 vec = new Vector2(0, 0);    // movement vector
         float dt = Gdx.graphics.getDeltaTime();
 
+        // up
         if (Input.isHeld(Input.Keys.W)) {
-            vec.y++;    // up
-            setY(getY() + movSpeed);
+            vec.y++;
             facingDirection = Direction.UP;
         }
+        // down
         if (Input.isHeld(Input.Keys.S)) {
-            vec.y--;    // down
-            setY(getY() - movSpeed);
+            vec.y--;
             facingDirection = Direction.DOWN;
         }
+        // left
         if (Input.isHeld(Input.Keys.A)) {
-            vec.x--;    // left
-            setX(getX() - movSpeed);
+            vec.x--;
             facingDirection = Direction.LEFT;
         }
+        // right
         if (Input.isHeld(Input.Keys.D)) {
-            vec.x++;    // right
-            setX(getX() + movSpeed);
+            vec.x++;
             facingDirection = Direction.RIGHT;
         }
+
+        move(vec.x * movSpeed, vec.y * movSpeed);
 
         // ...
         // ...

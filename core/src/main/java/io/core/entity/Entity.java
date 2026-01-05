@@ -56,7 +56,8 @@ public abstract class Entity implements Tickable
      * New Rectangle (hitbox) is created at predicted position. If it doesn't collides with Level's collidable tiles or
      * other entity's hitboxes then entity is being moved to that position. At very high speeds entity can shoot through slim hitboxes.
      *
-     * Otherwise, if there is a collision at the expected position - entity is moved by a fraction of given X or Y until collision happens.
+     * Otherwise, if there is a collision at the expected position - entity is moved by a fraction (not smaller than 1/32th of tile length)
+     * of given X or Y until collision happens.
      * At first, movement by X axis is done, then by Y axis so entity can "slide" when moving diagonally.
      * There's a check if entity will collide with a new position, if not, entity is moved
      * @param x - X axis
