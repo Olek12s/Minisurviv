@@ -236,6 +236,8 @@ public class Level
 
         for (int cx = chunkX0; cx <= chunkX1; cx++) {
             for (int cy = chunkY0; cy <= chunkY1; cy++) {
+                if (cx < 0 || cx >= chunks.length) continue;                    // Don't render tiles if out ouf map
+                if (cy < 0 || cy >= chunks[cx].length) continue;                // Don't render tiles if out ouf map
                 Chunk chunk = chunks[cx][cy];
 
                 for (int tx = 0; tx < Chunk.CHUNK_SIZE; tx++) {

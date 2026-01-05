@@ -62,7 +62,6 @@ public class CameraController {
 
         camera.position.x += (targetX - camera.position.x) * FOLLOW_FACTOR;
         camera.position.y += (targetY - camera.position.y) * FOLLOW_FACTOR;
-        System.out.println(camera.position);
         camera.update();
     }
 
