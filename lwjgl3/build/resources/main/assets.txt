@@ -6,6 +6,7 @@ fonts/minecrafty/Italic.otf
 fonts/minecrafty/Regular.otf
 fonts/minecrafty/info.txt
 logo.png
+textures/entities/chicken.png
 textures/entities/player.png
 textures/tiles/bedrock.png
 textures/tiles/cactus.png

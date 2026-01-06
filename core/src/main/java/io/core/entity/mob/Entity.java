@@ -17,6 +17,7 @@ public abstract class Entity implements Tickable
 
     protected Rectangle hitbox = new Rectangle();
     protected Level level; // level that entity is at
+    private boolean removed;    // should entity by removed on the next tick    // TODO: implement rmeoving
 
     // Hitbox config - needed during hitbox updates. Values needs to be divided by / 24 (1 tile contains 24 pixels)
     // - which is already done in updateHitbox()
@@ -167,5 +168,17 @@ public abstract class Entity implements Tickable
                 (hitboxWidth) / 24f,
                 (hitboxHeight) / 24f
         );
+    }
+
+    // should only be called by level class, eg. level.add(entity)
+    public void setLevel(Level level, float x, float y) {
+        if (level == null) {
+            throw new RuntimeException("Tried to set level of entity " + this + " to a null level.");
+        }
+
+        this.level = level;
+        this.removed = false;
+        setX(x);
+        setY(y);
     }
 }

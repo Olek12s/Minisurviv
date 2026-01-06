@@ -221,6 +221,18 @@ public class Level
 
     public void tick() {
 
+        // adding entities to add from entities collections
+        if (!entitiesToAdd.isEmpty()) {
+            entities.addAll(entitiesToAdd);
+            entitiesToAdd.clear();
+        }
+
+        // removing entities to remove from entities collection
+        if (!entitiesToRemove.isEmpty()) {
+            entities.removeAll(entitiesToRemove);
+            entitiesToRemove.clear();
+        }
+
         for (Player p : players) {
             p.tick(this);
         }
@@ -349,17 +361,30 @@ public class Level
         }
     }
 
-    public void addEntity(Entity entity, int x, int y) {
-        entity.setLevel(this);
-        entity.setX(x);
-        entity.setY(y);
-
-        if (entity instanceof Player p) {
-            players.add(p);
-        } else {
-            entities.add(entity);
+    /**
+     * Adds entity to the level. Coordinates should be provided inside entity in Tile cords system.
+     * @param e Entity to be added
+     */
+    public void addEntity(Entity e) {
+        if (e == null) {
+            return;
         }
+        addEntity(e, e.getX(), e.getY());
     }
+
+    public void addEntity(Entity e, float x, float y) {
+        e.setLevel(this, x, y);
+
+        if (e instanceof Player) {
+            players.add((Player)e);
+            entitiesToRemove.remove(e);
+            return;
+        }
+        entitiesToRemove.remove(e);
+        entitiesToAdd.add(e);
+    }
+
+
 
     @Override
     public String toString() {

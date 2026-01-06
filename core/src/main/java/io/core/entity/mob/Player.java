@@ -40,7 +40,6 @@ public class Player extends Mob
 
 
 
-
         // Move the player
         float xd = vec.x * movSpeed;
         float yd = vec.y * movSpeed;

@@ -11,7 +11,7 @@ import java.util.EnumMap;
 public abstract class Mob extends Entity
 {
     protected Direction facingDirection = Direction.UP;
-    protected static EnumMap<Direction, Animation<TextureRegion>> animations;
+    protected EnumMap<Direction, Animation<TextureRegion>> animations;
     protected int animTick = 0;
     protected int animFrame = 0;
     private static final float FRAME_CHANGE_INTERVAL = 0.1f;

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import io.core.core.Minisurviv;
+import io.core.entity.mob.Chicken;
 import io.core.entity.mob.Player;
 import io.core.level.LevelsManager;
 import io.core.util.FloatConsumer;
@@ -79,6 +80,12 @@ public class LoadingScreen implements Screen {
             throw new RuntimeException(e);
         }
         LevelsManager.player = new Player();
+
+        Chicken chick = new Chicken();
+        chick.x = 1;
+        chick.y = 2;
+        LevelsManager.getCurrentLevel().addEntity(chick);
+
     }
 
     @Override
