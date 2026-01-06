@@ -63,10 +63,9 @@ public abstract class Entity implements Tickable
      * There's a check if entity will collide with a new position, if not, entity is moved
      * @param xd - X axis
      * @param yd - Y axis
-     * @param changeDirection - change mob's direction along x y vector
      * @return True if entity has moved, otherwise false
      */
-    public boolean move(float xd, float yd, boolean changeDirection) {
+    public boolean move(float xd, float yd) {
         if (xd == 0 && yd == 0) return false;
 
         if (!collidesAt(x + xd, y + yd)) {

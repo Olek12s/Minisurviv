@@ -12,7 +12,7 @@ import java.util.EnumMap;
 
 public abstract class Mob extends Entity
 {
-    protected Direction facingDirection = Direction.DOWN;
+    protected Direction facingDirection = Direction.UP;
     protected EnumMap<Direction, Animation<TextureRegion>> animations;
     protected float animStateTime = 0f;
     private float animSpeed = 0.15f;
@@ -32,6 +32,16 @@ public abstract class Mob extends Entity
         this.hitboxHeight = 16f;
         this.hitboxOffsetX = (24f - hitboxWidth) /2;
         this.hitboxOffsetY = (24f - hitboxHeight) /2;
+    }
+
+    protected boolean move(float xd, float yd, boolean changeDirection) {
+        if (level == null) return false;
+
+        if (changeDirection) facingDirection = Direction.getDirection(xd, yd);
+
+        boolean moved;
+        moved = super.move(xd, yd);
+        return moved;
     }
 
     public void render() {

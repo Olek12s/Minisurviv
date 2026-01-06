@@ -36,7 +36,7 @@ public class Player extends Mob
     public void tick(Level level) {
 
         Vector2 vec = new Vector2(0, 0);    // movement vector
-        float dt = Gdx.graphics.getDeltaTime();
+
 
         if (Input.isHeld(Input.Keys.W)) vec.y++;            // up
         if (Input.isHeld(Input.Keys.S)) vec.y--;            // down
