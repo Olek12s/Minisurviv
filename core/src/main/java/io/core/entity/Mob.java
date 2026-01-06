@@ -13,15 +13,19 @@ import java.util.EnumMap;
 public abstract class Mob extends Entity
 {
     protected Direction facingDirection = Direction.UP;
-    protected EnumMap<Direction, Animation<TextureRegion>> animations;
-    protected float animStateTime = 0f;
-    private float animSpeed = 0.15f;
+    protected static EnumMap<Direction, Animation<TextureRegion>> animations;
+    protected int animTick = 0;
+    protected int animFrame = 0;
+    private static final float FRAME_CHANGE_INTERVAL = 0.1f;
+    private static final int FRAME_TICKS = (int)(FRAME_CHANGE_INTERVAL * 60);
+    protected boolean isWalking = false;
+
 
 
     protected float movSpeed = 3f / 60; // TODO: change it for better format. now it moves 3 tiles / sec
 
     public TextureRegion getCurrentFrame() {
-        return animations.get(facingDirection).getKeyFrame(animStateTime);
+        return animations.get(facingDirection).getKeyFrame(animFrame);
     }
 
 
@@ -35,12 +39,15 @@ public abstract class Mob extends Entity
     }
 
     protected boolean move(float xd, float yd, boolean changeDirection) {
-        if (level == null) return false;
+        if (level == null || (xd == 0 && yd == 0)) {
+            isWalking= false;
+            return false;
+        }
 
         if (changeDirection) facingDirection = Direction.getDirection(xd, yd);
 
-        boolean moved;
-        moved = super.move(xd, yd);
+        boolean moved = super.move(xd, yd);
+        isWalking = moved;
         return moved;
     }
 
@@ -50,8 +57,31 @@ public abstract class Mob extends Entity
         Renderer.renderEntity(frame, x, y);
     }
 
+    protected void updateWalkingAnimation() {
+        if (!isWalking) {
+            animFrame = 0; // idle = frame 0
+            return;
+        }
+
+        animTick++;
+
+        if (animTick >= FRAME_TICKS) {
+            animTick = 0;
+            animFrame++;
+
+            // while walking - skip standing frame
+            if (animFrame < 1 || animFrame >= 3) {
+                animFrame = 1;
+            }
+        }
+    }
+
+
+
     public void tick(Level level) {
 
+
+        updateWalkingAnimation();
     }
 
     /**
@@ -73,13 +103,13 @@ public abstract class Mob extends Entity
         animations = new EnumMap<>(Direction.class);
 
         animations.put(Direction.DOWN,
-                new Animation<>(animSpeed, tmp[0]));
+                new Animation<>(1f, tmp[0]));
         animations.put(Direction.LEFT,
-                new Animation<>(animSpeed, tmp[1]));
+                new Animation<>(1f, tmp[1]));
         animations.put(Direction.RIGHT,
-                new Animation<>(animSpeed, tmp[2]));
+                new Animation<>(1f, tmp[2]));
         animations.put(Direction.UP,
-                new Animation<>(animSpeed, tmp[3]));
+                new Animation<>(1f, tmp[3]));
 
         for (Animation<TextureRegion> a : animations.values()) {
             a.setPlayMode(Animation.PlayMode.LOOP);

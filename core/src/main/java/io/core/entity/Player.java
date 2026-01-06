@@ -50,5 +50,7 @@ public class Player extends Mob
         float xd = vec.x * movSpeed;
         float yd = vec.y * movSpeed;
         boolean moved = move(xd, yd, true); // Player's moved in this method
+
+        super.tick(level);
     }
 }
