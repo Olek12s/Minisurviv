@@ -7,9 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import io.core.core.CameraController;
 import io.core.core.Minisurviv;
-import io.core.entity.Player;
+import io.core.entity.mob.Player;
 import io.core.level.LevelsManager;
 import io.core.util.FloatConsumer;
 

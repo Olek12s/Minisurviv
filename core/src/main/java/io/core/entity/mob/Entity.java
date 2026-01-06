@@ -1,4 +1,4 @@
-package io.core.entity;
+package io.core.entity.mob;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

@@ -1,10 +1,7 @@
 package io.core.core;
 
-import com.badlogic.gdx.Gdx;
-import io.core.entity.Player;
+import io.core.entity.mob.Player;
 import io.core.level.LevelsManager;
-
-import java.util.Optional;
 
 public class Updater {
 

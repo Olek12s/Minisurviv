@@ -1,6 +1,6 @@
 package io.core.level;
 
-import io.core.entity.Player;
+import io.core.entity.mob.Player;
 import io.core.util.FloatConsumer;
 
 import java.util.NavigableMap;

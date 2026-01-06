@@ -1,8 +1,8 @@
 package io.core.level;
 
 import com.badlogic.gdx.math.Rectangle;
-import io.core.entity.Entity;
-import io.core.entity.Player;
+import io.core.entity.mob.Entity;
+import io.core.entity.mob.Player;
 import io.core.level.tile.TileData;
 import io.core.util.Box;
 import io.core.util.FloatConsumer;

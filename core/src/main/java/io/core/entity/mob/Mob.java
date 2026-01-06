@@ -1,9 +1,7 @@
-package io.core.entity;
+package io.core.entity.mob;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import io.core.core.Renderer;
 import io.core.level.Level;
 import io.core.util.Direction;

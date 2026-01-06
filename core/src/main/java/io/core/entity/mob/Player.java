@@ -1,17 +1,12 @@
-package io.core.entity;
+package io.core.entity.mob;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.ObjectFloatMap;
 import io.core.core.CameraController;
 import io.core.core.Input;
 import io.core.core.Renderer;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
-import io.core.util.Direction;
 
 
 public class Player extends Mob
