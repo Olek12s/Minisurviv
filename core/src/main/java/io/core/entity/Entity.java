@@ -68,25 +68,23 @@ public abstract class Entity implements Tickable
      */
     public boolean move(float xd, float yd, boolean changeDirection) {
         if (xd == 0 && yd == 0) return false;
-        Level lvl = LevelsManager.getCurrentLevel();
-        Rectangle hbFuturePos = new Rectangle(
-                x + xd + hitboxOffsetX / 24f,
-                y + yd + hitboxOffsetY / 24f,
-                hitboxWidth / 24f,
-                hitboxHeight / 24f
-        );
 
-        System.out.println("Future pos: " + hbFuturePos);
-
-
-        if(!lvl.intersectsWithAnyCollidableInBox(hbFuturePos, this)) {
+        if (!collidesAt(x + xd, y + yd)) {
             setX(x + xd);
             setY(y + yd);
             return true;
         }
-        System.out.println("collided");
 
         boolean moved = false;
+
+        if (xd != 0) {
+            moved |= moveX(xd);
+        }
+
+        if (yd != 0) {
+            moved |= moveY(yd);
+        }
+
         return moved;
     }
 
@@ -96,7 +94,24 @@ public abstract class Entity implements Tickable
      * @return True if entity has moved, otherwise false
      */
     private boolean moveX(float xd) {
-        setX(xd);
+        float step = (xd > 0 ? 1f : -1f) * (1f / 32f);
+        float moved = 0f;
+
+        while (Math.abs(moved + step) <= Math.abs(xd)) {
+            float nextX = x + moved + step;
+
+            if (collidesAt(nextX, y)) {
+                break;
+            }
+
+            moved += step;
+        }
+
+        if (moved != 0f) {
+            setX(x + moved);
+            return true;
+        }
+
         return false;
     }
 
@@ -106,9 +121,44 @@ public abstract class Entity implements Tickable
      * @return True if entity has moved, otherwise false
      */
     private boolean moveY(float yd) {
-        setY(yd);
+        float step = (yd > 0 ? 1f : -1f) * (1f / 32f);
+        float moved = 0f;
+
+        while (Math.abs(moved + step) <= Math.abs(yd)) {
+            float nextY = y + moved + step;
+
+            if (collidesAt(x, nextY)) {
+                break;
+            }
+
+            moved += step;
+        }
+
+        if (moved != 0f) {
+            setY(y + moved);
+            return true;
+        }
+
         return false;
     }
+
+    /**
+     * Method checking if entity at nx ny coordinates would collide with terrain or other entities
+     * @param nx
+     * @param ny
+     * @return
+     */
+    private boolean collidesAt(float nx, float ny) {
+        Rectangle hb = new Rectangle(
+                nx + hitboxOffsetX / 24f,
+                ny + hitboxOffsetY / 24f,
+                hitboxWidth  / 24f,
+                hitboxHeight / 24f
+        );
+
+        return level.intersectsWithAnyCollidableInBox(hb, this);
+    }
+
 
     // div by /24 so hitbox is in proper world coordinate system
     protected void updateHitbox() {
