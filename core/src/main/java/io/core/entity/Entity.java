@@ -1,4 +1,4 @@
-package io.core.entity.mob;
+package io.core.entity;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +25,7 @@ public abstract class Entity implements Tickable
     protected float hitboxOffsetY = 0;
     protected float hitboxWidth;
     protected float hitboxHeight;
+    protected boolean collidabe;  // Entity items should not be collidable like mobs
 
     public void setX(float x)
     {

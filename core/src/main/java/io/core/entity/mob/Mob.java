@@ -3,6 +3,7 @@ package io.core.entity.mob;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.core.core.Renderer;
+import io.core.entity.Entity;
 import io.core.level.Level;
 import io.core.util.Direction;
 
@@ -34,6 +35,8 @@ public abstract class Mob extends Entity
         this.hitboxHeight = 16f;
         this.hitboxOffsetX = (24f - hitboxWidth) /2;
         this.hitboxOffsetY = (24f - hitboxHeight) /2;
+
+        collidabe = true;
     }
 
     protected boolean move(float xd, float yd, boolean changeDirection) {

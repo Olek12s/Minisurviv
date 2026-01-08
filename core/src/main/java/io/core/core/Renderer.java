@@ -13,7 +13,7 @@ import io.core.level.LevelsManager;
 public class Renderer {
     private static int TILE_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
     private static int ENTITY_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
-    private static int TILE_UNITS_COUNT = 24;   // one tile is consited of 24 units
+    private static int ITEM_TXT_SIZE = 24;
 
     public static SpriteBatch spriteBatch;
     private static ShapeRenderer shapeRenderer;
@@ -21,12 +21,12 @@ public class Renderer {
 
     private static final AssetManager assetManager = new AssetManager();
     private static TextureAtlas TILES_TEXTURE_ATLAS;
-
     public static TextureAtlas getEntitiesTextureAtlas() {
         return ENTITIES_TEXTURE_ATLAS;
     }
-
     private static TextureAtlas ENTITIES_TEXTURE_ATLAS;
+    private static TextureAtlas ITEMS_TEXTURE_ATLAS;
+
 
     public static boolean renderGame = false;
 
@@ -54,6 +54,12 @@ public class Renderer {
         assetManager.load("entities.atlas", TextureAtlas.class);
         assetManager.finishLoading();
         ENTITIES_TEXTURE_ATLAS = assetManager.get("entities.atlas", TextureAtlas.class);
+    }
+
+    private static void loadItemTextures() {
+        assetManager.load("items.atlas", TextureAtlas.class);
+        assetManager.finishLoading();
+        ENTITIES_TEXTURE_ATLAS = assetManager.get("items.atlas", TextureAtlas.class);
     }
 
     /**
@@ -92,13 +98,22 @@ public class Renderer {
     }
 
     public static void renderTile(String tileName, int x, int y) {
-
         spriteBatch.draw(
                 TILES_TEXTURE_ATLAS.findRegion(tileName.toLowerCase()),
                 x * TILE_TXT_SIZE,
                 y * TILE_TXT_SIZE,
                 TILE_TXT_SIZE,
                 TILE_TXT_SIZE
+        );
+    }
+
+    public static void renderItem(String itemName, float x, float y) {
+        spriteBatch.draw(
+                TILES_TEXTURE_ATLAS.findRegion(itemName.toLowerCase()),
+                x * ITEM_TXT_SIZE,
+                y * ITEM_TXT_SIZE,
+                ITEM_TXT_SIZE,
+                ITEM_TXT_SIZE
         );
     }
 

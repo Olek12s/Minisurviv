@@ -35,5 +35,6 @@ public class Packer
 
         TexturePacker.process(settings,"assets/textures/tiles", "assets", "tiles");
         TexturePacker.process(settings,"assets/textures/entities", "assets", "entities");
+        TexturePacker.process(settings,"assets/textures/items", "assets", "items");
     }
 }

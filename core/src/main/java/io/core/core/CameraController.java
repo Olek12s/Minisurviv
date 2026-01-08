@@ -1,7 +1,7 @@
 package io.core.core;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import io.core.entity.mob.Entity;
+import io.core.entity.Entity;
 
 public class CameraController {
 
