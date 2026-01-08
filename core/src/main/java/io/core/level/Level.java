@@ -204,7 +204,7 @@ public class Level
 
         // check if any entity's hitbox at the current map intersects with box
         for (Entity e : entities) {
-            if (e == ignore) continue;
+            if (e == ignore || !e.isCollidabe()) continue;
             Rectangle hb = e.getHitbox();
 
             if (Box.overlaps(
@@ -374,6 +374,14 @@ public class Level
 
     public void addEntity(Entity e, float x, float y) {
         e.setLevel(this, x, y);
+
+        // Entity cannot be added if its hitbox intersects with other collidables
+        if (e.isCollidabe()) {
+            if (intersectsWithAnyCollidableInBox(e.getHitbox(), e)) {
+                System.out.println("[Level] Cannot add entity (collision): " + e);
+                return;
+            }
+        }
 
         if (e instanceof Player) {
             players.add((Player)e);

@@ -30,6 +30,10 @@ public abstract class Entity implements Tickable
     protected float hitboxHeight;
     protected boolean collidabe;  // Entity items should not be collidable like mobs
 
+    public boolean isCollidabe() {
+        return collidabe;
+    }
+
     public void setX(float x)
     {
         this.x = x;
