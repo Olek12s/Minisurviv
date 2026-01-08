@@ -42,6 +42,7 @@ public class Renderer {
 
         loadTileTextures();
         loadEntitiesTextures();
+        loadItemTextures();
     }
 
     private static void loadTileTextures() {
@@ -59,7 +60,7 @@ public class Renderer {
     private static void loadItemTextures() {
         assetManager.load("items.atlas", TextureAtlas.class);
         assetManager.finishLoading();
-        ENTITIES_TEXTURE_ATLAS = assetManager.get("items.atlas", TextureAtlas.class);
+        ITEMS_TEXTURE_ATLAS = assetManager.get("items.atlas", TextureAtlas.class);
     }
 
     /**
@@ -109,7 +110,7 @@ public class Renderer {
 
     public static void renderItem(String itemName, float x, float y) {
         spriteBatch.draw(
-                TILES_TEXTURE_ATLAS.findRegion(itemName.toLowerCase()),
+                ITEMS_TEXTURE_ATLAS.findRegion(itemName.toLowerCase()),
                 x * ITEM_TXT_SIZE,
                 y * ITEM_TXT_SIZE,
                 ITEM_TXT_SIZE,

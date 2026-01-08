@@ -5,9 +5,12 @@ fonts/minecrafty/BoldItalic.otf
 fonts/minecrafty/Italic.otf
 fonts/minecrafty/Regular.otf
 fonts/minecrafty/info.txt
+items.atlas
+items.png
 logo.png
 textures/entities/chicken.png
 textures/entities/player.png
+textures/items/egg.png
 textures/tiles/bedrock.png
 textures/tiles/cactus.png
 textures/tiles/clay.png

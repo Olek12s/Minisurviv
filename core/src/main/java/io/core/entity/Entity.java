@@ -8,6 +8,8 @@ import io.core.core.Renderer;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
 
+import java.util.Random;
+
 public abstract class Entity implements Tickable
 {
     // world coordinates. Notice how they are float values - It's because entity can appear between "tile pixels"
@@ -15,6 +17,7 @@ public abstract class Entity implements Tickable
     // USE SETTERS IF YOU WANT TO MODIFY THESE VALUES
     public float x, y;
 
+    protected Random random = new Random();
     protected Rectangle hitbox = new Rectangle();
     protected Level level; // level that entity is at
     private boolean removed;    // should entity by removed on the next tick    // TODO: implement rmeoving
