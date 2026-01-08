@@ -7,7 +7,7 @@ import io.core.entity.item.Egg;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
 
-public class Chicken extends Mob
+public class Chicken extends NeutralMob
 {
     static int a = 0;
     public Chicken () {
