@@ -77,6 +77,30 @@ public abstract class Mob extends Entity
         }
     }
 
+    protected void randomWalk() {
+        // entity can change direction randomly once per x seconds
+        boolean directionChange = random.nextInt(6 * 60) == 0;
+
+
+        if (directionChange) {
+            facingDirection = Direction.randomDirection();
+
+            // entity can also start walking randomly when changing direction
+            if (!isWalking && random.nextInt(5) == 0) {
+                isWalking = true;
+                return;
+            }
+        }
+        // entity can start walking randomly once per x seconds
+        if (!isWalking) {
+            if (random.nextInt(8 * 60) == 0) isWalking = true;
+        }
+        // entity can stop walking randomly once per x seconds
+        else {
+            if (random.nextInt(6 * 60) == 0) isWalking = false;
+        }
+    }
+
 
 
     public void tick(Level level) {
