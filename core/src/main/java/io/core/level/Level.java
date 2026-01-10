@@ -383,11 +383,10 @@ public class Level
         //TODO: xr and yr should have such a value that when the entity drops it,
         // the bounding box of ItemEntity should be inside the hitbox dropping the entity, or at least not bound into the walls,
         // but be moved next to the wall
-        float xr = x + (random.nextFloat() * 0.5f - 0.25f);
-        float yr = y + (random.nextFloat() * 0.5f - 0.25f);
+        float xr = x + (random.nextFloat() * 0.75f - 0.5f);
+        float yr = y + (random.nextFloat() * 0.75f - 0.5f);
 
         ItemEntity itemEntity = new ItemEntity(xr, yr, item);
-
         addEntity(itemEntity);
     }
 

@@ -6,6 +6,11 @@ public class Items
 {
     private static final ArrayList<Item> items = new ArrayList<>();
 
+    static {
+        Items.add(new Egg());
+        //Items.add(new Apple());   TODO: implement
+    }
+
     private static void add(Item item) {
         items.add(item);
     }
@@ -16,6 +21,6 @@ public class Items
                 return item;
             }
         }
-        return null; // if not found
+        throw new RuntimeException("Item on get was null");
     }
 }

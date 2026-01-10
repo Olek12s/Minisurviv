@@ -8,7 +8,7 @@ public class Egg extends Item
     }
 
     @Override
-    public void render() {
-        super.render(x, y);
+    public void renderOnHUD(float x, float y) {
+        super.renderOnHUD(x, y);
     }
 }

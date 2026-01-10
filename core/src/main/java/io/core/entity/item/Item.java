@@ -9,7 +9,7 @@ import io.core.util.Direction;
 
 import java.util.EnumMap;
 
-public abstract class Item extends Entity
+public abstract class Item
 {
     protected final ItemId id;
 
@@ -20,17 +20,10 @@ public abstract class Item extends Entity
     public Item(ItemId id)
     {
         this.id = id;
-        collidabe = false;
-
-        // default hitbox values for item
-        this.hitboxWidth = 8f;
-        this.hitboxHeight = 8f;
-        this.hitboxOffsetX = (24f - hitboxWidth) /2;
-        this.hitboxOffsetY = (24f - hitboxHeight) /2;
     }
 
-    // coordinates should be given in tile coordinates system
-    public void render(float x, float y) {
+    // coordinates should be given in HUD coordinate system
+    public void renderOnHUD(float x, float y) {
         Renderer.renderItem(id.name(), x, y);
     }
 }
