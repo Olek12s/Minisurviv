@@ -19,8 +19,9 @@ public abstract class Mob extends Entity
     protected int animFrame = 0;
     private static final float FRAME_CHANGE_INTERVAL = 0.1f;
     private static final int FRAME_TICKS = (int)(FRAME_CHANGE_INTERVAL * 60);
-    protected boolean walking = false;          // is entity walking on its own
-    protected boolean randomWalking = true;   // can entity perform random walk (used for ticking randomWalk() method)
+    protected boolean walking = false;              // is entity walking on its own
+    protected boolean randomWalkingActive = true;   // can entity perform random walk (used for ticking randomWalk() method)
+    protected boolean wantsToWalk = false;          // intention of walking, not physical state
 
 
 
@@ -80,27 +81,33 @@ public abstract class Mob extends Entity
         }
     }
 
-    protected void randomWalk() {
+    /**
+     *  Performs random walk for Mob. Mob randomly changes direction and may start walking in that direction based on given parameters.
+     * @param dirChangeDivider - How rare is direction changing
+     * @param toStartWalkDivider - How rare should entity start having intention to walk
+     * @param toStopWalkDivider - How rare should entity stop having intetion to walk
+     */
+    protected void randomWalk(int dirChangeDivider, int toStartWalkDivider, int toStopWalkDivider) {
         // entity can change direction randomly once per x seconds
-        boolean directionChange = random.nextInt(6 * 6) == 0;
+        boolean directionChange = random.nextInt(6 * dirChangeDivider) == 0;
 
         if (directionChange) {
             facingDirection = Direction.randomDirection();
-            System.out.println("direction change");
             // entity can also start walking randomly when changing direction
-            if (!walking && random.nextInt(5) == 0) {
-                walking = true;
-                System.out.println("walking true nested");
+            if (!wantsToWalk && random.nextInt(3) == 0) {
+                wantsToWalk = true;
                 return;
             }
         }
         // entity can start walking randomly once per x seconds
-        if (!walking) {
-            if (random.nextInt(8 * 6) == 0) walking = true;
+        if (!wantsToWalk) {
+            if (random.nextInt(toStartWalkDivider * 60) == 0) wantsToWalk = true;
         }
         // entity can stop walking randomly once per x seconds
         else {
-            if (random.nextInt(6 * 6) == 0) walking = false;
+            if (random.nextInt(4 * toStopWalkDivider) == 0) {
+                wantsToWalk = false;
+            }
         }
     }
 
@@ -117,8 +124,8 @@ public abstract class Mob extends Entity
         {
             return;
         }
-        if (randomWalking) {
-            randomWalk();
+        if (randomWalkingActive) {
+            randomWalk(9, 7, 8);
         }
 
         int x = 0; // facing vector X
@@ -129,8 +136,14 @@ public abstract class Mob extends Entity
         if (facingDirection == Direction.UP) y++;
         if (facingDirection == Direction.DOWN) y--;
 
-        float xd = x * movSpeed;
-        float yd = y * movSpeed;
+        float xd = 0;
+        float yd = 0;
+
+        if (wantsToWalk) {
+            xd = x * movSpeed;
+            yd = y * movSpeed;
+        }
+
         boolean moved = move(xd, yd, true); // Mobs's moved in this method
     }
 

@@ -27,9 +27,8 @@ public class Chicken extends NeutralMob
     public void tick(Level level) {
         super.tick(level);
         // Chicken can randomly lay eggs over time once per x minutes
-        if (random.nextInt(1 * 60 * 3) == 0) {
+        if (random.nextInt(60 * 60 * 4) == 0) {
             level.addEntity(new Egg(), x, y);
-            System.out.println("laid egg!");
         }
     }
 }
