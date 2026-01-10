@@ -2,6 +2,8 @@ package io.core.level;
 
 import com.badlogic.gdx.math.Rectangle;
 import io.core.entity.Entity;
+import io.core.entity.ItemEntity;
+import io.core.entity.item.Item;
 import io.core.entity.mob.Player;
 import io.core.level.tile.TileData;
 import io.core.util.Box;
@@ -373,6 +375,10 @@ public class Level
         for (Entity e : entityList) {
             e.render();
         }
+    }
+
+    public void dropItem(float x, float y, Item item) {
+        ItemEntity itemEntity = new ItemEntity(x, y, item);
     }
 
     /**
