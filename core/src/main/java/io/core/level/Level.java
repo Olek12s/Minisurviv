@@ -394,12 +394,10 @@ public class Level
     }
 
     public void dropItem(float x, float y, Item item) {
-
-        //TODO: xr and yr should have such a value that when the entity drops it,
-        // the bounding box of ItemEntity should be inside the hitbox dropping the entity, or at least not bound into the walls,
-        // but be moved next to the wall
-        float xr = x + (random.nextFloat() * 0.75f - 0.5f);
-        float yr = y + (random.nextFloat() * 0.75f - 0.5f);
+        // little messy but makes sence - 16 is typical hitbox size,
+        // divide it by 24 and add it to the xr/yr so dropped item is somewhere in the middle of entity dropping the item
+        float xr = x + (random.nextFloat() * 0.75f - 0.5f) + (16f/24f);
+        float yr = y + (random.nextFloat() * 0.75f - 0.5f) + (16f/24f);
 
         ItemEntity itemEntity = new ItemEntity(xr, yr, item);
         addEntity(itemEntity);
