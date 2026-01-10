@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.core.core.CameraController;
 import io.core.core.Renderer;
 import io.core.entity.item.Egg;
+import io.core.entity.item.ItemId;
+import io.core.entity.item.Items;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
 
@@ -28,7 +30,8 @@ public class Chicken extends NeutralMob
         super.tick(level);
         // Chicken can randomly lay eggs over time once per x minutes
         if (random.nextInt(60 * 60 * 4) == 0) {
-            level.addEntity(new Egg(), x, y);
+            //level.addEntity(new Egg(), x, y); depracted
+            level.dropItem(x, y, Items.get(ItemId.EGG));
         }
     }
 }

@@ -13,6 +13,10 @@ public abstract class Item extends Entity
 {
     protected final ItemId id;
 
+    public ItemId getId() {
+        return id;
+    }
+
     public Item(ItemId id)
     {
         this.id = id;

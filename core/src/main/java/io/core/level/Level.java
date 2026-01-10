@@ -19,6 +19,7 @@ public class Level
     protected int level;
     protected Level parentLevel; // reference to parent level
     protected int seed;
+    private Random random = new Random();
 
     public Set<Entity> entities = new HashSet<>();
     public Set<Player> players = new HashSet<>();
@@ -378,7 +379,16 @@ public class Level
     }
 
     public void dropItem(float x, float y, Item item) {
-        ItemEntity itemEntity = new ItemEntity(x, y, item);
+
+        //TODO: xr and yr should have such a value that when the entity drops it,
+        // the bounding box of ItemEntity should be inside the hitbox dropping the entity, or at least not bound into the walls,
+        // but be moved next to the wall
+        float xr = x + (random.nextFloat() * 0.5f - 0.25f);
+        float yr = y + (random.nextFloat() * 0.5f - 0.25f);
+
+        ItemEntity itemEntity = new ItemEntity(xr, yr, item);
+
+        addEntity(itemEntity);
     }
 
     /**
