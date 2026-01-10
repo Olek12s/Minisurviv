@@ -31,7 +31,7 @@ public class Chicken extends NeutralMob
         // Chicken can randomly lay eggs over time once per x minutes
         if (random.nextInt(6 * 6 * 4) == 0) {
             //level.addEntity(new Egg(), x, y); depracted
-            level.dropItem(x, y, 1, 10, Items.get(ItemId.EGG));
+            level.dropItem(x, y, 1, 1, Items.get(ItemId.EGG));
         }
     }
 }
