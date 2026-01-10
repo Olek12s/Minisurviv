@@ -17,7 +17,8 @@ public abstract class Mob extends Entity
     protected int animFrame = 0;
     private static final float FRAME_CHANGE_INTERVAL = 0.1f;
     private static final int FRAME_TICKS = (int)(FRAME_CHANGE_INTERVAL * 60);
-    protected boolean isWalking = false;
+    protected boolean walking = false;          // is entity walking on its own
+    protected boolean randomWalking = true;   // can entity perform random walk (used for ticking randomWalk() method)
 
 
 
@@ -41,14 +42,14 @@ public abstract class Mob extends Entity
 
     protected boolean move(float xd, float yd, boolean changeDirection) {
         if (level == null || (xd == 0 && yd == 0)) {
-            isWalking= false;
+            walking = false;
             return false;
         }
 
         if (changeDirection) facingDirection = Direction.getDirection(xd, yd);
 
         boolean moved = super.move(xd, yd);
-        isWalking = moved;
+        walking = moved;
         return moved;
     }
 
@@ -59,7 +60,7 @@ public abstract class Mob extends Entity
     }
 
     protected void updateWalkingAnimation() {
-        if (!isWalking) {
+        if (!walking) {
             animFrame = 0; // idle = frame 0
             return;
         }
@@ -80,24 +81,24 @@ public abstract class Mob extends Entity
     protected void randomWalk() {
         // entity can change direction randomly once per x seconds
         boolean directionChange = random.nextInt(6 * 60) == 0;
-
+        System.out.println("random walk");
 
         if (directionChange) {
             facingDirection = Direction.randomDirection();
 
             // entity can also start walking randomly when changing direction
-            if (!isWalking && random.nextInt(5) == 0) {
-                isWalking = true;
+            if (!walking && random.nextInt(5) == 0) {
+                walking = true;
                 return;
             }
         }
         // entity can start walking randomly once per x seconds
-        if (!isWalking) {
-            if (random.nextInt(8 * 60) == 0) isWalking = true;
+        if (!walking) {
+            if (random.nextInt(8 * 60) == 0) walking = true;
         }
         // entity can stop walking randomly once per x seconds
         else {
-            if (random.nextInt(6 * 60) == 0) isWalking = false;
+            if (random.nextInt(6 * 60) == 0) walking = false;
         }
     }
 
@@ -107,6 +108,19 @@ public abstract class Mob extends Entity
 
 
         updateWalkingAnimation();
+
+        // Behavior overriden (used) by both a player and NPCS
+        // is above this line. Everything below SHOULD NOT be used by Player class
+        if ((this instanceof Player))
+        {
+            return;
+        }
+
+        System.out.println("B");
+        if (randomWalking) {
+            System.out.println("A");
+            randomWalk();
+        }
     }
 
     /**
