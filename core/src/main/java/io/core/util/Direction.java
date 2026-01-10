@@ -18,7 +18,7 @@ public enum Direction {
     }
 
     public static Direction randomDirection() {
-        int r = random.nextInt(3);
+        int r = random.nextInt(4);
 
         switch (r) {
             case 0: return UP;
