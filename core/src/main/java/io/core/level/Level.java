@@ -378,6 +378,21 @@ public class Level
         }
     }
 
+    public void dropItems(float x, float y, Item ...items) {
+        for (Item item : items) {
+            dropItem(x, y, item);
+        }
+    }
+
+    public void dropItem(float x, float y, int min, int max, Item ...items) {
+        dropItem(x, y, min + random.nextInt(max - min + 1), items);
+    }
+
+    public void dropItem(float x, float y, int count, Item ...items) {
+        for (int i = 0; i < count; i++)
+            dropItems(x, y, items);
+    }
+
     public void dropItem(float x, float y, Item item) {
 
         //TODO: xr and yr should have such a value that when the entity drops it,
