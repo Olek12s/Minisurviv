@@ -2,6 +2,8 @@ package io.core.entity.mob;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import io.core.core.Input;
 import io.core.core.Renderer;
 import io.core.entity.Entity;
 import io.core.level.Level;
@@ -80,25 +82,25 @@ public abstract class Mob extends Entity
 
     protected void randomWalk() {
         // entity can change direction randomly once per x seconds
-        boolean directionChange = random.nextInt(6 * 60) == 0;
-        System.out.println("random walk");
+        boolean directionChange = random.nextInt(6 * 6) == 0;
 
         if (directionChange) {
             facingDirection = Direction.randomDirection();
-
+            System.out.println("direction change");
             // entity can also start walking randomly when changing direction
             if (!walking && random.nextInt(5) == 0) {
                 walking = true;
+                System.out.println("walking true nested");
                 return;
             }
         }
         // entity can start walking randomly once per x seconds
         if (!walking) {
-            if (random.nextInt(8 * 60) == 0) walking = true;
+            if (random.nextInt(8 * 6) == 0) walking = true;
         }
         // entity can stop walking randomly once per x seconds
         else {
-            if (random.nextInt(6 * 60) == 0) walking = false;
+            if (random.nextInt(6 * 6) == 0) walking = false;
         }
     }
 
@@ -115,12 +117,21 @@ public abstract class Mob extends Entity
         {
             return;
         }
-
-        System.out.println("B");
         if (randomWalking) {
-            System.out.println("A");
             randomWalk();
         }
+
+        int x = 0; // facing vector X
+        int y = 0; // facing vector Y
+
+        if (facingDirection == Direction.LEFT) x--;
+        if (facingDirection == Direction.RIGHT) x++;
+        if (facingDirection == Direction.UP) y++;
+        if (facingDirection == Direction.DOWN) y--;
+
+        float xd = x * movSpeed;
+        float yd = y * movSpeed;
+        boolean moved = move(xd, yd, true); // Mobs's moved in this method
     }
 
     /**

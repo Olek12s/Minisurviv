@@ -216,6 +216,20 @@ public class Level
 
         }
 
+        // check players hitboxes
+        for (Player p : players) {
+            if (p == ignore || !p.isCollidabe()) continue;
+            Rectangle hb = p.getHitbox();
+
+            if (Box.overlaps(
+                    hb.x, hb.y, hb.x + hb.width, hb.y + hb.height,
+                    x0, y0, x1, y1
+            )) {
+                return true;
+            }
+        }
+
+
         return false;
     }
 
