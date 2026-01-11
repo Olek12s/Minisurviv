@@ -75,4 +75,33 @@ public class Inventory
         }
         return true;
     }
+
+    public boolean addItemIfPossible(Item item) {
+        int amountToAdd = item.getAmount();
+
+        // add to the existing stacks
+        for (Item i : items) {
+            if (i.getId() == item.getId() && i.getAmount() < i.getMaxStack()) {
+                int space = i.getMaxStack() - i.getAmount();
+                int added = Math.min(space, amountToAdd);
+                i.setAmount(i.getAmount() + added);
+                amountToAdd -= added;
+                if (amountToAdd == 0) return true; // everything was distributed
+            }
+        }
+
+        // create new stack in inventory
+        if (amountToAdd > 0) {
+            if (items.size() < MAX_SIZE) {
+                item.setAmount(amountToAdd);
+                items.add(item);
+                return true;
+            } else {
+                return false; // no space
+            }
+        }
+        return true;
+    }
+
+
 }
