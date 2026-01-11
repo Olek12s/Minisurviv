@@ -137,7 +137,34 @@ public class Level
      * @param includePlayers - should include players into the list
      * @return - List of entities whose hitboxes are intersecting box given in params
      */
-    public List<Entity> getEntitiesInBox(int x0, int y0, int x1, int y1, boolean includePlayers) {
+    public List<Entity> getEntitiesInBox(float x0, float y0, float x1, float y1, boolean includePlayers) {
+        List<Entity> result = new ArrayList<>();
+
+        float left = Math.min(x0, x1);
+        float right = Math.max(x0, x1);
+        float top = Math.min(y0, y1);
+        float bottom = Math.max(y0, y1);
+
+        Rectangle box = new Rectangle(left, top, right - left, bottom - top);
+
+        for (Entity e : entities) {
+            if (e.getHitbox().overlaps(box)) {
+                result.add(e);
+            }
+        }
+        if (includePlayers) {
+            for (Entity p : players) {
+                if (p.getHitbox().overlaps(box)) {
+                    result.add(p);
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    /*public List<Entity> getEntitiesInBox(int x0, int y0, int x1, int y1, boolean includePlayers) {
         List<Entity> result = new ArrayList<>();
 
         int left = Math.min(x0, x1);
@@ -161,7 +188,7 @@ public class Level
         }
 
         return result;
-    }
+    }*/
 
     public boolean intersectsWithAnyCollidableInBox(Rectangle rect, Entity ignore) {
         return intersectsWithAnyCollidableInBox(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height, ignore);
