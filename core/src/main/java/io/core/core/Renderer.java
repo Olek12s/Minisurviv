@@ -1,6 +1,8 @@
 package io.core.core;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -140,5 +142,12 @@ public class Renderer {
                 w * TILE_TXT_SIZE,
                 h * TILE_TXT_SIZE
         );
+    }
+
+    public static void renderHitboxShape(Rectangle hitbox, Color color) {
+        Color originalColor = shapeRenderer.getColor().cpy();
+        shapeRenderer.setColor(color);
+        renderHitboxShape(hitbox);
+        shapeRenderer.setColor(originalColor);
     }
 }
