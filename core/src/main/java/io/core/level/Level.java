@@ -396,8 +396,8 @@ public class Level
     public void dropItem(float x, float y, Item item) {
         // little messy but makes sence - 16 is typical hitbox size,
         // divide it by 24 and add it to the xr/yr so dropped item is somewhere in the middle of entity dropping the item
-        float xr = x + (random.nextFloat() * 0.75f - 0.5f) + (16f/24f);
-        float yr = y + (random.nextFloat() * 0.75f - 0.5f) + (16f/24f);
+        float xr = x + (random.nextFloat() * 0.75f - 0.5f) + (16f/24f)/2;
+        float yr = y + (random.nextFloat() * 0.75f - 0.5f) + (16f/24f)/2;
 
         ItemEntity itemEntity = new ItemEntity(xr, yr, item);
         addEntity(itemEntity);
