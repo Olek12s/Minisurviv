@@ -20,7 +20,10 @@ public abstract class Entity implements Tickable
     protected Random random = new Random();
     protected Rectangle hitbox = new Rectangle();
     protected Level level; // level that entity is at
+    protected Inventory inventory = new Inventory();
     private boolean removed;    // should entity by removed on the next tick    // TODO: implement rmeoving
+
+
 
     // Hitbox config - needed during hitbox updates. Values needs to be divided by / 24 (1 tile contains 24 pixels)
     // - which is already done in updateHitbox()

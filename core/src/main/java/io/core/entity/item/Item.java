@@ -12,6 +12,11 @@ import java.util.EnumMap;
 public abstract class Item
 {
     protected final ItemId id;
+    protected int maxStack = 1; // by default - item stacks up to 1.
+    protected int amount;
+
+    public int getAmount() {return amount;}
+    public void setAmount(int count) {this.amount = count;}
 
     public ItemId getId() {
         return id;
