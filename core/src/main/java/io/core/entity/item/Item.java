@@ -15,6 +15,8 @@ public abstract class Item
     protected int maxStack = 1; // by default - item stacks up to 1.
     protected int amount;
 
+    public int getMaxStack() {return maxStack;}
+
     public int getAmount() {return amount;}
     public void setAmount(int count) {this.amount = count;}
 

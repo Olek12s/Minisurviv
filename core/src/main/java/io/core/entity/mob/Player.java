@@ -1,12 +1,18 @@
 package io.core.entity.mob;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import io.core.core.CameraController;
 import io.core.core.Input;
 import io.core.core.Renderer;
+import io.core.entity.Entity;
+import io.core.entity.ItemEntity;
+import io.core.entity.item.Item;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
+
+import java.util.List;
 
 
 public class Player extends Mob
@@ -30,15 +36,39 @@ public class Player extends Mob
     @Override
     public void tick(Level level) {
 
-        Vector2 vec = new Vector2(0, 0);    // movement vector
 
+        // PICKING UP ITEMS
+        List<Entity> nearbyItems = level.getEntitiesInBox(
+                hitbox.x, hitbox.y,
+                hitbox.x + hitbox.width, hitbox.y + hitbox.height,
+                false
+        );
+
+        System.out.println(nearbyItems);
+
+        for (Entity e : nearbyItems) {
+            if (e instanceof ItemEntity itemEntity) {
+                if (itemEntity.canBePicked()) {
+                    Item item = itemEntity.getItem();
+
+                    boolean added = inventory.addItemIfPossible(item);
+                    if (added) {
+                        level.entities.remove(itemEntity);
+                    }
+                }
+            }
+        }
+
+
+
+        // PLAYER MOVEMENT
+
+        Vector2 vec = new Vector2(0, 0);    // movement vector
 
         if (Input.isHeld(Input.Keys.W)) vec.y++;            // up
         if (Input.isHeld(Input.Keys.S)) vec.y--;            // down
         if (Input.isHeld(Input.Keys.A)) vec.x--;            // left
         if (Input.isHeld(Input.Keys.D)) vec.x++;            // right
-
-
 
         // Move the player
         float xd = vec.x * movSpeed;

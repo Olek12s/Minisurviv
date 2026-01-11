@@ -10,6 +10,9 @@ public class ItemEntity extends Entity
     protected Item item;    // reference to the item
     protected int ticksToBePickable = 40 + random.nextInt(41);  // [40, 80]
 
+    public Item getItem() {return item;}
+    public boolean canBePicked() {return ticksToBePickable == 0;}
+
     public ItemEntity(float x, float y, Item item) {
         this.x = x;
         this.y = y;
@@ -28,7 +31,6 @@ public class ItemEntity extends Entity
     public void tick(Level level) {
 
         if (ticksToBePickable != 0) ticksToBePickable--;
-        System.out.println(ticksToBePickable);
     }
 
     /**
