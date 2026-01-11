@@ -19,7 +19,10 @@ public abstract class Tile implements Tickable
         this.id = id;
     }
 
+    @Override
+    public void tick(Level level) {
 
+    }
 
     public void render(int tileX, int tileY) {
         Renderer.renderTile(id.name(), tileX, tileY);
