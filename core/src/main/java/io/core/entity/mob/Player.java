@@ -37,28 +37,26 @@ public class Player extends Mob
     public void tick(Level level) {
 
 
-        // PICKING UP ITEMS
-       /* List<Entity> nearbyItems = level.getEntitiesInBox(
+        // ITEMS WITHIN HITBOX
+        List<Entity> nearbyItems = level.getEntitiesInBox(
                 hitbox.x, hitbox.y,
                 hitbox.x + hitbox.width, hitbox.y + hitbox.height,
                 false
         );
 
-        System.out.println(inventory);
-
+        // PICKING UP ITEMS WITHIN HITBOX IF ITEM'S COUNTDOWN IS 0
         for (Entity e : nearbyItems) {
             if (e instanceof ItemEntity itemEntity) {
                 if (itemEntity.canBePicked()) {
                     Item item = itemEntity.getItem();
-                    Item itemCopy = item.copy();
 
-                    boolean added = inventory.addItemIfPossible(itemCopy);
+                    boolean added = inventory.addItemIfPossible(item);
                     if (added) {
                         level.entities.remove(itemEntity);
                     }
                 }
             }
-        }*/
+        }
 
         // PLAYER MOVEMENT
 

@@ -93,8 +93,9 @@ public class Inventory
         // create new stack in inventory
         if (amountToAdd > 0) {
             if (items.size() < MAX_SIZE) {
-                item.setAmount(amountToAdd);
-                items.add(item);
+                Item newStack = item.copy();
+                newStack.setAmount(amountToAdd);
+                items.add(newStack);
                 return true;
             } else {
                 return false; // no space
@@ -107,7 +108,7 @@ public class Inventory
     public String toString() {
         StringBuilder str = new StringBuilder("Inventory: \n");
         for (Item item : items) {
-            str.append(item.toString());
+            str.append(item.toString()).append("\n");
         }
         return str.toString();
     }

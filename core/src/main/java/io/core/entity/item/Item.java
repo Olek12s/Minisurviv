@@ -13,7 +13,7 @@ public abstract class Item
 {
     protected final ItemId id;
     protected int maxStack = 1; // by default - item stacks up to 1.
-    protected int amount;
+    protected int amount = 1;   // default amount is 1
 
     public int getMaxStack() {return maxStack;}
 
@@ -33,6 +33,18 @@ public abstract class Item
     public void renderOnHUD(float x, float y) {
         Renderer.renderItem(id.name(), x, y);
     }
+
+    //TODO: This might be bad copy() method, perhaps abstract copy() would be better
+    public Item copy() {
+        try {
+            Item copy = this.getClass().getDeclaredConstructor().newInstance();
+            copy.setAmount(this.amount);
+            return copy;
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot copy item " + this, e);
+        }
+    }
+
 
 
 
