@@ -9,7 +9,7 @@ import java.util.List;
 public class Inventory
 {
     private List<Item> items = new ArrayList<>();
-    public static int MAX_SIZE = 16;
+    public static int MAX_SIZE = 4;
 
     public List<Item> getItems() {return items;}
 
@@ -103,5 +103,12 @@ public class Inventory
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("Inventory: \n");
+        for (Item item : items) {
+            str.append(item.toString());
+        }
+        return str.toString();
+    }
 }

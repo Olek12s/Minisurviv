@@ -33,4 +33,15 @@ public abstract class Item
     public void renderOnHUD(float x, float y) {
         Renderer.renderItem(id.name(), x, y);
     }
+
+
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", maxStack=" + maxStack +
+                ", amount=" + amount +
+                '}';
+    }
 }

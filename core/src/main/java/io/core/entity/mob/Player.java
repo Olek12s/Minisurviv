@@ -38,28 +38,27 @@ public class Player extends Mob
 
 
         // PICKING UP ITEMS
-        List<Entity> nearbyItems = level.getEntitiesInBox(
+       /* List<Entity> nearbyItems = level.getEntitiesInBox(
                 hitbox.x, hitbox.y,
                 hitbox.x + hitbox.width, hitbox.y + hitbox.height,
                 false
         );
 
-        System.out.println(nearbyItems);
+        System.out.println(inventory);
 
         for (Entity e : nearbyItems) {
             if (e instanceof ItemEntity itemEntity) {
                 if (itemEntity.canBePicked()) {
                     Item item = itemEntity.getItem();
+                    Item itemCopy = item.copy();
 
-                    boolean added = inventory.addItemIfPossible(item);
+                    boolean added = inventory.addItemIfPossible(itemCopy);
                     if (added) {
                         level.entities.remove(itemEntity);
                     }
                 }
             }
-        }
-
-
+        }*/
 
         // PLAYER MOVEMENT
 

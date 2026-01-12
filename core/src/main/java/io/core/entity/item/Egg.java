@@ -6,7 +6,7 @@ public class Egg extends Item
     public Egg() {
         super(ItemId.EGG);
 
-        this.maxStack = 16;
+        this.maxStack = 3;
     }
 
     @Override
