@@ -127,14 +127,13 @@ public class Renderer {
         spriteBatch.setProjectionMatrix(hudCamera.combined);
 
 
-        // ===== HEARTS BAR ===== //
-        int heartSize = 24; // heart size on HUD
-        int maxHearts = (int)Math.ceil(player.maxHealth / 2f);
+        int statsIconSize = 24; // icon size on HUD
 
+        // ===== HEARTS BAR ===== //
+        int maxHearts = (int)Math.ceil(player.maxHealth / 2f);
         for (int i = 0; i < maxHearts; i++) {
 
-            float x = 5 + i * (heartSize + 2);
-            float y = hudCamera.viewportHeight - heartSize - 5;
+            float x = (i * (statsIconSize + 2));
 
             int heartHP = player.health - i * 2;
             int maxHeartHP = player.maxHealth - i * 2;
@@ -154,7 +153,36 @@ public class Renderer {
             }
 
             if (region != null) {
-                spriteBatch.draw(region, x, y, heartSize, heartSize);
+                spriteBatch.draw(region, x, statsIconSize, statsIconSize, statsIconSize);
+            }
+        }
+
+        // ===== ENERGY BAR ===== //
+        int maxEnergyIcons = (int)Math.ceil(Player.MAX_ENERGY / 2f);
+        for (int i = 0; i < maxEnergyIcons; i++) {
+
+            float x = i * (statsIconSize + 2);
+            float y = 0;
+
+            int energy = player.getEnergy() - i * 2;
+            int maxEnergy = Player.MAX_ENERGY - i * 2;
+
+            TextureRegion region;
+
+            if (energy >= 2) {
+                region = HUD_TEXTURE_ATLAS.findRegion("energy_full");
+            } else if (energy == 1) {
+                region = HUD_TEXTURE_ATLAS.findRegion("energy_half");
+            } else {
+                if (maxEnergy == 1) {
+                    region = HUD_TEXTURE_ATLAS.findRegion("energy_empty_half");
+                } else {
+                    region = HUD_TEXTURE_ATLAS.findRegion("energy_empty");
+                }
+            }
+
+            if (region != null) {
+                spriteBatch.draw(region, x, y, statsIconSize, statsIconSize);
             }
         }
     }

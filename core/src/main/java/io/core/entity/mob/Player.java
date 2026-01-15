@@ -18,7 +18,7 @@ import java.util.List;
 public class Player extends Mob
 {
     private static final int MAX_HEALTH = 20;
-    private static final int MAX_ENERGY = 20;
+    public static final int MAX_ENERGY = 20;
     private int energy;
 
     public int getEnergy() {return energy;}
