@@ -52,6 +52,25 @@ public abstract class Entity implements Tickable
     public Level getLevel() {return level;}
     public void setLevel(Level level) {this.level = level;}
 
+
+    public void setHitboxWidth(float hitboxWidth) {
+        this.hitboxWidth = hitboxWidth;
+        this.hitboxOffsetY = (24f - hitboxWidth) /2;
+        updateHitbox();
+    }
+
+    public void setHitboxHeight(float hitboxHeight) {
+        this.hitboxHeight = hitboxHeight;
+        this.hitboxOffsetX = (24f - hitboxHeight) /2;
+        updateHitbox();
+    }
+
+    public void setHitboxSize(float x, float y) {
+        setHitboxWidth(x);
+        setHitboxHeight(y);
+    }
+
+
     public Rectangle getHitbox() {return hitbox;}
 
     public abstract void render();
