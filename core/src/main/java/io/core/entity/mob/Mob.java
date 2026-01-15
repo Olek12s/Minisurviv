@@ -22,7 +22,8 @@ public abstract class Mob extends Entity
     protected boolean walking = false;              // is entity walking on its own
     protected boolean randomWalkingActive = true;   // can entity perform random walk (used for ticking randomWalk() method)
     protected boolean wantsToWalk = false;          // intention of walking, not physical state
-
+    public int health;
+    public final int maxHealth;
 
 
     protected float movSpeed = 3f / 60; // TODO: change it for better format. now it moves 3 tiles / sec
@@ -32,10 +33,12 @@ public abstract class Mob extends Entity
     }
 
 
-    public Mob() {
+    public Mob(int maxHealth) {
 
         // default hitbox values for mob
         setHitboxSize(16, 16);
+        this.maxHealth = maxHealth;
+        this.health = this.maxHealth;
 
         collidabe = true;
     }

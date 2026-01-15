@@ -17,8 +17,10 @@ import java.util.List;
 
 public class Player extends Mob
 {
+    private static final int PLAYER_MAX_HEALTH = 20;
 
     public Player() {
+        super(PLAYER_MAX_HEALTH);
         TextureRegion sheet = Renderer.getEntitiesTextureAtlas().findRegion("player");
         loadAnimations(sheet, 3, 4);
 

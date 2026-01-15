@@ -9,10 +9,12 @@ import io.core.entity.item.Items;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
 
-public class Chicken extends NeutralMob
+public class Chicken extends PassiveMob
 {
     static int a = 0;
     public Chicken () {
+        super(4);
+
         TextureRegion sheet = Renderer.getEntitiesTextureAtlas().findRegion("chicken");
         loadAnimations(sheet, 3, 4);
 
