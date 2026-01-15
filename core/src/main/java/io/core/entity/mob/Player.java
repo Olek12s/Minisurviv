@@ -21,6 +21,9 @@ public class Player extends Mob
     private static final int MAX_ENERGY = 20;
     private int energy;
 
+    public int getEnergy() {return energy;}
+    public void setEnergy(int energy) {this.energy = energy;}
+
     public Player() {
         super(MAX_HEALTH);
         TextureRegion sheet = Renderer.getEntitiesTextureAtlas().findRegion("player");
