@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.core.entity.mob.Player;
 import io.core.level.LevelsManager;
 
 public class Renderer {
@@ -20,6 +21,8 @@ public class Renderer {
     public static SpriteBatch spriteBatch;
     private static ShapeRenderer shapeRenderer;
     private static CameraController cameraController;
+    private static OrthographicCamera hudCamera;
+    private static Viewport viewport;
 
     private static final AssetManager assetManager = new AssetManager();
     private static TextureAtlas TILES_TEXTURE_ATLAS;
@@ -28,23 +31,31 @@ public class Renderer {
     }
     private static TextureAtlas ENTITIES_TEXTURE_ATLAS;
     private static TextureAtlas ITEMS_TEXTURE_ATLAS;
-
+    private static TextureAtlas HUD_TEXTURE_ATLAS;
 
     public static boolean renderGame = false;
 
     public static void init(Viewport viewport) {
         Renderer.spriteBatch = new SpriteBatch();
         Renderer.shapeRenderer = new ShapeRenderer();
+        Renderer.viewport = viewport;
 
+        // world camera
         cameraController = new CameraController((OrthographicCamera) viewport.getCamera());
-        //Renderer.camera.setToOrtho(false);
         CameraController.camera.update();
+
+        // HUD camera
+        hudCamera = new OrthographicCamera();
+        hudCamera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight());
+        hudCamera.update();
+
 
         spriteBatch.setProjectionMatrix(cameraController.camera.combined);
 
         loadTileTextures();
         loadEntitiesTextures();
         loadItemTextures();
+        loadHUDTextures();
     }
 
     private static void loadTileTextures() {
@@ -65,6 +76,12 @@ public class Renderer {
         ITEMS_TEXTURE_ATLAS = assetManager.get("items.atlas", TextureAtlas.class);
     }
 
+    private static void loadHUDTextures() {
+        assetManager.load("hud.atlas", TextureAtlas.class);
+        assetManager.finishLoading();
+        HUD_TEXTURE_ATLAS = assetManager.get("hud.atlas", TextureAtlas.class);
+    }
+
     /**
      * Main rendering method, here every render() method is being called and managed
      */
@@ -82,11 +99,13 @@ public class Renderer {
 
 
         if (renderGame) {
-
             spriteBatch.setProjectionMatrix(CameraController.camera.combined);
             spriteBatch.begin();
             LevelsManager.getCurrentLevel().render(startX, startY, endX, endY);
-            //renderGUI();
+            spriteBatch.end();
+
+            spriteBatch.begin();
+            renderHUD();
             spriteBatch.end();
 
 
@@ -97,6 +116,46 @@ public class Renderer {
                 LevelsManager.getCurrentLevel().renderShapes(startX, startY, endX, endY);
             }
             shapeRenderer.end();
+        }
+    }
+
+    private static void renderHUD() {
+        Player player = LevelsManager.getCurrentLevel().getFirstPlayer();
+
+        if (player == null) return;
+
+        spriteBatch.setProjectionMatrix(hudCamera.combined);
+
+
+        // ===== HEARTS BAR ===== //
+        int heartSize = 24; // heart size on HUD
+        int maxHearts = (int)Math.ceil(player.maxHealth / 2f);
+
+        for (int i = 0; i < maxHearts; i++) {
+
+            float x = 5 + i * (heartSize + 2);
+            float y = hudCamera.viewportHeight - heartSize - 5;
+
+            int heartHP = player.health - i * 2;
+            int maxHeartHP = player.maxHealth - i * 2;
+
+            TextureRegion region;
+
+            if (heartHP >= 2) {
+                region = HUD_TEXTURE_ATLAS.findRegion("heart_full");
+            } else if (heartHP == 1) {
+                region = HUD_TEXTURE_ATLAS.findRegion("heart_half");
+            } else {
+                if (maxHeartHP == 1) {
+                    region = HUD_TEXTURE_ATLAS.findRegion("heart_empty_half");
+                } else {
+                    region = HUD_TEXTURE_ATLAS.findRegion("heart_empty");
+                }
+            }
+
+            if (region != null) {
+                spriteBatch.draw(region, x, y, heartSize, heartSize);
+            }
         }
     }
 
