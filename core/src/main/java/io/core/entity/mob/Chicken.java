@@ -16,7 +16,7 @@ public class Chicken extends NeutralMob
         TextureRegion sheet = Renderer.getEntitiesTextureAtlas().findRegion("chicken");
         loadAnimations(sheet, 3, 4);
 
-
+        setHitboxSize(8, 8);
         int x = 4;
         int y = 4;
         if (a == 0)LevelsManager.getCurrentLevel().addEntity(this, x, y);  //TODO: temporary, spawning should be determined in world generation
