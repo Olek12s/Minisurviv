@@ -17,12 +17,16 @@ import java.util.List;
 
 public class Player extends Mob
 {
-    private static final int PLAYER_MAX_HEALTH = 20;
+    private static final int MAX_HEALTH = 20;
+    private static final int MAX_ENERGY = 20;
+    private int energy;
 
     public Player() {
-        super(PLAYER_MAX_HEALTH);
+        super(MAX_HEALTH);
         TextureRegion sheet = Renderer.getEntitiesTextureAtlas().findRegion("player");
         loadAnimations(sheet, 3, 4);
+
+        this.energy = MAX_ENERGY;
 
         // starting coordinates are set to 0
         int x = 0;
