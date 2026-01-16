@@ -185,6 +185,36 @@ public class Renderer {
                 spriteBatch.draw(region, x, y, statsIconSize, statsIconSize);
             }
         }
+
+        // ===== FOOD BAR ===== //
+        int maxFoodIcons = (int)Math.ceil(Player.MAX_FOOD / 2f);
+        for (int i = 0; i < maxFoodIcons; i++) {
+
+            float x = hudCamera.viewportWidth - (i + 1) * (statsIconSize);
+            float y = 0;
+
+            float foodInSlot = player.getFood() - i * 2f; // float!
+            float maxFoodInSlot = Player.MAX_FOOD - i * 2f;
+
+            TextureRegion region;
+
+            if (foodInSlot >= 2f) {
+                region = HUD_TEXTURE_ATLAS.findRegion("food_full");
+            } else if (foodInSlot >= 1f) { // >=1 for half
+                region = HUD_TEXTURE_ATLAS.findRegion("food_half");
+            } else {
+                if (maxFoodInSlot == 1f) {
+                    region = HUD_TEXTURE_ATLAS.findRegion("food_empty_half");
+                } else {
+                    region = HUD_TEXTURE_ATLAS.findRegion("food_empty");
+                }
+            }
+
+            if (region != null) {
+                spriteBatch.draw(region, x, y, statsIconSize, statsIconSize);
+            }
+        }
+
     }
 
     public static void renderTile(String tileName, int x, int y) {

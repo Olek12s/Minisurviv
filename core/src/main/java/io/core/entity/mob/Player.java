@@ -19,10 +19,14 @@ public class Player extends Mob
 {
     private static final int MAX_HEALTH = 20;
     public static final int MAX_ENERGY = 20;
+    public static final int MAX_FOOD = 20;
     private int energy;
+    private float food;
 
     public int getEnergy() {return energy;}
     public void setEnergy(int energy) {this.energy = energy;}
+    public float getFood() {return food;}
+    public void setFood(int food) {this.food = food;}
 
     public Player() {
         super(MAX_HEALTH);
@@ -30,6 +34,7 @@ public class Player extends Mob
         loadAnimations(sheet, 3, 4);
 
         this.energy = MAX_ENERGY;
+        this.food = MAX_FOOD;
 
         // starting coordinates are set to 0
         int x = 0;
