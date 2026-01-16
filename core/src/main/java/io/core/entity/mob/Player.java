@@ -11,7 +11,6 @@ import io.core.entity.ItemEntity;
 import io.core.entity.item.Item;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
-import io.core.ui.UIDisplayManager;
 
 import java.util.List;
 
@@ -84,7 +83,7 @@ public class Player extends Mob
 
         // PLAYER MOVEMENT
 
-        if (!UIDisplayManager.blocksGameInput()) {
+
             Vector2 vec = new Vector2(0, 0);    // movement vector
 
             if (Input.isHeld(Input.Keys.W)) vec.y++;            // up
@@ -96,7 +95,7 @@ public class Player extends Mob
             float xd = vec.x * movSpeed;
             float yd = vec.y * movSpeed;
             boolean moved = move(xd, yd, true); // Player's moved in this method
-        }
+
 
         super.tick(level);
     }

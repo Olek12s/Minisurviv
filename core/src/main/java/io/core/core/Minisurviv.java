@@ -12,6 +12,8 @@ import lombok.Getter;
 @Getter
 public abstract class Minisurviv extends Game
 {
+    private static Minisurviv instance;
+
     private AssetManager assetManager;
     private Input input;
     private Updater updater;
@@ -40,9 +42,14 @@ public abstract class Minisurviv extends Game
 
     public static final String VERSION = "v0.3.0 Pre-alpha";
 
+    public static Minisurviv get() {
+        return instance;
+    }
 
     @Override
     public void create() {
+        instance = this;
+
         this.assetManager = new AssetManager();
 
         this.input = new Input();

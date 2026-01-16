@@ -72,6 +72,9 @@ public class Input {
         public static final int CONTROL_RIGHT = com.badlogic.gdx.Input.Keys.CONTROL_RIGHT;
         public static final int ALT_LEFT = com.badlogic.gdx.Input.Keys.ALT_LEFT;
         public static final int ALT_RIGHT = com.badlogic.gdx.Input.Keys.ALT_RIGHT;
+
+        public static final int UP = com.badlogic.gdx.Input.Keys.UP;
+        public static final int DOWN = com.badlogic.gdx.Input.Keys.DOWN;
     }
 
     private static final Integer[] allKeys = {

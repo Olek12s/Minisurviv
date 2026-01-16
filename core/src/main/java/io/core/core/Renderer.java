@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.core.entity.item.Item;
 import io.core.entity.mob.Player;
 import io.core.level.LevelsManager;
 
@@ -126,11 +127,10 @@ public class Renderer {
 
         spriteBatch.setProjectionMatrix(hudCamera.combined);
 
-
         int statsIconSize = 24; // icon size on HUD
 
         // ===== HEARTS BAR ===== //
-        int maxHearts = (int)Math.ceil(player.maxHealth / 2f);
+        int maxHearts = (int) Math.ceil(player.maxHealth / 2f);
         for (int i = 0; i < maxHearts; i++) {
 
             float x = (i * (statsIconSize + 2));
@@ -158,7 +158,7 @@ public class Renderer {
         }
 
         // ===== ENERGY BAR ===== //
-        int maxEnergyIcons = (int)Math.ceil(Player.MAX_ENERGY / 2f);
+        int maxEnergyIcons = (int) Math.ceil(Player.MAX_ENERGY / 2f);
         for (int i = 0; i < maxEnergyIcons; i++) {
 
             float x = i * (statsIconSize + 2);
@@ -187,7 +187,7 @@ public class Renderer {
         }
 
         // ===== FOOD BAR ===== //
-        int maxFoodIcons = (int)Math.ceil(Player.MAX_FOOD / 2f);
+        int maxFoodIcons = (int) Math.ceil(Player.MAX_FOOD / 2f);
         for (int i = 0; i < maxFoodIcons; i++) {
 
             float x = hudCamera.viewportWidth - (i + 1) * (statsIconSize);
@@ -214,6 +214,13 @@ public class Renderer {
                 spriteBatch.draw(region, x, y, statsIconSize, statsIconSize);
             }
         }
+
+
+
+        // ===== HOTBAR ===== //
+        Item[] hotBarItems = player.getHotbarItems();
+        int slotCount = hotBarItems.length;
+
 
     }
 
