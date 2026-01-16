@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import io.core.core.Input;
 import io.core.core.Renderer;
 import io.core.entity.Entity;
+import io.core.entity.item.Item;
 import io.core.level.Level;
 import io.core.util.Direction;
 
@@ -24,7 +25,7 @@ public abstract class Mob extends Entity
     protected boolean wantsToWalk = false;          // intention of walking, not physical state
     public int health;
     public final int maxHealth;
-
+    protected Item activeItem;
 
     protected float movSpeed = 3f / 60; // TODO: change it for better format. now it moves 3 tiles / sec
 

@@ -1,7 +1,9 @@
 package io.core.core;
 
+import com.badlogic.gdx.Gdx;
 import io.core.entity.mob.Player;
 import io.core.level.LevelsManager;
+import io.core.ui.UIDisplayManager;
 
 public class Updater {
 
@@ -18,6 +20,7 @@ public class Updater {
         if (player == null) return;
 
         LevelsManager.getCurrentLevel().tick();
+        UIDisplayManager.tick();
 
         // camera is linked to the player's character
         CameraController.followSmooth(player);

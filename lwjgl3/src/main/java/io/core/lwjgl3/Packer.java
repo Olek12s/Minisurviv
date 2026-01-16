@@ -28,6 +28,7 @@ public class Packer
         settings.maxWidth = 1024;
         settings.maxHeight = 1024;
         settings.duplicatePadding = true;
+        settings.flattenPaths = true;
         // Duplicates the edge pixels of each sprite in the atlas.
         // This prevents "ghost pixels" or thin lines between tiles when the GPU interpolates textures
         // (e.g., during scaling or linear filtering).

@@ -11,6 +11,7 @@ import io.core.entity.ItemEntity;
 import io.core.entity.item.Item;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
+import io.core.ui.UIDisplayManager;
 
 import java.util.List;
 
@@ -22,11 +23,13 @@ public class Player extends Mob
     public static final int MAX_FOOD = 20;
     private int energy;
     private float food;
+    private final Item[] hotbarItems = new Item[5];
 
     public int getEnergy() {return energy;}
     public void setEnergy(int energy) {this.energy = energy;}
     public float getFood() {return food;}
     public void setFood(int food) {this.food = food;}
+    public Item[] getHotbarItems() {return hotbarItems;}
 
     public Player() {
         super(MAX_HEALTH);
@@ -49,6 +52,13 @@ public class Player extends Mob
 
     @Override
     public void tick(Level level) {
+        // ACTIVE ITEM SELECTION FROM HOTBAR
+        if (Input.isHeld(Input.Keys.NUM_0)) activeItem = hotbarItems[0];
+        if (Input.isHeld(Input.Keys.NUM_1)) activeItem = hotbarItems[1];
+        if (Input.isHeld(Input.Keys.NUM_2)) activeItem = hotbarItems[2];
+        if (Input.isHeld(Input.Keys.NUM_3)) activeItem = hotbarItems[3];
+        if (Input.isHeld(Input.Keys.NUM_4)) activeItem = hotbarItems[4];
+
 
 
         // ITEMS WITHIN HITBOX
@@ -74,17 +84,19 @@ public class Player extends Mob
 
         // PLAYER MOVEMENT
 
-        Vector2 vec = new Vector2(0, 0);    // movement vector
+        if (!UIDisplayManager.blocksGameInput()) {
+            Vector2 vec = new Vector2(0, 0);    // movement vector
 
-        if (Input.isHeld(Input.Keys.W)) vec.y++;            // up
-        if (Input.isHeld(Input.Keys.S)) vec.y--;            // down
-        if (Input.isHeld(Input.Keys.A)) vec.x--;            // left
-        if (Input.isHeld(Input.Keys.D)) vec.x++;            // right
+            if (Input.isHeld(Input.Keys.W)) vec.y++;            // up
+            if (Input.isHeld(Input.Keys.S)) vec.y--;            // down
+            if (Input.isHeld(Input.Keys.A)) vec.x--;            // left
+            if (Input.isHeld(Input.Keys.D)) vec.x++;            // right
 
-        // Move the player
-        float xd = vec.x * movSpeed;
-        float yd = vec.y * movSpeed;
-        boolean moved = move(xd, yd, true); // Player's moved in this method
+            // Move the player
+            float xd = vec.x * movSpeed;
+            float yd = vec.y * movSpeed;
+            boolean moved = move(xd, yd, true); // Player's moved in this method
+        }
 
         super.tick(level);
     }
