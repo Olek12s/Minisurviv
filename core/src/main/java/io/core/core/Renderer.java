@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -136,7 +133,7 @@ public class Renderer {
 
         spriteBatch.setProjectionMatrix(hudCamera.combined);
 
-        int statsIconSize = 9; // icon size on HUD
+        int statsIconSize = 13; // icon size on HUD
 
         // ===== HEARTS BAR ===== //
         int maxHearts = (int) Math.ceil(player.maxHealth / 2f);
@@ -224,13 +221,12 @@ public class Renderer {
             }
         }
 
-        Display display = new Display();
-        int s = 3;
-        display.setX(25);
-        display.setY(25);
-        display.setWidth(25);
-        display.setHeight(25);
-        display.render();
+//        Display display = new Display();
+//        display.setX(25);
+//        display.setY(25);
+//        display.setWidth(24);
+//        display.setHeight(24);
+//        display.render();
 
         // ===== HOTBAR ===== //
         Item[] hotBarItems = player.getHotbarItems();
@@ -268,6 +264,11 @@ public class Renderer {
                 ENTITY_TXT_SIZE
         );
     }
+
+    public static void drawText(BitmapFont font, String text, int x, int y) {
+        font.draw(spriteBatch, text, x, y);
+    }
+
 
     public static void renderWindowNinePatch(NinePatch windowPatch, int width, int height, int x, int y) {
         windowPatch.draw(spriteBatch, x, y, width, height);
