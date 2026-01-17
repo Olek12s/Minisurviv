@@ -1,12 +1,14 @@
 package io.core.core;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
 import io.core.entity.Entity;
 
 public class CameraController {
 
     protected static OrthographicCamera camera;
     private static final int PIXELS_PER_TILE = 24;
+    private static final int ENTITY_SIZE = 24;
 
     // 1.0 or above - instant (no smoothness)
     // above 0 - smooth
@@ -22,8 +24,8 @@ public class CameraController {
      */
     protected static void follow(Entity e) {
         camera.position.set(
-                e.getX() * PIXELS_PER_TILE,
-                e.getY() * PIXELS_PER_TILE,
+                centerXPx(e),
+                centerYPx(e),
                 0
         );
         camera.update();
@@ -42,8 +44,8 @@ public class CameraController {
      */
     public static void snapTo(Entity e) {
         camera.position.set(
-                e.getX() * PIXELS_PER_TILE,
-                e.getY() * PIXELS_PER_TILE,
+                centerXPx(e),
+                centerYPx(e),
                 0
         );
         camera.update();
@@ -56,13 +58,21 @@ public class CameraController {
      * @param e - entity to follow
      */
     public static void followSmooth(Entity e) {
-
-        float targetX = e.getX() * PIXELS_PER_TILE;
-        float targetY = e.getY() * PIXELS_PER_TILE;
+        float targetX = centerXPx(e);
+        float targetY = centerYPx(e);
 
         camera.position.x += (targetX - camera.position.x) * FOLLOW_FACTOR;
         camera.position.y += (targetY - camera.position.y) * FOLLOW_FACTOR;
         camera.update();
+    }
+
+
+    private static float centerXPx(Entity e) {
+        return (ENTITY_SIZE + ENTITY_SIZE / 2f) * PIXELS_PER_TILE;
+    }
+
+    private static float centerYPx(Entity e) {
+        return (ENTITY_SIZE + ENTITY_SIZE / 2f) * PIXELS_PER_TILE;
     }
 
 
