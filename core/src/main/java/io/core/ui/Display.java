@@ -11,7 +11,7 @@ import java.util.List;
 public class Display
 {
     protected static TextureRegion windowRegion = Renderer.getHudTextureAtlas().findRegion("window");
-    protected static NinePatch windowPatch = new NinePatch(windowRegion, 24, 24, 24, 24);
+    protected static NinePatch windowPatch = new NinePatch(windowRegion, 8,8,8,8);
 
 
     protected int x, y; // window position

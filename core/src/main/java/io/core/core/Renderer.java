@@ -56,8 +56,8 @@ public class Renderer {
 
         // HUD camera
         hudCamera = new OrthographicCamera();
-        hudCamera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight()); // TODO: Change to worldWidth & Height
-
+        //hudCamera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight()); // TODO: Change to worldWidth & Height
+        hudCamera.setToOrtho(false, viewport.getWorldWidth(), viewport.getWorldHeight());
         hudCamera.update();
 
 
@@ -136,7 +136,7 @@ public class Renderer {
 
         spriteBatch.setProjectionMatrix(hudCamera.combined);
 
-        int statsIconSize = 24; // icon size on HUD
+        int statsIconSize = 9; // icon size on HUD
 
         // ===== HEARTS BAR ===== //
         int maxHearts = (int) Math.ceil(player.maxHealth / 2f);
@@ -226,10 +226,10 @@ public class Renderer {
 
         Display display = new Display();
         int s = 3;
-        display.setX(100 * s);
-        display.setY(20 * s);
-        display.setWidth(100 * s);
-        display.setHeight(200 * s);
+        display.setX(25);
+        display.setY(25);
+        display.setWidth(25);
+        display.setHeight(25);
         display.render();
 
         // ===== HOTBAR ===== //
