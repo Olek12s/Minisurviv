@@ -8,7 +8,6 @@ public class CameraController {
 
     protected static OrthographicCamera camera;
     private static final int PIXELS_PER_TILE = 24;
-    private static final int ENTITY_SIZE = 24;
 
     // 1.0 or above - instant (no smoothness)
     // above 0 - smooth
@@ -66,14 +65,17 @@ public class CameraController {
         camera.update();
     }
 
-
+    // 0.5 - half tile
     private static float centerXPx(Entity e) {
-        return (ENTITY_SIZE + ENTITY_SIZE / 2f) * PIXELS_PER_TILE;
+        return (e.getX() + 0.5f) * PIXELS_PER_TILE;
     }
 
+    // 0.5 - half tile
     private static float centerYPx(Entity e) {
-        return (ENTITY_SIZE + ENTITY_SIZE / 2f) * PIXELS_PER_TILE;
+        return (e.getY() + 0.5f) * PIXELS_PER_TILE;
     }
+
+
 
 
 }
