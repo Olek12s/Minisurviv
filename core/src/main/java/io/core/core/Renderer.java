@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import io.core.entity.item.Item;
 import io.core.entity.mob.Player;
 import io.core.level.LevelsManager;
+import io.core.ui.Display;
 
 public class Renderer {
     private static int TILE_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
@@ -34,6 +36,13 @@ public class Renderer {
     private static TextureAtlas ITEMS_TEXTURE_ATLAS;
     private static TextureAtlas HUD_TEXTURE_ATLAS;
 
+    public static TextureAtlas getHudTextureAtlas() {return HUD_TEXTURE_ATLAS;}
+    public static int getTileTxtSize() {return TILE_TXT_SIZE;}
+    public static int getEntityTxtSize() {return ENTITY_TXT_SIZE;}
+    public static int getItemTxtSize() {return ITEM_TXT_SIZE;}
+    public static TextureAtlas getTilesTextureAtlas() {return TILES_TEXTURE_ATLAS;}
+    public static TextureAtlas getItemsTextureAtlas() {return ITEMS_TEXTURE_ATLAS;}
+
     public static boolean renderGame = false;
 
     public static void init(Viewport viewport) {
@@ -47,7 +56,8 @@ public class Renderer {
 
         // HUD camera
         hudCamera = new OrthographicCamera();
-        hudCamera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight());
+        hudCamera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight()); // TODO: Change to worldWidth & Height
+
         hudCamera.update();
 
 
@@ -97,7 +107,6 @@ public class Renderer {
         int endX   = (int) Math.ceil ((camX + halfW) / TILE_TXT_SIZE);
         int startY = (int) Math.floor((camY - halfH) / TILE_TXT_SIZE);
         int endY   = (int) Math.ceil ((camY + halfH) / TILE_TXT_SIZE);
-
 
         if (renderGame) {
             spriteBatch.setProjectionMatrix(CameraController.camera.combined);
@@ -215,7 +224,13 @@ public class Renderer {
             }
         }
 
-
+        Display display = new Display();
+        int s = 3;
+        display.setX(100 * s);
+        display.setY(20 * s);
+        display.setWidth(100 * s);
+        display.setHeight(200 * s);
+        display.render();
 
         // ===== HOTBAR ===== //
         Item[] hotBarItems = player.getHotbarItems();
@@ -252,6 +267,10 @@ public class Renderer {
                 ENTITY_TXT_SIZE,
                 ENTITY_TXT_SIZE
         );
+    }
+
+    public static void renderWindowNinePatch(NinePatch windowPatch, int width, int height, int x, int y) {
+        windowPatch.draw(spriteBatch, x, y, width, height);
     }
 
     public static void renderHitboxShape(Rectangle hitbox) {
