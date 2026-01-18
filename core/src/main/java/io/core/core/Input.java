@@ -96,10 +96,25 @@ public class Input {
      */
     public static void listen() {
         for (int key : allKeys) {
-            keysJustPressed.put(key, Gdx.input.isKeyJustPressed(key));
-            keysHeld.put(key, Gdx.input.isKeyPressed(key));
-        }
+            boolean currentlyPressed = Gdx.input.isKeyPressed(key);
+            boolean wasHeld = keysHeld.getOrDefault(key, false);
 
+            if (currentlyPressed && !wasHeld) {
+                keysJustPressed.put(key, true);
+            }
+
+            keysHeld.put(key, currentlyPressed);
+        }
+    }
+
+    /**
+     * Sets every just-clicked button from true to false every tick.
+     * This method should be called ONLY after performing all the ticks in the main game loop
+     */
+    protected static void resetJustClickedFlag() {
+        for (int key : allKeys) {
+            keysJustPressed.put(key, false);
+        }
     }
 
     public static boolean isJustPressed(int key) {

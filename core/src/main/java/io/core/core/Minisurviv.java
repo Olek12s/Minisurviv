@@ -79,10 +79,10 @@ public abstract class Minisurviv extends Game
         // LibGDX render pipeline
         super.render();
 
+      //  input.listen(); // Listen to user input  <--- move input.listen() here to make it TARGET_FPS dependent
+
         long now = System.nanoTime();
         double nsPerTick = 1_000_000_000.0 / TARGET_TPS;
-
-        // input.listen(); // Listen to user input  <--- move input.listen() here to make it TARGET_FPS dependent
 
         // Accumulate unprocessed time
         accumulator += (now - (lastTickTime == 0 ? now : lastTickTime)) / nsPerTick;
@@ -92,6 +92,7 @@ public abstract class Minisurviv extends Game
         while (accumulator >= 1) {
             input.listen(); // Listen to user input
             updater.tick();
+            Input.resetJustClickedFlag();
             ticksThisSecond++;
             accumulator--;
         }
