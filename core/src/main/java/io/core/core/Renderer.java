@@ -120,11 +120,6 @@ public class Renderer {
             currentLvl.render(startX, startY, endX, endY);
             spriteBatch.end();
 
-            spriteBatch.begin();
-            renderHUD();
-            spriteBatch.end();
-
-
             // Shape renderer's DEBUG render
             shapeRenderer.setProjectionMatrix(CameraController.camera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -132,6 +127,10 @@ public class Renderer {
                 currentLvl.renderShapes(startX, startY, endX, endY);
             }
             shapeRenderer.end();
+
+            spriteBatch.begin();
+            renderHUD();
+            spriteBatch.end();
         }
     }
 
