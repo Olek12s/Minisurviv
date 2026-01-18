@@ -2,7 +2,9 @@ package io.core.ui;
 
 public abstract class Entry
 {
-    protected boolean selectable = true;
+    protected boolean selectable;
+
+
 
     public boolean isSelectable() {
         return selectable;

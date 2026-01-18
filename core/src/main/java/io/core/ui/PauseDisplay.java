@@ -1,20 +1,14 @@
 package io.core.ui;
 
-import com.badlogic.gdx.Gdx;
 import io.core.core.Flow;
-import io.core.core.Renderer;
 
-public class ExitDisplay extends Display
+public class PauseDisplay extends Display
 {
-    public ExitDisplay() {
-
-
+    public PauseDisplay() {
         Menu menu = new Menu();
-        menu.addEntry(new TextEntry("Exit", Flow::exitToMainMenu, true));
-        menu.addEntry(new TextEntry("Return", this::close, true));
+        menu.addEntry(new TextEntry("Game is Paused"));
 
         addMenu(menu);
-
         layoutToContent();
         centerOnScreen();
     }
@@ -36,6 +30,6 @@ public class ExitDisplay extends Display
 
     @Override
     public String toString() {
-        return "ExitDisplay";
+        return "PasuseDisplay";
     }
 }

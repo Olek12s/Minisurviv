@@ -26,6 +26,7 @@ public class Display
     protected int x, y; // window position
     protected int width, height;
 
+
     static {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/minecrafty/Regular.otf"));
         FreeTypeFontGenerator.FreeTypeFontParameter ftf = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -44,6 +45,14 @@ public class Display
 
     public Menu getActiveMenu() {
         return menus.get(activeMenu);
+    }
+
+    protected void centerOnScreen() {
+        float w = Renderer.getVWWidth();
+        float h = Renderer.getVWHeight();
+
+        this.x = (int)(w / 2f - width / 2f);
+        this.y = (int)(h / 2f - height / 2f);
     }
 
     public void layoutToContent() {

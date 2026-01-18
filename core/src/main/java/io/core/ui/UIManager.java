@@ -7,14 +7,24 @@ import java.util.List;
 public class UIManager
 {
     //private static final ArrayDeque<Display> displayStack = new ArrayDeque<>();
-    private static final List<Display> displays = new ArrayList<>();
+    protected static final List<Display> displays = new ArrayList<>();
 
-    public static void open(Display display) {
-        if (display == null) return;
-        if (alreadyOpen(display.getClass())) return;
+    public static <T extends Display> T open(Class<T> cls) {
+        for (Display d : displays) {
+            if (d.getClass() == cls) {
+                return cls.cast(d);
+            }
+        }
 
-        displays.add(display);
-        System.out.println("[Display] Opened: " + display.toString());
+        try {
+            T display = cls.getDeclaredConstructor().newInstance();
+            displays.add(display);
+            System.out.println("[Display] Opened: " + display.toString());
+            return display;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static boolean alreadyOpen(Class<? extends Display> cls) {
@@ -22,6 +32,17 @@ public class UIManager
             if (d.getClass() == cls) return true;
         }
         return false;
+    }
+
+    public static <T extends Display> void close(Class<T> cls) {
+        for (int i = displays.size() - 1; i >= 0; i--) {
+            Display d = displays.get(i);
+            if (d.getClass() == cls) {
+                System.out.println("[Display] Closed: " + d.toString());
+                displays.remove(i);
+                return;
+            }
+        }
     }
 
     public static void closeTopDisplay() {
@@ -46,5 +67,9 @@ public class UIManager
         for (Display display : displays) {
             display.render();
         }
+    }
+
+    public static void dispose() {
+        displays.clear();
     }
 }

@@ -14,6 +14,7 @@ import io.core.level.Level;
 import io.core.level.LevelsManager;
 import io.core.ui.Display;
 import io.core.ui.ExitDisplay;
+import io.core.ui.PauseDisplay;
 import io.core.ui.UIManager;
 
 import java.util.List;
@@ -55,12 +56,6 @@ public class Player extends Mob
 
     @Override
     public void tick(Level level) {
-
-        // DISPLAYS
-
-        if (Input.isJustPressed(Input.Keys.ESCAPE)) {
-            UIManager.open(new ExitDisplay());
-        }
 
         // ACTIVE ITEM SELECTION FROM HOTBAR
         if (Input.isHeld(Input.Keys.NUM_0)) activeItem = hotbarItems[0];

@@ -29,10 +29,17 @@ public class Menu
     private void move(int dir) {
         if (entries.isEmpty()) return;
 
+        int startIndex = selectedIndex;
         do {
             selectedIndex = (selectedIndex + dir + entries.size()) % entries.size();
+
+            if (selectedIndex == startIndex && !entries.get(selectedIndex).isSelectable()) {
+                return;
+            }
+
         } while (!entries.get(selectedIndex).isSelectable());
     }
+
 
     public void render(int x, int y) {
         int offsetY = 0;

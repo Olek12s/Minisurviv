@@ -35,7 +35,5 @@ public class Chicken extends PassiveMob
             //level.addEntity(new Egg(), x, y); depracted
             level.dropItem(x, y, 1, 1, Items.get(ItemId.EGG));
         }
-
-        System.out.println(hitbox);
     }
 }
