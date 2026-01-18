@@ -9,6 +9,11 @@ public class UIManager
     //private static final ArrayDeque<Display> displayStack = new ArrayDeque<>();
     protected static final List<Display> displays = new ArrayList<>();
 
+    public static boolean isDisplaysEmpty() {
+        return displays.isEmpty();
+    }
+
+
     public static <T extends Display> T open(Class<T> cls) {
         for (Display d : displays) {
             if (d.getClass() == cls) {
