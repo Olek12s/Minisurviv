@@ -35,7 +35,7 @@ public abstract class Mob extends Entity
 
 
     public Mob(int maxHealth) {
-
+        super();
         // default hitbox values for mob
         setHitboxSize(16, 16);
         this.maxHealth = maxHealth;
@@ -115,8 +115,6 @@ public abstract class Mob extends Entity
 
 
     public void tick(Level level) {
-
-
         updateWalkingAnimation();
 
         // Behavior overriden (used) by both a player and NPCS

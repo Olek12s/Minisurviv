@@ -87,7 +87,7 @@ public class Input {
             Keys.NUMPAD_5, Keys.NUMPAD_6, Keys.NUMPAD_7, Keys.NUMPAD_8, Keys.NUMPAD_9,
             Keys.ENTER, Keys.SPACE, Keys.ESCAPE, Keys.TAB, Keys.BACKSPACE,
             Keys.SHIFT_LEFT, Keys.SHIFT_RIGHT, Keys.CONTROL_LEFT, Keys.CONTROL_RIGHT,
-            Keys.ALT_LEFT, Keys.ALT_RIGHT
+            Keys.ALT_LEFT, Keys.ALT_RIGHT, Keys.UP, Keys.DOWN
     };
 
     /**

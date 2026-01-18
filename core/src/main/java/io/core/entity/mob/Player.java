@@ -1,5 +1,6 @@
 package io.core.entity.mob;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +13,8 @@ import io.core.entity.item.Item;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
 import io.core.ui.Display;
+import io.core.ui.ExitDisplay;
+import io.core.ui.UIManager;
 
 import java.util.List;
 
@@ -52,13 +55,19 @@ public class Player extends Mob
 
     @Override
     public void tick(Level level) {
+
+        // DISPLAYS
+
+        if (Input.isJustPressed(Input.Keys.ESCAPE)) {
+            UIManager.open(new ExitDisplay());
+        }
+
         // ACTIVE ITEM SELECTION FROM HOTBAR
         if (Input.isHeld(Input.Keys.NUM_0)) activeItem = hotbarItems[0];
         if (Input.isHeld(Input.Keys.NUM_1)) activeItem = hotbarItems[1];
         if (Input.isHeld(Input.Keys.NUM_2)) activeItem = hotbarItems[2];
         if (Input.isHeld(Input.Keys.NUM_3)) activeItem = hotbarItems[3];
         if (Input.isHeld(Input.Keys.NUM_4)) activeItem = hotbarItems[4];
-
 
 
         // ITEMS WITHIN HITBOX
@@ -84,7 +93,6 @@ public class Player extends Mob
 
         // PLAYER MOVEMENT
 
-
             Vector2 vec = new Vector2(0, 0);    // movement vector
 
             if (Input.isHeld(Input.Keys.W)) vec.y++;            // up
@@ -96,7 +104,6 @@ public class Player extends Mob
             float xd = vec.x * movSpeed;
             float yd = vec.y * movSpeed;
             boolean moved = move(xd, yd, true); // Player's moved in this method
-
 
         super.tick(level);
     }

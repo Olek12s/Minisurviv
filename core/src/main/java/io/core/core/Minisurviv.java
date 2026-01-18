@@ -92,10 +92,10 @@ public abstract class Minisurviv extends Game
         while (accumulator >= 1) {
             input.listen(); // Listen to user input
             updater.tick();
-            Input.resetJustClickedFlag();
             ticksThisSecond++;
             accumulator--;
         }
+        Input.resetJustClickedFlag();
 
         // Render current frame
         renderer.render();

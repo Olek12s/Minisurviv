@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import io.core.Tickable;
 import io.core.core.Renderer;
+import io.core.entity.mob.Chicken;
 import io.core.level.Level;
 import io.core.level.LevelsManager;
 
@@ -55,19 +56,20 @@ public abstract class Entity implements Tickable
 
     public void setHitboxWidth(float hitboxWidth) {
         this.hitboxWidth = hitboxWidth;
-        this.hitboxOffsetY = (24f - hitboxWidth) /2;
+        this.hitboxOffsetX = (24f - hitboxWidth) /2;
         updateHitbox();
     }
 
     public void setHitboxHeight(float hitboxHeight) {
         this.hitboxHeight = hitboxHeight;
-        this.hitboxOffsetX = (24f - hitboxHeight) /2;
+        this.hitboxOffsetY = (24f - hitboxHeight) /2;
         updateHitbox();
     }
 
     public void setHitboxSize(float x, float y) {
         setHitboxWidth(x);
         setHitboxHeight(y);
+        updateHitbox();
     }
 
 

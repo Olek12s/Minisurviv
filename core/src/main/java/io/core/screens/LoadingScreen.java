@@ -86,8 +86,6 @@ public class LoadingScreen implements Screen {
         LevelsManager.player = new Player();
         LevelsManager.getCurrentLevel().dropItem(0, 0, 1, 1, Items.get(ItemId.EGG));
         Chicken chick = new Chicken();
-        chick.x = 1;
-        chick.y = 2;
     }
 
     @Override

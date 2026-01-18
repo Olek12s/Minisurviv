@@ -461,6 +461,19 @@ public class Level
         entitiesToAdd.add(e);
     }
 
+    public void dispose() {
+        chunks = null;
+        width = 0;
+        height = 0;
+        level = 0;
+        parentLevel = null;
+        seed = 0;
+        random = null;
+        entities = null;
+        players = null;
+        entitiesToAdd = null;
+        entitiesToRemove = null;
+    }
 
 
     @Override

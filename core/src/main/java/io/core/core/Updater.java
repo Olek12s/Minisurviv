@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import io.core.entity.mob.Player;
 import io.core.level.LevelsManager;
+import io.core.ui.UIManager;
 
 import static com.badlogic.gdx.Gdx.input;
 
@@ -32,7 +33,7 @@ public class Updater {
         // camera is linked to the player's character
         CameraController.followSmooth(player);
         LevelsManager.getCurrentLevel().tick();
-
+        UIManager.tick();
 
     }
 }

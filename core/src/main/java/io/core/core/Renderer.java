@@ -10,8 +10,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.core.entity.item.Item;
 import io.core.entity.mob.Player;
+import io.core.level.Level;
 import io.core.level.LevelsManager;
 import io.core.ui.Display;
+import io.core.ui.ExitDisplay;
+import io.core.ui.UIManager;
 
 public class Renderer {
     private static int TILE_TXT_SIZE = 24;  // leave it private, no class except Renderer should know what TXT size is
@@ -39,6 +42,9 @@ public class Renderer {
     public static int getItemTxtSize() {return ITEM_TXT_SIZE;}
     public static TextureAtlas getTilesTextureAtlas() {return TILES_TEXTURE_ATLAS;}
     public static TextureAtlas getItemsTextureAtlas() {return ITEMS_TEXTURE_ATLAS;}
+    public static float getVWWidth() {return viewport.getWorldWidth();}
+    public static float getVWHeight() {return viewport.getWorldHeight();}
+
 
     public static boolean renderGame = false;
 
@@ -106,9 +112,12 @@ public class Renderer {
         int endY   = (int) Math.ceil ((camY + halfH) / TILE_TXT_SIZE);
 
         if (renderGame) {
+            Level currentLvl = LevelsManager.getCurrentLevel();
+            if (currentLvl == null) return;
+
             spriteBatch.setProjectionMatrix(CameraController.camera.combined);
             spriteBatch.begin();
-            LevelsManager.getCurrentLevel().render(startX, startY, endX, endY);
+            currentLvl.render(startX, startY, endX, endY);
             spriteBatch.end();
 
             spriteBatch.begin();
@@ -120,7 +129,7 @@ public class Renderer {
             shapeRenderer.setProjectionMatrix(CameraController.camera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             if (Minisurviv.DEBUG_MODE) {
-                LevelsManager.getCurrentLevel().renderShapes(startX, startY, endX, endY);
+                currentLvl.renderShapes(startX, startY, endX, endY);
             }
             shapeRenderer.end();
         }
@@ -224,15 +233,19 @@ public class Renderer {
 //        Display display = new Display();
 //        display.setX(25);
 //        display.setY(25);
-//        display.setWidth(24);
-//        display.setHeight(24);
+//        display.setWidth(80);
+//        display.setHeight(120);
 //        display.render();
+//
+//        ExitDisplay exitDisplay = new ExitDisplay();
+//        exitDisplay.tick();
+//        exitDisplay.render();
 
         // ===== HOTBAR ===== //
         Item[] hotBarItems = player.getHotbarItems();
         int slotCount = hotBarItems.length;
 
-
+        UIManager.render();
     }
 
     public static void renderTile(String tileName, int x, int y) {

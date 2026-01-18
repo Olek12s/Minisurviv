@@ -1,7 +1,10 @@
 package io.core.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import io.core.core.Input;
 import io.core.core.Renderer;
 
@@ -13,6 +16,7 @@ public class Display
 {
     protected static TextureRegion windowRegion = Renderer.getHudTextureAtlas().findRegion("window");
     protected static NinePatch windowPatch = new NinePatch(windowRegion, 8,8,8,8);
+    protected static BitmapFont font;
 
     private int padding = 4;
     private boolean selected;
@@ -21,6 +25,13 @@ public class Display
 
     protected int x, y; // window position
     protected int width, height;
+
+    static {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/minecrafty/Regular.otf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter ftf = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        ftf.size = 10;
+        font = generator.generateFont(ftf);
+    }
 
     public void setX(int x) {this.x = x;}
     public void setY(int y) {this.y = y;}

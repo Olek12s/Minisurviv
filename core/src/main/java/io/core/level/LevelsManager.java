@@ -1,5 +1,7 @@
 package io.core.level;
 
+import io.core.core.Renderer;
+import io.core.core.Updater;
 import io.core.entity.mob.Player;
 import io.core.util.FloatConsumer;
 
@@ -8,7 +10,7 @@ import java.util.TreeMap;
 
 public class LevelsManager
 {
-    private static final Level[] levels = new Level[4];
+    private static Level[] levels;
 
     private static String worldName;
     private static int worldSize;
@@ -20,6 +22,7 @@ public class LevelsManager
     public static final int SURFACE = 0, CAVE = -1, DEEP_CAVE = -2, RUINS = -3;
 
     public static void init(String worldName, int worldSize, int worldSeed) {
+        levels = new Level[4];
         LevelsManager.worldName = worldName;
         LevelsManager.worldSize = worldSize;
         LevelsManager.worldSeed = worldSeed;
@@ -71,4 +74,18 @@ public class LevelsManager
         put(CAVE, "Cave");
         put(SURFACE, "Surface");
     }};
+
+    public static void dispose() {
+        for (Level level : levels) {
+            level.dispose();
+        }
+
+        levels = null;
+        currentLevel = 0;
+        player = null;
+
+
+        System.gc();
+        System.out.println("[WORLD] Disposed");
+    }
 }
