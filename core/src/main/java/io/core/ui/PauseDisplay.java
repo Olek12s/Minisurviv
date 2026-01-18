@@ -30,6 +30,6 @@ public class PauseDisplay extends Display
 
     @Override
     public String toString() {
-        return "PasuseDisplay";
+        return "PauseDisplay";
     }
 }

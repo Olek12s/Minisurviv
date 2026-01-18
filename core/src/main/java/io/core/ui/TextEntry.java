@@ -27,7 +27,7 @@ public class TextEntry extends Entry
 
     @Override
     public void render(int x, int y, boolean selected) {
-        if (selected && selectable) Renderer.drawText(Display.font, "> " + text + " <", x, y);
+        if (selected && selectable) Renderer.drawText(Display.font, ">" + text + "<", x, y);
         else Renderer.drawText(Display.font, text, x, y);
     }
 

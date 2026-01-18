@@ -8,7 +8,6 @@ public class ExitDisplay extends Display
 {
     public ExitDisplay() {
 
-
         Menu menu = new Menu();
         menu.addEntry(new TextEntry("Exit", Flow::exitToMainMenu, true));
         menu.addEntry(new TextEntry("Return", this::close, true));
@@ -16,6 +15,7 @@ public class ExitDisplay extends Display
         addMenu(menu);
 
         layoutToContent();
+       // setMinimumSize(80, 0);
         centerOnScreen();
     }
 

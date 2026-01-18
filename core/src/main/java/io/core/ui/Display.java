@@ -64,33 +64,44 @@ public class Display
             maxH = Math.max(maxH, m.getRequiredHeight());
         }
 
-        width  = maxW + padding * 2;
-        height = maxH + padding * 2;
+        width  = Math.max(width, maxW + padding * 2);
+        height = Math.max(height, maxH + padding * 2);
     }
+
 
     public void tick() {
         if (menus.isEmpty()) return;
         getActiveMenu().tick();
     }
 
+    public void setMinimumSize(int minWidth, int minHeight) {
+        width = Math.max(width, minWidth);
+        height = Math.max(height, minHeight);
+    }
+
+
     public void render() {
         Renderer.renderWindowNinePatch(windowPatch, width, height, x, y);
 
         if (menus.isEmpty()) return;
 
-        getActiveMenu().render(
-                x + padding,
-                y + height - padding
-        );
+        Menu menu = getActiveMenu();
+
+        int menuX = x + (width - menu.getRequiredWidth()) / 2;
+        int menuY = y + (height + menu.getRequiredHeight()) / 2;
+
+        menu.render(menuX, menuY);
     }
 
-    /*
-    public void render() {
 
-
-        Renderer.renderWindowNinePatch(windowPatch, width, height, x, y);
-        menu.render(Renderer.spriteBatch, x + padding, y + height - padding, selected);
-        System.out.println("rendering window: x: " + x + ", y: " + y + " width: " + width + " height: " + height);
-    }
-    */
+//    public void render() {
+//        Renderer.renderWindowNinePatch(windowPatch, width, height, x, y);
+//
+//        if (menus.isEmpty()) return;
+//
+//        getActiveMenu().render(
+//                x + padding,
+//                y + height - padding
+//        );
+//    }
 }
