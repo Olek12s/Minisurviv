@@ -93,6 +93,41 @@ public class Display
         menu.render(menuX, menuY);
     }
 
+    public static class Builder {
+        private final Display display;
+        private final Menu menu = new Menu();
+        private Entry lastEntry;
+
+        public Builder(Display display) {
+            this.display = display;
+        }
+
+        public Builder addEntry(Entry entry) {
+            menu.addEntry(entry);
+            lastEntry = entry;
+            return this;
+        }
+
+        public Builder centered() {
+            if (lastEntry != null)
+                lastEntry.centered = true;
+            return this;
+        }
+
+        public Builder selectable(boolean value) {
+            if (lastEntry != null)
+                lastEntry.selectable = value;
+            return this;
+        }
+
+        public Display build(boolean centerOnScreen) {
+            display.addMenu(menu);
+            display.layoutToContent();
+            if (centerOnScreen) display.centerOnScreen();
+            return display;
+        }
+    }
+
 
 //    public void render() {
 //        Renderer.renderWindowNinePatch(windowPatch, width, height, x, y);

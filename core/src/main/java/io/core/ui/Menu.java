@@ -5,14 +5,32 @@ import io.core.core.Input;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Menu
-{
+public class Menu {
     private final List<Entry> entries = new ArrayList<>();
     private int selectedIndex = 0;
-    private int spacing = 4;
+    private int spacing = 8;
 
     public void addEntry(Entry e) {
         entries.add(e);
+    }
+
+    public void render(int x, int y) {
+        int offsetY = 0;
+        int maxWidth = getRequiredWidth();
+
+        for (int i = 0; i < entries.size(); i++) {
+            Entry e = entries.get(i);
+            boolean selected = (i == selectedIndex);
+
+            int drawX = x;
+
+            if (e.isCentered()) {
+                drawX += e.getDrawOffset(maxWidth, selected);
+            }
+
+            e.render(drawX, y - offsetY, selected);
+            offsetY += e.getHeight() + spacing;
+        }
     }
 
     public void tick() {
@@ -40,19 +58,6 @@ public class Menu
         } while (!entries.get(selectedIndex).isSelectable());
     }
 
-
-    public void render(int x, int y) {
-        int offsetY = 0;
-
-        for (int i = 0; i < entries.size(); i++) {
-            Entry e = entries.get(i);
-            boolean selected = (i == selectedIndex);
-
-            e.render(x, y - offsetY, selected);
-            offsetY += e.getHeight() + spacing;
-        }
-    }
-
     public int getRequiredWidth() {
         int max = 0;
         for (Entry e : entries)
@@ -70,3 +75,4 @@ public class Menu
         return sum;
     }
 }
+
