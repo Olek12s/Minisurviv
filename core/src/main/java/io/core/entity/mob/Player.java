@@ -90,10 +90,10 @@ public class Player extends Mob
 
             Vector2 vec = new Vector2(0, 0);    // movement vector
 
-            if (Input.isHeld(Input.Keys.W)) vec.y++;            // up
-            if (Input.isHeld(Input.Keys.S)) vec.y--;            // down
-            if (Input.isHeld(Input.Keys.A)) vec.x--;            // left
-            if (Input.isHeld(Input.Keys.D)) vec.x++;            // right
+            if (Input.isHeld(Input.Keys.W) || Input.isHeld(Input.Keys.UP)) vec.y++;              // up
+            if (Input.isHeld(Input.Keys.S) || Input.isHeld(Input.Keys.DOWN)) vec.y--;            // down
+            if (Input.isHeld(Input.Keys.A) || Input.isHeld(Input.Keys.LEFT)) vec.x--;            // left
+            if (Input.isHeld(Input.Keys.D) || Input.isHeld(Input.Keys.RIGHT)) vec.x++;            // right
 
             // Move the player
             float xd = vec.x * movSpeed;
