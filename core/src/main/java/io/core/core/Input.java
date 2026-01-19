@@ -75,6 +75,8 @@ public class Input {
 
         public static final int UP = com.badlogic.gdx.Input.Keys.UP;
         public static final int DOWN = com.badlogic.gdx.Input.Keys.DOWN;
+        public static final int LEFT = com.badlogic.gdx.Input.Keys.LEFT;
+        public static final int RIGHT = com.badlogic.gdx.Input.Keys.RIGHT;
     }
 
     private static final Integer[] allKeys = {
@@ -87,7 +89,7 @@ public class Input {
             Keys.NUMPAD_5, Keys.NUMPAD_6, Keys.NUMPAD_7, Keys.NUMPAD_8, Keys.NUMPAD_9,
             Keys.ENTER, Keys.SPACE, Keys.ESCAPE, Keys.TAB, Keys.BACKSPACE,
             Keys.SHIFT_LEFT, Keys.SHIFT_RIGHT, Keys.CONTROL_LEFT, Keys.CONTROL_RIGHT,
-            Keys.ALT_LEFT, Keys.ALT_RIGHT, Keys.UP, Keys.DOWN
+            Keys.ALT_LEFT, Keys.ALT_RIGHT, Keys.UP, Keys.DOWN, Keys.LEFT, Keys.RIGHT
     };
 
     /**
